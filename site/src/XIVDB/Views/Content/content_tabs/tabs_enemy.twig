@@ -1,0 +1,5 @@
+{% include 'Content/content_tabs/tabs.twig' with { tabs: [
+    [ languages.custom[408], content.items, 'Content/extras/enemy_items.twig' ],
+    [ languages.custom[841], content.instances, 'Content/extras/enemy_instances.twig' ],
+    [ languages.custom[732], content.map_data ? content.map_data.points : false, 'Content/extras/enemy_maps.twig' ],
+]} %}

@@ -1,0 +1,91 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}Add Character{% endset %}
+
+{% block body %}
+<style>
+.character-row {
+    border: solid 1px #222;
+    margin-bottom: 2px;
+    font-size: 16px;
+
+    height: 50px;
+    line-height: 50px;
+}
+.character-row a {
+    display: inline-block;
+}
+.character-row img {
+    vertical-align: middle;
+    border-radius: 50%;
+    margin: 0 15px 5px 15px;
+    box-shadow: 0 1px 2px #000;
+}
+</style>
+<div class="content-block page-content">
+
+	<div class="page-pad-30">
+
+        <h1>Add Character</h1>
+        {% if res.success is defined and res.success %}
+        <br><br>
+        <div class="alert alert-info">
+            <h4>Success</h4>
+            <strong>{{ res.message }}</strong>
+            <br>Please allow up to 5 minutes before it shows on XIVDB.
+        </div>
+        {% endif %}
+
+        <p>XIVDB tracks millions of characters every days, recording progression events and achievement data. If you have
+        an XIVDB account you can go to the <a href="{{ defines.SECURE }}/account">Account Section</a> to add your character here.</p>
+
+        <p>If you wish to add characters without an account, please use the form below!</p>
+
+        <br><br>
+
+        <div class="form panel p15">
+            <input type="text" placeholder="Character Name" id="addCharacterName">
+            &nbsp;&nbsp;
+            <select id="addCharacterServer">
+                {% for server in filters.servers %}
+                    <option value="{{ server.name }}">{{ server.name }}</option>
+                {% endfor %}
+            </select>
+            &nbsp;&nbsp;
+            <input type="button" class="blue" value="Add Character" id="addCharacterSubmit">
+        </div>
+
+        <br><br>
+
+        <div id="addCharacterResponse"></div>
+
+    </div>
+</div>
+<script>
+$('#addCharacterSubmit').on('click', function(event) {
+    event.preventDefault();
+
+    var name = $('#addCharacterName').val(),
+        server = $('#addCharacterServer').val();
+
+    var url = 'https://xivsync.com/character/search?name='+ name.replace(' ', '+') +'&server='+ server;
+    var $dom = $('#addCharacterResponse');
+
+    $dom.html('<div class="alert alert-warning">Searching lodestone, please wait a couple seconds ...</div>');
+    $.get(url, function(response) {
+        $dom.html('<p>Click the character you want to add<p>');
+
+        for(var i in response.data.results) {
+            var character = response.data.results[i];
+
+            $dom.append('<div class="character-row">' +
+                '<a href="/character/add?id='+ character.id +'">' +
+                    '<img src="'+ character.avatar +'" height="32"> '+ character.name +
+                '</a>' +
+            '</div>');
+        }
+    });
+});
+</script>
+
+
+{% endblock %}

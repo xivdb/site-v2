@@ -1,0 +1,6 @@
+<div class="acc-top">
+	<nav>
+		<a href="/account" {% if type is defined and type == 'profile' %}class="active"{% endif %}>{{ languages.custom[669] }}</a>
+		<a href="/account/characters" {% if type is defined and type == 'character' %}class="active"{% endif %}>{{ languages.custom[33] }}</a>
+	</nav>
+</div>

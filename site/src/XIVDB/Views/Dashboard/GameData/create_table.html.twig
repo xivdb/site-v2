@@ -1,0 +1,37 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Create Table{% endset %}
+{% set page = 'gamedata' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Game Data' },
+    { title: 'Create Table' },
+]) }}
+
+{% include 'Dashboard/Default/gamedata.html.twig' %}
+
+<div class="container">
+    <h2><a href="/gamedata">Game Data</a> - Create Table</h2>
+
+	<form method="post">
+    	<div class="row">
+			<div class="col-md-12">
+				<fieldset class="form-group">
+		    		<label for="name">Name</label>
+		    		<input type="text" class="form-control" name="name" id="name" value="{{ app.request.get('name') }}">
+		    	</fieldset>
+
+                <fieldset class="form-group">
+                    <input type="checkbox" name="repeater" id="repeater" value="yes" {{ app.request.get('repeater') ? 'checked' : '' }}>
+		    		<label for="repeater">Create Repeater Table?</label>
+		    	</fieldset>
+			</div>
+		</div>
+
+		<div align="center">
+			<button type="submit" class="btn btn-success" name="create" value="create">Create</button>
+		</div>
+    </form>
+
+</div>
+{% endblock %}

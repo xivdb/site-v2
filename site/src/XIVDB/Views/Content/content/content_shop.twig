@@ -1,0 +1,20 @@
+{# Roulette #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[814], content.beast_tribe_name ? content.beast_tribe_name : '-'),
+    ])
+}}
+
+{# start/end npcs #}
+{{
+    Layout.row([
+		Layout.col(languages.custom[402], Layout.npc(content.npc)),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

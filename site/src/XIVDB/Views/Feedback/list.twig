@@ -1,0 +1,47 @@
+{% extends 'Default/index.twig' %}
+{% set type = 'feedback' %}
+{% set pagetitle %}{{ languages.custom[726] }}{% endset %}
+
+{% block body %}
+<div class="content-block p30">
+
+    <h2>{{ languages.custom[1153] }}</h2>
+    <p>{{ languages.custom[1154] }}</p>
+
+    <div class="panel mb10">
+        <em class="feedback-cat-title">{{ languages.custom[1155] }}</em>
+        <a class="feedback-category feedback-category-blue" href="/feedback">Untagged</a>
+        {% for folder in folders %}
+            <a class="feedback-category" href="/feedback?folder={{ folder.name|replace({' ':'+'}) }}">{{ folder.name|title }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="form">
+        <table class="{{ type }}-feedback-table w100">
+        <thead>
+            <th width="2%">#</th>
+            <th width="50%">{{ languages.custom[314] }}</th>
+            <th>{{ languages.custom[316] }}</th>
+            <th>{{ languages.custom[1156] }}</th>
+            <th>{{ languages.custom[181] }}</th>
+            <th>{{ languages.custom[1157] }}</th>
+        </thead>
+        <tbody>
+        {% for post in feedback %}
+        <tr>
+            <td class="fs12">{{ post.id }}</td>
+            <td class="fs12">
+                <a href="/feedback/view/{{ post.id }}" class="sky">{% if post.title %}{{ post.title }}{% else %}<em class="green">New Report</em>{% endif %}</a>
+            </td>
+            <td class="fs12">{{ post.category }}</td>
+            <td class="fs12">{{ post.section }}</td>
+            <td class="fs12" data-text="{{ post.updated|date('U') }}">{{ post.updated|date('jS M') }}</td>
+            <td class="fs12" data-text="{{ post.added|date('U') }}">{{ post.added|date('jS M') }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

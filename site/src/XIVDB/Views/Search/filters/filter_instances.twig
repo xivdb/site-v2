@@ -1,0 +1,27 @@
+<div class="filter-panel filter-panel-instances" data-filter-type="instances">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs">
+        <div class="filter-param-row">
+            {{ SearchFilter.level('LEVEL', 'level') }}
+            {{ SearchFilter.level('LEVEL SYNC', 'level_sync') }}
+            {{ SearchFilter.level('ITEM LEVEL', 'item_level') }}
+            {{ SearchFilter.level('ITEM LEVEL SYNC', 'item_level_sync') }}
+
+            {{ SearchFilter.select('CONTENT TYPE', 'content_type', [filters.content_type, 'id', 'name']) }}
+            {{ SearchFilter.select('ROULETTE', 'content_roulette', [filters.content_roulette, 'id', 'name']) }}
+        </div>
+        <div class="filter-param-row">
+            {{ SearchFilter.checkbox('ECHO', 'is_echo_default') }}
+            {{ SearchFilter.checkbox('DEATH ECHO', 'is_echo_annihilation') }}
+            {{ SearchFilter.checkbox('ROULETTE', 'content_roulette') }}
+            {{ SearchFilter.checkbox('ALLIANCES', 'alliance') }}
+            {{ SearchFilter.checkbox('DUTY FINDER', 'is_in_duty_finder') }}
+        </div>
+    </div>
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.instances) }}
+
+{% endspaceless %}
+</div>

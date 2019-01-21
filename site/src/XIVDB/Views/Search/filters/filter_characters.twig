@@ -1,0 +1,16 @@
+<div class="filter-panel filter-panel-characters" data-filter-type="characters">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs active" data-tab="general">
+        <div class="filter-param-row">
+            {{ SearchFilter.select('SERVER', 'server', [filters.servers, 'name', 'name']) }}
+            {{ SearchFilter.checkbox('HAS ACHIEVEMENTS', 'achievements_public') }}
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.characters) }}
+
+{% endspaceless %}
+</div>

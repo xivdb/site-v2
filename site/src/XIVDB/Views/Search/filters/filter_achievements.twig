@@ -1,0 +1,18 @@
+<div class="filter-panel filter-panel-achievements" data-filter-type="achievements">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs active" data-tab="general">
+        <div class="filter-param-row">
+            {{ SearchFilter.select('POINTS', 'points', [filters.points, 'id', 'name']) }}
+            {{ SearchFilter.select('CATEGORY', 'achievement_category', [filters.categories, 'id', 'name'], ['categories', 'id', 'name']) }}
+            {{ SearchFilter.checkbox('ITEM', 'item') }}
+            {{ SearchFilter.checkbox('TITLE', 'title') }}
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.achievements) }}
+
+{% endspaceless %}
+</div>

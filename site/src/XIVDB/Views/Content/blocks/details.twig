@@ -1,0 +1,34 @@
+<div class="tab-block tab-details active" id="tab-block-details">
+    {# center: main template #}
+    <div class="content-data">
+        {# main data #}
+        <div class="content-data-info">
+            {% include template_main %}
+        </div>
+
+        {# Fansites #}
+        <div class="layout-row">
+            <div class="tc-fansite">
+                <a class="tc-gbd" href="https://www.garlandtools.org/db/#{{ content._type }}/{{ content.id }}" data-tt="{{ languages.custom[908] }}" target="_blank">
+                    <img src="/img/ui/GarlandLogo.png" height="18"> Garland Data
+                </a>
+            </div>
+
+            <div class="tc-fansite">
+                <a class="tc-fansite tc-ge" href="https://ffxiv.gamerescape.com/wiki/{{ content.name_en|replace({ ' ': '_' }) }}" data-tt="{{ languages.custom[909] }}" target="_blank">
+                    <img src="/img/ui/GE.png" height="16"> Gamer Escape
+                </a>
+            </div>
+        </div>
+
+        {# language selection #}
+        {% include 'Content/content/language.twig' %}
+
+        <div class="content-data-empty">
+            {% include 'Content/blocks/nodata.twig' %}
+        </div>
+    </div>
+
+    {# right: ad block #}
+    {% include 'Content/content/right.twig' %}
+</div>

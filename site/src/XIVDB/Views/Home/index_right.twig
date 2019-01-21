@@ -1,0 +1,14 @@
+{% if not devices.mobile %}
+    <div class="home-screenshots">
+        {% for ss in screenshots %}
+            <a href="{{ ss.content.url }}#lb={{ ss.id}}" {{ loop.first ? 'class="active"' : '' }} data-xivdb-ignore="1" data-tt-dynamic="1" data-tt-isImage="1" style="background-image:url({{ ss.image }})"></a>
+        {% endfor %}
+    </div>
+    <div class="home-screenshots-link">
+        <a href="/community/screenshots">view more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+    </div>
+{% endif %}
+
+{% set limit = devices.mobile and not nomobile ? 2 : 5 %}
+
+{% include 'Home/index_sedata.twig' %}

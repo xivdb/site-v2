@@ -1,0 +1,91 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}{{ language }} - Translations{% endset %}
+{% set page = 'translations' %}
+{% set exteded = true %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Translations', url: '/translations' },
+    { title: language }
+]) }}
+
+<div class="container-fluid">
+
+    <div class="alert alert-info" role="alert">
+        The edit button next to translations is for editing specifics about it, not required for translations, just
+        type in the boxes to do translations :D
+    </div>
+
+    <br>
+
+    <form method="post">
+        <button type="submit" class="btn btn-success translations-save">Save Translations</button>
+        <input type="hidden" id="newchanges" name="newchanges">
+    </form>
+
+    <h1>{{ language }} Translations {% if category %}- {{ category }}{% endif %}</h1>
+
+    <p>Coverage: <strong>{{ coverage.percent }}%</strong>, {{ coverage.completed }}/{{ coverage.total }}, {{ coverage.remaining }} remaining</p>
+    <progress class="progress progress-success" value="{{ coverage.percent }}" max="100">{{ coverage.percent }}%</progress>
+
+    <h2>Categories</h2>
+    <div class="category-list">
+        <a href="/translations/manage/{{ language|lower }}" class="btn btn-primary btn-sm">All</a>
+        {% for row in categories %}
+            <a href="?category={{ row.category }}" class="btn btn-default btn-sm">{{ row.category|title }}</a>
+        {% endfor %}
+    </div>
+
+    <table class="translation-table" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th width="2%"><a href="?order=id,desc">ID</a></th>
+                <th width="40%"><a href="?order=text_en,asc">English</a></th>
+                <th width="40%"><a href="?order=text_lang,asc">{{ language }}</a></th>
+                <th width="10%"><a href="?order=updated,desc">Updated</a></th>
+                <th width="5%"><div align="right">Actions</div></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for string in translations %}
+                <tr data-id="{{ string.id }}">
+                    <td style="font-size:11px;">{{ string.id }}</td>
+                    <td class="is-editable" data-lang="english" contenteditable>{{ string.text_en }}</td>
+                    <td class="is-editable" data-lang="translation" contenteditable>{{ string.text_lang }}</td>
+                    <td style="font-size:11px;">{{ string.updated|date('F j, Y') }}</td>
+                    <td align="right"><a href="/translations/{{ string.id }}/update" type="submit">Edit</button></td>
+                </tr>
+                {% if string.notes %}
+                <tr class="is-alert">
+                    <td>&nbsp;</td>
+                    <td colspan="2">
+                        <div class="alert alert-default alert-small">{{ string.notes }}</div>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+var changes = {};
+$('.is-editable').on('keyup', function() {
+    var id = $(this).parent().attr('data-id'),
+        english = $(this).parent().find('[data-lang="english"]').text(),
+        translation = $(this).parent().find('[data-lang="translation"]').text();
+
+    if (!$(this).parent().hasClass('been-edited')) {
+        $(this).parent().addClass('been-edited');
+    }
+
+    changes[id] = {
+        english: english,
+        translation: translation
+    };
+
+    $('.translations-save').text(`Save Translations (${Object.keys(changes).length})`);
+    $('#newchanges').val(JSON.stringify(changes));
+});
+</script>
+{% endblock %}

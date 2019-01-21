@@ -1,0 +1,10 @@
+<div class="filter-panel filter-panel-emotes" data-filter-type="emotes">
+{% spaceless %}
+
+    {{ SearchFilter.empty('Places') }}
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.emotes) }}
+
+{% endspaceless %}
+</div>

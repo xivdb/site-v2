@@ -1,0 +1,11 @@
+<div class="additional-content-container">
+	{# Latest screenshot #}
+    {% if latestScreenshot %}
+    <div>
+        <a class="lc-image" style="background-image:url({{ latestScreenshot.small }});" href="#lb={{ latestScreenshot.id }}"></a>
+    </div>
+    {% endif %}
+
+	{# dev data #}
+	{% include 'Content/content/devdata.twig' %}
+</div>

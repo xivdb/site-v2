@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS `%s_repeater` (`content_id` int(32) NOT NULL, `patch` int(3) NOT NULL DEFAULT '0', `setnum` int(16) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+ALTER TABLE `%s_repeater` ADD UNIQUE KEY `unique` (`content_id`,`setnum`), ADD KEY `patch` (`patch`), ADD KEY `content_id` (`content_id`);

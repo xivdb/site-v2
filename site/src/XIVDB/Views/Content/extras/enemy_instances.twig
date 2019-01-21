@@ -1,0 +1,33 @@
+{# list items #}
+<table class="{{ content._type }}-items-table">
+    <thead>
+        <tr>
+            <th width="3%" class="tac"><i class="fa fa-picture-o"></i></th>
+            <th width="37%">{{ languages.custom[474] }}</th>
+            <th width="15%">{{ languages.custom[457] }}</th>
+            <th width="15%">{{ languages.custom[122] }}</th>
+            <th width="40%">{{ languages.custom[861] }}</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for entity in content.instances %}
+        <tr>
+            <td class="tac"><img src="{{ entity.icon }}" class="table-content-icon" height="20"></td>
+            <td>
+                <a href="{{ entity.url }}" title="{{ entity.name }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ entity.name }}</a>
+                <em class="td-note">({{ entity.content_name }})</em>
+            </td>
+            <td class="yellow">{{ entity.level }}</td>
+            <td class="yellow">{{ entity.level_sync }}</td>
+            <td>{{ entity.roulette_name }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+$(function() {
+    var $table = $('.{{ content._type }}-items-table');
+        $table.tablesorter({ widthFixed: true, widgets: ['zebra'] });
+});
+</script>

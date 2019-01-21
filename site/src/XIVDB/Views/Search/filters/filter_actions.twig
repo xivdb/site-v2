@@ -1,0 +1,34 @@
+<div class="filter-panel filter-panel-actions" data-filter-type="actions">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs">
+        <div class="filter-param-row">
+            {{ SearchFilter.level('LEVEL', 'level') }}
+            {{ SearchFilter.select('CATEGORY', 'action_category', [filters.actions_category, 'id', 'name']) }}
+            {{ SearchFilter.checkbox('PVP', 'can_target_dead') }}
+            {{ SearchFilter.checkbox('AOE', 'is_target_area') }}
+            {{ SearchFilter.checkbox('TARGET SELF', 'can_target_self') }}
+            {{ SearchFilter.checkbox('TARGET PARTY', 'can_target_party') }}
+            {{ SearchFilter.checkbox('TARGET FRIENDLY', 'can_target_friendly') }}
+            {{ SearchFilter.checkbox('TARGET HOSTILE', 'can_target_hostile') }}
+            {{ SearchFilter.checkbox('TARGET DEAD', 'is_pvp') }}
+            {{ SearchFilter.andor('CLASS/JOBS AND/OR', 'classjobs_andor', {
+                'and': '(AND) Group Class/Jobs',
+                'or': '(OR) Split Class/Jobs',
+            }) }}
+        </div>
+    </div>
+
+    {# classjobs #}
+    <div class="filter-panel-tabs">
+        <div class="filter-special-classjobs">
+            {{ SearchFilter.classjobs(filters) }}
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.actions, filters.patches) }}
+
+{% endspaceless %}
+</div>

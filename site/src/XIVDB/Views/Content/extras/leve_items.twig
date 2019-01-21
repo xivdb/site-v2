@@ -1,0 +1,20 @@
+{% if content.items|length > 1 %}
+    {% set mid = (content.items|length / 2)|round + 1 %}
+    {% set end = content.items|length + 1 %}
+    <div class="content-loot-table">
+        <div class="content-loot-table--left">
+            {{ Layout.lootTable(content.items, 0, mid) }}
+        </div>
+        <div class="content-loot-table--right">
+            {{ Layout.lootTable(content.items, mid, end) }}
+        </div>
+    </div>
+{% else %}
+    {% set end = content.items|length + 1 %}
+    <div class="content-loot-table">
+        <div class="content-loot-table--left">
+            {{ Layout.lootTable(content.items, 0, end) }}
+        </div>
+        <div class="content-loot-table--right"></div>
+    </div>
+{% endif %}

@@ -1,0 +1,122 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Patches{% endset %}
+{% set page = 'gamedata' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+	{ title: 'Game Data' },
+	{ title: 'Patches' }
+]) }}
+
+{% include 'Dashboard/Default/gamedata.html.twig' %}
+
+<div class="container">
+    <h1><a href="/gamedata">Game Data</a> - Patches</h1>
+
+	<form method="post">
+    	<div class="row">
+			<div class="col-md-6">
+				<fieldset class="form-group">
+		    		<label for="command">Command</label>
+		    		<input type="text" class="form-control" name="command" id="command" placeholder="Command (eg: 3.05)" value="{{ editing ? editing.command : '' }}">
+		    	</fieldset>
+			</div>
+			<div class="col-md-6">
+				<fieldset class="form-group">
+		    		<label for="patch_url">Patch URL</label>
+		    		<input type="text" class="form-control" name="patch_url" id="patch_url" placeholder="Patch URL (eg: patch+3.2)" value="{{ editing ? editing.patch_url : '' }}">
+		    	</fieldset>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-3">
+				<fieldset class="form-group">
+					<label for="name_en">Name EN</label>
+					<input type="text" class="form-control" name="name_en" id="name_en" placeholder="English" value="{{ editing ? editing.name_en : '' }}">
+				</fieldset>
+			</div>
+			<div class="col-md-3">
+				<fieldset class="form-group">
+					<label for="name_ja">Name JA</label>
+					<input type="text" class="form-control" name="name_ja" id="name_ja" placeholder="Japanese" value="{{ editing ? editing.name_ja : '' }}">
+				</fieldset>
+			</div>
+			<div class="col-md-3">
+				<fieldset class="form-group">
+					<label for="name_fr">Name FR</label>
+					<input type="text" class="form-control" name="name_fr" id="name_fr" placeholder="French" value="{{ editing ? editing.name_fr : '' }}">
+				</fieldset>
+			</div>
+			<div class="col-md-3">
+				<fieldset class="form-group">
+					<label for="name_de">Name DE</label>
+					<input type="text" class="form-control" name="name_de" id="name_de" placeholder="German" value="{{ editing ? editing.name_de : '' }}">
+				</fieldset>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-3">
+				<fieldset class="form-group">
+		    		<label for="date">Patch Date</label>
+		    		<input type="text" class="form-control" name="date" id="date" placeholder="Imgur link" value="{{ editing ? editing.date : "now"|date('Y-m-d H:i:s') }}">
+		    	</fieldset>
+			</div>
+			<div class="col-md-3">
+				<fieldset class="form-group">
+		    		<label for="banner">Banner URL</label>
+		    		<input type="text" class="form-control" name="banner" id="banner" placeholder="Imgur link" value="{{ editing ? editing.banner : '' }}">
+		    	</fieldset>
+			</div>
+			<div class="col-md-3">
+				<fieldset class="form-group">
+		    		<label for="is_expansion">Is Expansion? (1 = yes, 0 = no)</label>
+		    		<input type="text" class="form-control" name="is_expansion" id="is_expansion" placeholder="1 = yes, 0 = no" value="{{ editing ? editing.is_expansion : '0' }}">
+		    	</fieldset>
+			</div>
+			<div class="col-md-3">
+				<fieldset class="form-group">
+		    		<label for="folder">Folder</label>
+		    		<input type="text" class="form-control" name="folder" id="folder" placeholder="eg: extract-325" value="{{ editing ? editing.folder : '' }}">
+		    	</fieldset>
+			</div>
+		</div>
+
+    	<div class="row">
+			<div class="col-sm-6">
+				<a href="/gamedata/patches" class="btn btn-primary-outline">New Patch</a>
+			</div>
+    		<div class="col-sm-6 tar">
+    			<button type="submit" class="btn btn-success" name="save" value="save"><i class="fa fa-pencil"></i> Save Patch</button>
+    		</div>
+    	</div>
+    </form>
+
+	<br><br>
+
+	<table class="table">
+		<thead class="thead-inverse">
+			<tr>
+				<th width="10%">Patch ID</th>
+				<th width="20%">Command</th>
+				<th width="50%">Name</th>
+				<th width="10%">Folder</th>
+				<th width="10%">Link</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for patch in list %}
+			<tr>
+				<td>{{ patch.patch }}</td>
+				<td>{{ patch.command }}</td>
+				<td><a href="?edit={{ patch.patch }}">{{ patch.name_en }}</a></td>
+				<td>{{ patch.folder }}</td>
+				<td><a href="{{ defines.URL }}?search=patch+{{ patch.command }}">Link</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+{% endblock %}

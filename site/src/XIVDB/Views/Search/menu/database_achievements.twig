@@ -1,0 +1,24 @@
+<div class="subdropdown-container">
+    <div id="sub-achieve" class="dropdown-slot active">
+        {{ mm.column([
+            mm.list(menu.database.achievements.battle),
+            mm.list(menu.database.achievements.character),
+        ], 'dropdown-column-tiny') }}
+
+        {{ mm.column([
+            mm.list(menu.database.achievements.items),
+            mm.list(menu.database.achievements.crafting),
+        ], 'dropdown-column-tiny') }}
+
+        {{ mm.column([
+            mm.list(menu.database.achievements.gathering),
+            mm.list(menu.database.achievements.quests),
+            mm.list(menu.database.achievements.exploration),
+        ], 'dropdown-column-tiny') }}
+
+        {{ mm.column([
+            mm.list(menu.database.achievements.grand_company),
+            mm.list(menu.database.achievements.legacy),
+        ], 'dropdown-column-tiny') }}
+    </div>
+</div>

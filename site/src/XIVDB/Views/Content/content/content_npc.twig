@@ -1,0 +1,23 @@
+{% if content.map_primary %}
+{{
+    Layout.row([
+        Layout.col(languages.custom[1053], content.map_primary.placename.name),
+        Layout.col(languages.custom[866], content.map_primary.placename.region is defined ? content.map_primary.placename.region.name : '-'),
+    ])
+}}
+
+{{
+    Layout.row([
+        Layout.col(languages.custom[1054], '<em class="faint">X</em> %s &nbsp;/&nbsp; <em class="faint">Y</em> %s'|format(
+            content.map_primary.position.x, content.map_primary.position.y
+        )),
+    ])
+}}
+{% endif %}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

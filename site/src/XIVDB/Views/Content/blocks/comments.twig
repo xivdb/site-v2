@@ -1,0 +1,103 @@
+<div class="tab-block" id="tab-block-comments">
+
+    {% if user %}
+    <div id="comments-form" class="comments-form comments-form-top form">
+        <textarea class="comment-input" maxlength="2000" placeholder="{{ languages.custom[1075] }}"></textarea>
+        <button class="green comment-submit">{{ languages.custom[200] }}</button>
+    </div>
+    <div class="comment-errors"></div>
+    {% else %}
+    <div class="not-logged-in">
+        <a href="{{ defines.SECURE }}/login">{{ languages.custom[263] }}</a> or <a href="{{ defines.SECURE }}/register">{{ languages.custom[1073] }}</a> to post comments!
+    </div>
+    {% endif %}
+
+    <div class="no-comments">
+        <span class="moogleface"></span>
+        <span class="green">{{ languages.custom[1074] }}</span>
+    </div>
+
+    <div class="ui-comments"></div>
+
+</div>
+
+{% raw %}
+<script id="ui-comment-reply" type="text/x-mustache-template">
+<div class="ui-comment-reply">
+    <p>{% endraw %}{{ languages.custom[1078] }}{% raw %}</p>
+    <div class="comments-form">
+        <textarea class="comment-reply" data-reply="{{ id }}" placeholder="{% endraw %}{{ languages.custom[1076] }}{% raw %}" maxlength="2000"></textarea>
+        <button class="green small reply-submit">{% endraw %}{{ languages.custom[200] }}{% raw %}</button>
+    </div>
+    <div class="comment-reply-errors"></div>
+</div>
+</script>
+<script id="ui-comment" type="text/x-mustache-template">
+    <div class="comment comment-level-{{ level }}" id="ui-comment-{{ id }}" data-id="{{ id }}">
+
+        <div class="comment-top vat">
+            <i class="fa fa-minus-square toggle-comment" data-id="{{ id }}" data-visible="1" data-tt="{% endraw %}{{ languages.custom[1077] }}{% raw %}"></i>
+
+            <img src="{{ character_avatar }}" class="avatar">
+
+            <span class="name">
+            {{#if username}}
+                {{#if lodestone_id}}
+                    {{#iif star '==' 1 }}<i class="fa fa-star yellow" data-tt="{{ character_name }} is a Star Member!"></i> &nbsp;{{/iif}}
+                    <a href="/profile/{{ username }}">
+                        {{#if character_name}}
+                            <span class="character {{#is_author}}lime{{/is_author}}">{{ character_name }}</span>
+                            &nbsp;
+                        {{/if}}
+                        <span class="username">{{ username }}</span>
+                    </a>
+                {{else}}
+                    {{#iif star '==' 1 }}<i class="fa fa-star yellow" data-tt="{{ username }} is a Star Member!"></i> &nbsp;{{/iif}}
+                    <a href="/profile/{{ username }}" class="{{#is_author}}lime{{/is_author}} username">{{ username }}</a>
+                {{/if}}
+            {{else}}
+                <span class="adventurer username">Adventurer</span>
+            {{/if}}
+            </span>
+
+            <span class="time">{{ time }}, {% endraw %}{{ languages.custom[388] }}{% raw %} {{ patch }}</span>
+
+            {{#if is_online}}
+                {{#unless deleted}}
+                <div class="form comment-buttons">
+                    {{#if is_author}}
+                        <button class="dark mini edit-button" data-id="{{ id }}">{% endraw %}{{ languages.custom[1081] }}{% raw %}</button>
+                        <button class="dark mini stop-edit-button" data-id="{{ id }}">{% endraw %}{{ languages.custom[1080] }}{% raw %}</button>
+                    {{else}}
+                        {{#if can_reply}}
+                            <button class="dark mini reply-button" data-id="{{ id }}">{% endraw %}{{ languages.custom[1079] }}{% raw %}</button>
+                        {{/if}}
+                    {{/if}}
+                </div>
+                {{/unless}}
+            {{/if}}
+
+        </div>
+
+        <div class="comment_minimized">{% endraw %}{{ languages.custom[1082] }}{% raw %}</div>
+
+        <div class="comment_detail">
+            <div class="text">{{{ text }}}</div>
+            {{#if is_author}}
+                <div class="comment-edit form">
+                    <textarea>{{{ original }}}</textarea>
+                    <button class="green save-button small" data-id="{{ id }}"><i class="fa fa-check"></i> {% endraw %}{{ languages.custom[22] }}{% raw %}</button>
+                    <button class="red delete-button fr small transparent" data-id="{{ id }}"><i class="fa fa-trash-o"></i> {% endraw %}{{ languages.custom[330] }}{% raw %}</button>
+                </div>
+            {{/if}}
+
+            <div class="replyto form"></div>
+
+            {{#if has_replies}}
+                <div class="replies"></div>
+            {{/if}}
+        </div>
+
+    </div>
+</script>
+{% endraw %}

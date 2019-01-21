@@ -1,0 +1,55 @@
+{% spaceless %}
+<div class="user-bar" role="navigation">
+    <div class="user-left">
+        <a href="{{ urls.current }}/" class="logo">XIVDB</a>
+        <button class="user-menu-open"><i class="fa fa-bars" aria-hidden="true"></i></button>
+    </div>
+
+    <div class="user-controls">
+        {# history #}
+        {% if user is defined and user.history is defined and not devices.mobile %}
+            <span class="history">
+                History
+                <div class="history-box">
+                    {% for content in user.history %}
+                        <a href="{{ urls.current }}{{ content.url }}" data-xivdb-ignore="1">
+                            <img src="{{ content.icon }}" height="18">
+                            {{ content.name }}
+                            <em>({{ content.type|upper }})</em>
+                        </a>
+                    {% else %}
+                        <div class="history-none">
+                            <strong>{{ languages.custom[1071] }}</strong>
+                            {{ languages.custom[1072] }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </span>
+        {% endif %}
+
+        {# user #}
+        {% if user %}
+            <a href="{{ defines.SECURE }}/account">{{ languages.custom['account'] }}</a>
+            <a href="{{ urls.current }}{{ user.url }}">
+                {% if user.hasMainCharacter %}
+                    <em class="lime">{{ user.character_name }}</em> ({{ user.username }})
+                {% else %}
+                    {{ user.username }}
+                {% endif %}
+                {% if user.star %}
+                    <i class="fa fa-star yellow" data-tt="You are a Star Member!"></i>
+                {% endif %}
+            </a>
+            {% if user.hasMainCharacter %}
+                <em>
+                    <a href="{{ urls.current }}{{ user.character_url }}" class="user-bar-avatar-link">
+                        <img src="{{ user.character_avatar is not empty ? user.character_avatar : (user.avatar is not empty ? user.avatar : '/img/ui/noavatar_light.png') }}" class="user-bar-avatar" height="40px">
+                    </a>
+                </em>
+            {% endif %}
+        {% else %}
+            <a href="{{ defines.SECURE }}/login" class="btn-login">{{ languages.custom['login'] }}</a>
+        {% endif %}
+    </div>
+</div>
+{% endspaceless %}

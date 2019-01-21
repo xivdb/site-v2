@@ -1,0 +1,6 @@
+CREATE DATABASE xivdb;
+CREATE DATABASE xivdb_sync;
+CREATE USER xivdb@localhost IDENTIFIED BY 'xivdb';
+GRANT ALL PRIVILEGES ON *.* TO xivdb@'%' IDENTIFIED BY 'xivdb';
+GRANT ALL PRIVILEGES ON *.* TO xivdb@localhost IDENTIFIED BY 'xivdb';
+FLUSH PRIVILEGES;

@@ -1,0 +1,179 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}XIVSync Character Tracking{% endset %}
+
+{% block body %}
+<div class="content-block content-xivsync">
+
+	<div class="jumbo">
+		<div>
+			<h1>XIVSYNC</h1>
+			<h2>Character Tracking</h2>
+			<p>
+				The character tracking feature allows you to follow your progress through Eorzea
+				with a timeline of events consisting of experience points and levels gained. Keep
+				track of your achievement goals and view the full stat distribution of your gear.
+			</p>
+			<p>Add your character to track your events, the system will also extend to your
+			entire Free Company!</p>
+		</div>
+		<div>
+			<img src="/img/tools/xivsync/jumbo.png">
+		</div>
+	</div>
+
+	<div class="xivsync-s1">
+
+		<h3>What data is tracked?</h3>
+
+		<div class="xivsync-p1">
+
+			<ul>
+				<li>Experience points and levels gained, per class</li>
+				<li>Achievements</li>
+				<li>Profile changes: Name, Server, Title, Race, Clan, Gender, City</li>
+				<li>Free Companies you go to</li>
+				<li>All 3 ranks for each of the Grand Companies</li>
+				<li>Gearsets per class</li>
+				<li>Minions and Mounts</li>
+			</ul>
+
+			<div>
+				<img src="/img/tools/xivsync/1.png" class="featured" width="300">
+			</div>
+
+		</div>
+
+		<hr>
+
+		<h3>Sounds good, what do I need to do?</h3>
+
+		<p>If you don't have an XIVDB account, <a href="{{ defines.SECURE }}/register">go get registered!</a></p>
+
+		<p>You need to add your character to the site, do this by going
+			to <strong>Account</strong> and then <strong>Characters</strong>.
+			In this section click <strong>Add Characters</strong> and follow the instructions.
+			(Even if your character is already on the site, do this!)</p>
+
+		<p>Once done, your character will be added and start tracking automatically. It's like moogle magic!</p>
+
+		<p><strong class="lime">What about my Free Company members?</strong></p>
+
+		<p>Your Free Company is scanned when your character is added and all members
+			in your free company are automatically added to the site and start tracking.</p>
+
+		<p><strong class="lime">How long will it take to add my character?</strong></p>
+
+		<p>Not long, once you've added your character in your <strong>Account</strong>, go make a cup of tea
+			and when you're back you should be able to visit its profile!</p>
+
+		<p><strong class="lime">What about updating my character, how often does it update?</strong></p>
+
+		<p>Characters are updated automatically, the more you play the game then the more frequently you
+			will update on the site.</p>
+
+		<p>The tracking server runs a "Auto-Update Queue" system every minute which upates several hundreds of characters.
+			Queues are restricted to a "Last Active" time limit, which means
+			that it prioritise players who play more often. If you have stopped playing then your
+			character move down to a slower queue until you begin playing again.</p>
+
+		<div align="center">
+			<img src="/img/tools/xivsync/2.png">
+		</div>
+
+		<p>Using the graph above, if you have played the game and
+			had some activity within the past 3 days, you will update more rapidly as all 1-14 queues
+			prioritise this date.</p>
+
+		<p>If you have not played in 90 days, then only 5 queues (9-14) will update your character,
+			slowing the frequency down, this is normal as the system does not need to focus characters
+			who are not active!</p>
+
+	</div>
+
+	<div class="xivsync-s2">
+
+		<div class="panel">
+			<div class="qatitle">What determines a "Active" character?</div>
+
+			A character is deemed "Active" if something
+			on their lodestone profile changes since they were last scanned. This includes:
+			<em class="highlight">name, server, title, race/clan/gender, city, grand company, grand company ranking up,
+			moving free company, changing active class, gaining exp/levels on any class, obtaining
+			new achievements, getting a new minion or mount, changing any of your
+			currently equipped gear or updating your lodestone biography.</em>
+		</div>
+
+		<div class="panel">
+			<div class="qatitle">What is a "3 hour EXP Session"?</div>
+
+			Within a characters profile is a feature that estimates how long it will take
+			them to reach the maximum level. As the site does not track in real time there
+			can be gaps of up to 24 hours between EXP Events.
+			<br><br>
+			To improve this, the site will take your EXP and average over a "3 hour play session",
+			and use that to calculate your EXP. If you played for 6 hours, this will just double
+			the amount, if you play for 1 hour, you would get 1/3rd the result.
+			<br><br>
+			It provides a more accurate reading than suggesting you gained 300,000 EXP in 24 hours!
+		</div>
+
+		<div class="panel">
+			<div class="qatitle">What about EXP data before I joined XIVDB?</div>
+
+			Unfortunately, there is no way to back date events you've gained. Once a character is
+			added to the site, EXP/Level events will track from that point.
+			<br><br>
+			With the mass-adding of Free Company members, a fair amount of characters already exist
+			and your character may already be on here being tracked!
+
+		</div>
+
+		<div class="panel">
+			<div class="qatitle">What about achievements before I joined XIVDB?</div>
+
+			Achievements have a "Obtained" timestamp associated with them, this allows
+			your achievements to be back dated and show on your timeline.
+			<br><br>
+			To make sure this works, enable your Achievements on lodestone.
+		</div>
+
+		<div class="panel">
+			<div class="qatitle">My achievements are not showing up?</div>
+
+			It may be that you have not enabled them for public view. To do this:
+			<br><br>
+			<ul>
+				<li>Go to <a href="https://na.finalfantasyxiv.com/lodestone/" target="_blank">The Lodestone</a> and login</li>
+				<li>Click on your Character at the top-right, under <strong>Home Menu</strong> click on <strong>Account Management</strong></li>
+				<li>On here, next to <strong>Achievements</strong> check "Public" option.</li>
+				<li>Scroll all the way down and click Confirm</li>
+			</ul>
+			<br>
+			Once you have done this your achievements will update shortly and be shown on the site.
+		</div>
+
+		<div class="panel">
+			<div class="qatitle">How do I hide this stuff?</div>
+
+			Please go to <a href="/character/privacy">this page</a> to hide your character data. You must
+			have an XIVDB Account (even if it's under a fake email), and you must verify the character
+			is yours by: Logging in, clicking Account > Character and adding your character, you can then
+			go to the privacy page to hide your character. Please note at this time your character will still
+			update but no one can see your character. If you're wondering why not just fully delete? This is because
+			someone could just re-add your character... In a future site update, much more control over
+			character data will be available.
+		</div>
+
+		<div class="panel">
+			<div class="qatitle">I haven't played in a while, how do I update?</div>
+
+			Characters are updated automatically. If you have not played in a while, simply do something
+			in game that changes your profile (kill a monster, level up, change gear, earn an achievement)
+			and the site will update you.
+
+		</div>
+
+	</div>
+
+</div>
+{% endblock %}

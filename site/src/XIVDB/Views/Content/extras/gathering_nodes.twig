@@ -1,0 +1,29 @@
+{# list nodes #}
+<table class="{{ content._type }}-nodes-table">
+    <thead>
+        <tr>
+            <th width="37%">{{ languages.custom[474] }}</th>
+            <th width="15%">{{ languages.custom[866] }}</th>
+            <th width="15%">{{ languages.custom[457] }}</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for placename in content.nodes %}
+        <tr>
+            <td>
+                <a href="{{ placename.url }}" title="{{ placename.name }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ placename.name }}</a>
+            </td>
+            <td>{{ placename.region.name is defined ? placename.region.name : '-' }}</td>
+            <td class="yellow">{{ placename.level }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<script>
+$(function() {
+    var $table = $('.{{ content._type }}-nodes-table');
+        $table.tablesorter({ widthFixed: true, widgets: ['zebra'] });
+});
+</script>

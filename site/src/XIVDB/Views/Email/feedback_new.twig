@@ -1,0 +1,13 @@
+{% extends 'Email/default.twig' %}
+
+{% block email_title %}New Feedback Post{% endblock %}
+{% block email_body %}
+
+    <h2>New Feedback Post!</h2>
+
+    <p><strong>Live: </strong> <a href="{{ url }}" target="_blank">{{ url }}</a></p>
+
+    <p style="font-weight:bold;">{{ title }}</p>
+    <p>{{ message|raw|nl2br }}</p>
+
+{% endblock %}

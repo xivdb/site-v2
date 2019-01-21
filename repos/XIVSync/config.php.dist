@@ -1,0 +1,12 @@
+<?php
+return [
+	'database' => [
+		'driver' => 'pdo_mysql',
+        'host' => '',
+        'name' => '',
+        'user' => '',
+        'pass' => '',
+        'char' => 'utf8',
+        'port' => 3306,
+	],
+];

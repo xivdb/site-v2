@@ -1,0 +1,20 @@
+<div class="dropdown-container dropdown-container-small dropdown-mr30 dropdown-search">
+    {{ mm.column([
+        mm.list({
+            'title': 'Core',
+            'menu': menu.database.all.main
+        }),
+        mm.list({
+            'title': 'Special',
+            'menu': menu.database.all.special
+        }),
+
+    ]) }}
+
+    {{ mm.column([
+        mm.list({
+            'title': 'Misc',
+            'menu': menu.database.all.misc
+        }),
+    ]) }}
+</div>

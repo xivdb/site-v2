@@ -1,0 +1,64 @@
+{# help text #}
+{% if content.help is not empty %}
+    {{ Layout.block([
+        '<h4>'~ languages.custom[833] ~'</h4>',
+        '<div class="lc-help">'~ content.help_html|raw ~'</div>'
+    ]) }}
+{% endif %}
+
+{# roles #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[457], content.level, 'yellow'),
+        Layout.col(languages.custom[384], content.class_name),
+        Layout.col(languages.custom[837], content.classjob_category),
+        Layout.col(languages.custom[854], content.type_name),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+{# cost, hp, mp, tp
+{% set data = [] %}
+{% if content.cost > 0 %}
+    {% set data = data|merge([ Layout.col(languages.custom[767], content.cost) ]) %}
+{% endif %}
+{% if content.cost_hp > 0 %}
+    {% set data = data|merge([ Layout.col(languages.custom[459], content.cost_hp) ]) %}
+{% endif %}
+{% if content.cost_mp > 0 %}
+    {% set data = data|merge([ Layout.col(languages.custom[834], content.cost_mp) ]) %}
+{% endif %}
+{% if content.cost_tp > 0 %}
+    {% set data = data|merge([ Layout.col(languages.custom[458], content.cost_tp) ]) %}
+{% endif %}
+{% if data|length > 0 %}
+    {{ Layout.row(data) }}
+{% endif %}
+#}
+
+{# Ranges #}
+{% if content.type != 2 %}
+{{
+    Layout.row([
+        Layout.col(languages.custom[460], content.cast_range > 0 ? content.cast_range ~'y' : languages.custom[835]),
+        Layout.col(languages.custom[208], content.cast_time > 0 ? content.cast_time ~' '~ languages.custom[188] : languages.custom[836]),
+        Layout.col(languages.custom[202], content.recast_time > 0 ? content.recast_time ~' '~ languages.custom[188] : languages.custom[836]),
+    ])
+}}
+{% endif %}
+
+{# upgrades #}
+{% if content.upgrades %}
+    {{
+        Layout.row([
+            Layout.col(languages.custom[558], content.upgrades|length),
+            Layout.col(languages.custom[859], content.upgrades|join(' ▶ ')),
+        ])
+    }}
+{% endif %}

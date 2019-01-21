@@ -1,0 +1,97 @@
+{% raw %}
+<script id="ui-cart-material-details" type="text/x-mustache-template">
+<div class="panel mb10 red">
+This section is still a work in progress, click "Open Item Page" to get more thorough data until this has completed :)
+</div>
+<div class="cart-extended-details">
+	<div class="top-detail">
+		<img src="{{ icon }}" height="42">
+		<div class="info-detail">
+			<a href="{{ url }}" target="_blank" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">
+				<i class="fa fa-external-link"></i>
+				{% endraw %}{{ languages.custom[786] }}{% raw %}
+			</a>
+			<div>{{ name }}</div>
+			<div>{{ category_name }} - {{ kind_name }}</div>
+		</div>
+	</div>
+
+	<div class="line"></div>
+
+	<div class="cart-extended-craftable">
+		{{#if craftable}}
+			<div class="cart-extended-data">
+				<div class="cart-extended-tree-info">
+					{% endraw %}{{ languages.custom[784] }}{% raw %}
+					<strong class="yellow">{{ craftable.0.level_view }}</strong>&nbsp;
+					<em class="lime">{{ craftable.0.classjob.name }}</em>
+
+					<span>
+						{{#if craftable.0.stars_html}}
+							<em>{% endraw %}{{ languages.custom[781] }}{% raw %}:</em>&nbsp;
+							<span class="yellow">{{{ craftable.0.stars_html }}}</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+						{{/if}}
+
+						<em>{% endraw %}{{ languages.custom[211] }}{% raw %}</em>&nbsp;
+						<span class="yellow">{{{ craftable.0.craft_quantity }}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+
+						<em>{% endraw %}{{ languages.custom[782] }}{% raw %}:</em>&nbsp;
+						{{#if craftable.0.can_quick_synth}}
+							<em class="green">✔</em>
+						{{else}}
+							<em class="red">✖</em>
+						{{/if}}
+					</span>
+				</div>
+				<div class="cart-extended-tree"></div>
+				<p class="cart-extended-recipe-link">
+					<a href="{{ craftable.0.url }}" target="_blank" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">
+						<i class="fa fa-external-link"></i>
+						{% endraw %}{{ languages.custom[642] }}{% raw %}
+					</a>
+				</p>
+			</div>
+		{{else}}
+			<div class="cart-extended-none">{% endraw %}{{ languages.custom[785] }}{% raw %}</div>
+		{{/if}}
+	</div>
+
+	<div class="line"></div>
+
+	<div class="cart-extended-purchase">
+		{{#if shops}}
+			<p>{% endraw %}{{ languages.custom[761] }}{% raw %}</p>
+			{{#each shops}}
+			<div class="cart-shop-row" style="background-image: url({{ this.icon }});">
+				<div>
+					<a href="{{ this.npcs.0.url }}" class="col1" target="_blank" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ this.npcs.0.name }}</a>
+					<a href="{{ this.url }}" class="col2 faint" target="_blank" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ this.name }}</a>
+				</div>
+				<div>
+					<span class="col1">
+						<em class="faint">x</em> <em class="yellow">{{ this.npcs.0.coordinates.x }}</em>,
+						<em class="faint">y</em> <em class="yellow">{{ this.npcs.0.coordinates.y }}</em>
+					</span>
+					<em class="col2 faint">
+						{{ this.npcs.0.placename.name }} - {{ this.npcs.0.placename.region.name }}
+					</em>
+				</div>
+			</div>
+			{{/each}}
+		{{else}}
+			<div class="cart-extended-none">{% endraw %}{{ languages.custom[787] }}{% raw %}</div>
+		{{/if}}
+	</div>
+
+</div>
+</script>
+<script id="ui-cart-tree-row" type="text/x-mustache-template">
+<div class="craft-tree-row craft-tree-tier-{{ tier }}" style="background-image:url({{ icon }});">
+	<em>{{ quantity }}</em>
+	<a href="{{ url }}" target="_blank" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ name }}</a>
+	<span>{{ kind_name }} - {{ category_name }}</span>
+</div>
+</script>
+{% endraw %}

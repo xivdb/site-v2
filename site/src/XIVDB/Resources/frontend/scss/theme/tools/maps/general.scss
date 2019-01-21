@@ -1,0 +1,35 @@
+.tools-maps {
+    overflow: auto;
+
+    .map-tool-logo {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        z-index: 15;
+    }
+
+    .map-tool-container {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+    }
+
+    .map-tool-dropdown {
+        position: absolute;
+        z-index: 5;
+        top: 20px;
+        left: 20px;
+        background-color: #333;
+        color: #fff;
+        border: solid 1px #000;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        border-radius: 3px;
+        outline: none;
+
+        appearance: none;
+        background-image: url('../img/ui/arrow_light.png');
+        background-position: center right;
+        background-repeat: no-repeat;
+        background-size: auto auto;
+        padding: 5px 25px 5px 8px;
+    }
+}

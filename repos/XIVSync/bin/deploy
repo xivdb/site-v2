@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /home/xivsync/sync/
+git stash save --keep-index
+git stash drop
+git pull

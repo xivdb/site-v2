@@ -1,0 +1,120 @@
+{# Crafted Item #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[396], Layout.item(content.item)),
+        Layout.col(languages.custom[1050], content.masterbook ? Layout.item(content.masterbook) : '-'),
+    ])
+}}
+
+{# Difficulty, Level, Class Level, Class/Job, Aspect #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[1108], content.stars_html ? content.stars_html : '-', 'yellow'),
+        Layout.col(languages.custom[457], content.level ? content.level : '-'),
+        Layout.col(languages.custom[1109], content.level_view ? content.level_view : '-'),
+        Layout.col(languages.custom[384], content.classjob ? content.classjob.name : '-'),
+        Layout.col(languages.custom[1110], content.element_name ? content.element_name : '-'),
+    ])
+}}
+
+{# Craftmanship, Control, Durability, Quality, Difficulty #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[1111], content.required_craftsmanship ? content.required_craftsmanship|number_format : '-'),
+        Layout.col(languages.custom[1112], content.required_control ? content.required_control|number_format : '-'),
+        Layout.col(languages.custom[1113], content.level_view ? content.durability|number_format : '-'),
+        Layout.col(languages.custom[1114], content.quality ? content.quality|number_format : '-'),
+        Layout.col(languages.custom[781], content.difficulty ? content.difficulty|number_format : '-'),
+    ])
+}}
+
+
+{# Aspect #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[1115], content.can_hq ? '<em class="green">✔</em>' : '<em class="red">✖</em>'),
+        Layout.col(languages.custom[1116], content.can_quick_synth ? '<em class="green">✔</em>' : '<em class="red">✖</em>'),
+        Layout.col(languages.custom[1117], content.can_quick_synth ? content.quick_synth_craftsmanship|number_format ~ ' Craftmanship' : '-'),
+        Layout.col(languages.custom[1118], content.can_quick_synth ? content.quick_synth_craftsmanship|number_format ~ ' Control' : '-'),
+    ])
+}}
+
+<div class="layout-row">
+    <div class="tc-fansite">
+        <a class="tc-gbd" href="https://ffxivteamcraft.com/add-item/{{ (content.item.id ~','~ content.id)|base64encode }}" target="_blank">
+            <div style="display:flex;text-align:left;">
+                <div style="flex: 0 1 32px;">
+                    <img src="https://i.imgur.com/64JzKhN.png" height="38px">
+                </div>
+                <div style="flex: 0 1 calc(100% - 32px);padding-left:15px;">
+                    <small>OPEN ON</SMALL>
+                    <div style="font-size:16px;"><strong>FFXIV TeamCraft</strong></div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+
+{# Display a copy/paste craft tree #}
+{% macro treeSimple(craft, level) %}
+{% set level = level + 1 %}
+{% set tabs = level * 4 %}
+{# ---------------------------------------------------------- #}
+{% if craft.tree is defined and craft.tree is not empty %}
+    {% if tabs > 0 %}
+        {% for i in range(0, tabs) %}&nbsp;&nbsp;{% endfor %}
+    {% endif %}
+    - <em class="purple">{{ craft.level_view }}</em>
+    {{ craft.classjob.name }}
+    {{ craft.stars_html|raw }}<br>
+    {% for item in craft.tree %}
+    {# Item row #}
+        {% if tabs > 0 %}
+            {% for i in range(0, tabs) %}&nbsp;&nbsp;{% endfor %}
+        {% endif %}
+        <em class="yellow">{{ item.quantity }}</em> {{ item.name }}<br>
+
+        {# if synths #}
+        {% if item.synths is defined and level < 6 %}
+            {% for recipe in item.synths %}
+            {{ _self.treeSimple(recipe, level) }}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    <br>
+{% endif %}
+{# ---------------------------------------------------------- #}
+{% endmacro %}
+<div class="layout-row">
+    <div>
+        <h4>{{ languages.custom[256] }}</h4>
+        <span class="a" id="toggleCPCraftingTree">{{ languages.custom[949] }}</span>
+        &nbsp;&nbsp;-&nbsp;&nbsp;
+        <span class="a" id="viewFullCratingTree">{{ languages.custom[950] }}</span>
+        <div class="lc-textarea-cp" id="toggleCPCraftingTreeTextarea" contenteditable="true">{{ _self.treeSimple(content, -1) }}</div>
+    </div>
+</div>
+<script>
+$('#toggleCPCraftingTree').on('click', function() {
+    $('#toggleCPCraftingTreeTextarea').toggle();
+});
+$('#viewFullCratingTree').on('click', function() {
+    $('[data-tab="recipestree"]').trigger('click');
+});
+</script>
+
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

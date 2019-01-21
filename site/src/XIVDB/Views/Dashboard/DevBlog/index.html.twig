@@ -1,0 +1,66 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Dev Blogs{% endset %}
+{% set page = 'devblog' %}
+
+{% block body %}
+
+<div class="container">
+    <form method="post">
+    	<fieldset class="form-group">
+    		<label for="subject">Subject</label>
+    		<input type="text" class="form-control form-control-lg" name="subject" id="subject" placeholder="Post Subject" value="{{ editing ? editing.subject : '' }}">
+    	</fieldset>
+
+    	<fieldset class="form-group">
+    		<textarea id="text" name="text">{{ editing ? editing.text }}</textarea>
+    		<script type="text/javascript">$(function() { $('#text').redactor({ imageUpload: '/devblog/upload' }); });</script>
+    	</fieldset>
+
+    	<div class="row">
+    		<div class="col-sm-8">
+    			{% if editing %}
+    				<button type="submit" class="btn btn-danger" name="delete" value="publish"><i class="fa fa-trash"></i> Delete</button>
+    				&nbsp;&nbsp;&nbsp;
+    				<strong>Updated:</strong> {{ editing.updated|date('F j, Y, g:i a') }} GMT
+    			{% endif %}
+    		</div>
+    		<div class="col-sm-4 tar">
+    			{% if editing %}
+    				{% if editing.published %}
+    					<button type="submit" class="btn btn-warning" name="unpublish" value="unpublish"><i class="fa fa-paper-plane-o"></i> Un-Publish</button>
+    				{% else %}
+    					<button type="submit" class="btn btn-primary" name="publish" value="publish"><i class="fa fa-paper-plane-o"></i> Publish</button>
+    				{% endif %}
+    			{% endif %}
+    			<button type="submit" class="btn btn-success" name="save" value="save"><i class="fa fa-pencil"></i> Save Post</button>
+    		</div>
+    	</div>
+    </form>
+
+    <br>
+    <br>
+
+    <table class="table">
+    	<thead class="thead-inverse">
+    		<tr>
+    			<th>#</th>
+    			<th width="50%">Subject</th>
+    			<th>Status</th>
+    			<th>Updated</th>
+    			<th class="tar">Actions</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		{% for post in posts %}
+    		<tr>
+    			<th scope="row">{{ post.id }}</th>
+    			<td>{{ post.subject }}</td>
+    			<td>{{ post.published ? '<span class="label label-success">Published</span>' : '<span class="label label-warning">Draft</span>' }}</td>
+    			<td>{{ post.updated|date('F j, Y') }}</td>
+    			<td class="tar"><a href="/devblog?edit={{ post.id }}">Update</a></td>
+    		</tr>
+    		{% endfor %}
+    	</tbody>
+    </table>
+</div>
+{% endblock %}

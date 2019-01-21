@@ -1,0 +1,10 @@
+<div class="filter-panel filter-panel-places" data-filter-type="places">
+{% spaceless %}
+
+    {{ SearchFilter.empty('Places') }}
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.places) }}
+
+{% endspaceless %}
+</div>

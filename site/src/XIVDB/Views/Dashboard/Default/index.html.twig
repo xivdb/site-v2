@@ -1,0 +1,53 @@
+{% if pagetitle is not defined %}
+    {% set pagetitle = defines.META_TITLE %}
+{% else %}
+    {% set pagetitle = '%s - %s'|format(pagetitle, defines.META_TITLE) %}
+{% endif %}
+<!doctype html>
+<html>
+    <head>
+        <script>
+            var APP = 'dashboard',
+                VERSION = '{{ defines.VERSION }}',
+                SITETITLE = '{{ pagetitle }}',
+                LANGUAGE = '{{ defines.LANGUAGE }}',
+                API_URL = '{{ defines.API }}',
+                SID = "{{ user ? user.id : '' }}";
+        </script>
+        <script type="text/javascript">function isOnMobile() { var state = {{ devices.mobile ? 'true' : 'false' }}; state = state ? state : Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 720 ? true : false; return state; }</script>
+
+        <title>{{ pagetitle }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+
+        {# JQuery 2.2 - Slim #}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+
+        {# Bootstrap 4.0 - cus im too lazy to style my own CMS #}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+
+        {# Moment #}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+
+        {# Font Awesome #}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+
+        {# WYSIWYG #}
+        <link href="/assets/redactor/redactor.css" type="text/css" rel="stylesheet">
+        <script src="/assets/redactor/redactor.min.js"></script>
+
+        {# Custom styles #}
+        <link href="/assets/dashboard.min.css" rel="stylesheet" type="text/css">
+        <script src="/assets/dashboard.min.js"></script>
+    </head>
+    <body>
+        {% import 'Dashboard/Default/macros.twig' as Macros %}
+        {% include 'Dashboard/Default/nav.html.twig' %}
+        {% include 'Dashboard/Default/system.html.twig' %}
+        {% include 'Dashboard/Default/alerts.twig' %}
+        {% block body %}{% endblock %}
+        {# Google analytics #}
+        {% include 'Default/ga.twig' %}
+    </body>
+</html>

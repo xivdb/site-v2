@@ -1,0 +1,22 @@
+{# Game Status #}
+<div class="home-se">
+    <h3><img src="/img/ui/ls_topic.png" height="24">{{ languages.custom[1188] }}</h3>
+
+    {% for syncentry in synctimes %}
+        <div class="home-sync">
+            <h4>{{ syncentry.time|moment }}</h4>
+            <div>
+                <div>
+                    <em>{{ syncentry.rows_processed|number_format }}</em> rows
+                </div>
+                <div>
+                    <em>{{ syncentry.duration|number_format }}</em> sec
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div style="margin:10px 0;display:block;font-size:14px;">
+        <a href="https://xivsync.com/" target="_blank" style="padding:10px 20px;">{{ languages.custom[1187] }}</a>
+    </div>
+</div>

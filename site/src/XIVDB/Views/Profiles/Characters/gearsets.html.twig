@@ -1,0 +1,113 @@
+<div class="character-gearsets">
+	<div>
+		{% for gs in gearsets %}
+		{% set role = gs.role %}
+		<div class="gs-page {{ loop.index == 1 ? 'active' : '' }}" data-gs="{{ role.id }}{{ gs.item_level_total }}">
+			{# class #}
+			<h2>
+				<img src="/img/loader/loading2.gif" data-src="{{ role.icon }}" height="32">&nbsp;<span class="highlight">{{ gs.item_level_avg }}</span>&nbsp;{{ role.name }}
+				<small>{{ languages.custom[1228] }} {{ gs.level }} &nbsp;&nbsp;-&nbsp;&nbsp; {{ languages.custom[1227] }} {{ gs.item_level_total|number_format }}</small>
+			</h2>
+
+			{# Last updated #}
+			<div class="gs-info">
+				{{ languages.custom[1213] }}{{ gs.last_updated|moment }}
+			</div>
+
+			{# gear #}
+			<div class="gs-items">
+				{% for item in gs.gear %}
+					<div>
+						<img src="/img/loader/loading2.gif" data-src="{{ item.data.icon }}">
+
+						<div>
+							<div class="gs-item-slot">{{ item.data.slot_name }}</div>
+							<span class="gs-item-level">{{ item.data.level_item }}</span>
+							<a href="{{ item.data.url }}" class="gs-item-name rarity-{{ item.data.color }}" data-xivdb-replace="1">{{ item.data.name }}</a>
+						</div>
+
+					</div>
+				{% endfor %}
+			</div>
+
+			{# Item level distribution #}
+			<h6>Item level distribution</h6>
+			<br>
+			<table class="table-clean cc-timeline-table">
+				<thead>
+					<th width="40%">{{ languages.custom[625] }}</th>
+					<th width="15%">{{ languages.custom[456] }}</th>
+					<th width="15%">%</th>
+					<th width="30%"></th>
+				</thead>
+				<tbody>
+					{% set highest = gs.item_level_highest %}
+					{% for slot, ilv in gs.item_level_graph %}
+					{% set percent = ((ilv / highest) * 100)|round(2) %}
+					{% set name = gs.item_level_graph_names[slot] %}
+					<tr>
+						<td>{{ name }}</td>
+						<td>{{ ilv|number_format }}</td>
+						<td {% if percent == 100 %}class="lime"{% endif %}>{{ percent }}</td>
+						<td><div class="cp-bar"><div class="blue" style="width:{{ percent }}%;"></div></div></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			{# stats #}
+			<hr>
+			<h6>Gearset Stats Distribution</h6>
+			<br>
+			{% for type, graphdata in gs.stats_graph_data %}
+				<table class="table-clean cc-timeline-table">
+					<thead>
+						<th width="40%">{{ type|title }}</th>
+						<th width="15%">{{ languages.custom[1229] }}</th>
+						<th width="15%">%</th>
+						<th width="30%"></th>
+					</thead>
+					<tbody>
+						{% set highest = graphdata|first %}
+						{% for name, value in graphdata %}
+						{% set percent = value > 0 ? ((value / highest) * 100)|round(2) : 0 %}
+						<tr>
+							<td>{{ name }}</td>
+							<td>{{ value|number_format }}</td>
+							<td>{{ percent }}</td>
+							<td><div class="cp-bar"><div class="orange" style="width:{{ percent }}%;"></div></div></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endfor %}
+			<p class="cc-note">{{ languages.custom[1230] }}</p>
+
+			{% if member is defined and member is not empty and member.is_owner %}
+			<hr>
+			<div class="form">
+				<button data-remove-gearset="/character/gearsets/{{ lodestone_id }}/{{ gs.classjob_id }}-{{ gs.level }}/remove" class="red mini">Remove Gearset</button>
+			</div>
+			{% endif %}
+		</div>
+		{% endfor %}
+	</div>
+	<div>
+		<div class="gs-list">
+			<div class="gs-list-group">
+				{% for gs in gearsets %}
+					<button data-gs="{{ gs.role.id }}{{ gs.item_level_total }}" {{ loop.first ? 'class="active"' : '' }}>
+						<img src="{{ gs.role.icon }}" height="16">
+						<span class="{{ gs.item_level_avg > 200 ? 'gs-cap' : gs.item_level_avg < 2 ? 'gs-non' : '' }}">{{ gs.item_level_avg }}</span>
+						{{ gs.role.name }}
+					</button>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="gs-note">
+			{{ languages.custom[1231] }}
+			<br><br>{{ languages.custom[1232] }}
+		</div>
+	</div>
+</div>

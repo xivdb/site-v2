@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block email_title %}Moogle Mail{% endblock %} - XIVDB</title>
+    </head>
+    <body style="text-align:center;">
+        <div style="font-family:arial;padding:10px;">
+
+            <div style="display:block;padding:20px;padding-top:0;">
+                <a href="https://secure.xivdb.com/" target="_blank">
+                    <img src="https://secure.xivdb.com/img/logo/logo_dark.png" height="32">
+                </a>
+            </div>
+
+            <div style="background-color:#eee;max-width:500px;margin-left:auto;margin-right:auto;text-align:left;line-height:20px;">
+                <div style="font-size:14px;padding:20px;word-wrap: break-word;">
+                    {% block email_body %}{% endblock %}
+                </div>
+
+                <div style="display:block;text-align:center;padding:20px;border-top:solid 3px #fff;">
+                    <img src="https://secure.xivdb.com/img/logo/moogle_avatar2.png" height="64" style="border-radius:50%;vertical-align: bottom;">
+                    <div style="font-size:14px;color:#888;margin-top:5px;">XIVDB Moogle</div>
+                </div>
+            </div>
+
+            <div style="padding-top:10px;padding-bottom:30px;font-size:11px;color:#aaa;max-width:500px;margin-left:auto;margin-right:auto;text-align:left;">
+                <a href="https://xivdb.com/" style="color:#aaa;">XIVDB.com</a>
+            </div>
+
+        </div>
+    </body>
+</html>

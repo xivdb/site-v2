@@ -1,0 +1,31 @@
+{% set bgcss = 'bg-account' %}
+{% extends 'Default/index_simplified.twig' %}
+{% set pagetitle %}{{ languages.custom[33] }}{% endset %}
+
+{% block body %}
+{% include 'User/base/header.twig' %}
+<div class="acc-heading">
+	<h1>{{ languages.custom[33] }}</h1>
+</div>
+<div class="acc-content">
+
+	{% include 'User/base/notices.twig' %}
+
+	<h3 class="red">{{ languages.custom[975] }}</h3>
+
+	<p class="fs24 yellow">
+		<img src="{{ user.characters[delete_id].character_avatar }}" height="18">
+		{{ user.characters[delete_id].character_name }} - {{ user.characters[delete_id].character_server }}
+	</p>
+
+	<div class="panel">{{ languages.custom[976] }}. {{ languages.custom[977] }}</div>
+	<br>
+	<div align="center">
+		<a href="/account/characters/delete/{{ delete_id }}/confirm" class="red">
+			<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+			{{ languages.custom[978] }}
+		</a>
+	</div>
+
+</div>
+{% endblock %}

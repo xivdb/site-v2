@@ -1,0 +1,19 @@
+<div class="tool-cart-page-container">
+    <h3>{{ languages.custom[22] }}</h3>
+    <br>
+    <form method="post">
+        <div>
+            <input type="text" class="w50" placeholder="{{ languages.custom[801] }}" name="description" maxlength="256" value="{{ saved ? saved.description : '' }}">
+        </div>
+        <br>
+        <div>
+            <textarea class="w100" placeholder="{{ languages.custom[802] }}" name="notes" maxlength="2048">{{ saved ? saved.notes : '' }}</textarea>
+            <input type="hidden" id="basketprices" name="basketprices">
+            <input type="hidden" id="cartprices" name="cartprices">
+        </div>
+        <br>
+        <div>
+            <button class="green">{{ languages.custom[22] }}</button>
+        </div>
+    </form>
+</div>

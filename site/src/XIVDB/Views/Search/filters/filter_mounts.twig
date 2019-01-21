@@ -1,0 +1,10 @@
+<div class="filter-panel filter-panel-mounts" data-filter-type="mounts">
+{% spaceless %}
+
+    {{ SearchFilter.empty('Mounts') }}
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.mounts) }}
+
+{% endspaceless %}
+</div>

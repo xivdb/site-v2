@@ -1,0 +1,49 @@
+{% for enemy in content.enemies %}
+    <div class="enemy-group">
+        <div>
+            {# icon #}
+            <img src="{{ enemy.content.icon }}" height="42">
+        </div>
+        <div>
+            {# name #}
+            <h4>
+                <a href="{{ enemy.content.url }}" data-xivdb-replace="0">
+                    {{ enemy.content.name }}
+                </a>
+
+                <small class="fr">
+                    <strong>{{ enemy.spawns|number_format }}</strong>
+                    &nbsp;&nbsp;{{ languages.custom[1062] }}
+                </small>
+            </h4>
+
+            {# spawn points #}
+            <table width="100%" class="enemy_spawn_table">
+                <thead>
+                <th>{{ languages.custom[1055] }}</th>
+                <th>X / Y</th>
+                <th>{{ languages.custom[457] }}</th>
+                <th>{{ languages.custom[459] }}</th>
+                <th>{{ languages.custom[834] }}</th>
+                </thead>
+                <tbody>
+                {% for spawn in enemy.positions %}
+                    <tr>
+                        <td width="5%" align="center"><img src="{{ spawn.icon }}"></td>
+                        <td>{{ spawn.x }} &nbsp;/&nbsp; {{ spawn.y }}</td>
+                        <td>{{ spawn.level }}</td>
+                        <td>{{ spawn.hp|number_format }}</td>
+                        <td>{{ spawn.mp|number_format }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endfor %}
+<script>
+    $(function() {
+        $('.enemy_spawn_table').tablesorter({ widthFixed: true, widgets: ['zebra'] });
+    });
+</script>

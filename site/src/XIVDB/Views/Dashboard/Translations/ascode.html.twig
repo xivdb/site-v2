@@ -1,0 +1,35 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}As Code Blocks- Translations{% endset %}
+{% set page = 'translations' %}
+{% set exteded = true %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Translations', url: '/translations' },
+    { title: 'As Code Blocks' }
+]) }}
+
+<div class="container-fluid">
+
+    <h1>As Code Blocks</h1>
+
+    <table class="translation-table" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th width="2%"><a href="?order=id,desc">ID</a></th>
+                <th width="49%"><a href="?order=text_en,asc">English</a></th>
+                <th width="49%">Codeblock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for string in translations %}
+                <tr data-id="{{ string.id }}">
+                    <td>{{ string.id }}</td>
+                    <td>{{ string.text_en }}</td>
+                    <td><input type="text" class="form-control" value="{% raw %}{{ languages.custom[{% endraw %}{{ string.id }}{% raw %}] }}{% endraw %}"></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

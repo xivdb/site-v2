@@ -1,0 +1,50 @@
+{# banner  #}
+{% if content.header is not empty and content.header %}
+    {{ Layout.bannerContent(content.header) }}
+{% endif %}
+
+{# class/jobs #}
+{{
+    Layout.row([
+		Layout.col(languages.custom[900], content.class_level_1 ? 'Lv ' ~ content.class_level_1 ~' '~ content.classjob_category_1 : '-'),
+		Layout.col(languages.custom[901], content.class_level_2 ? 'Lv ' ~ content.class_level_2 ~' '~ content.classjob_category_2 : '-'),
+    ])
+}}
+
+{# gil + exp #}
+{{
+    Layout.row([
+		Layout.col(languages.custom[136], content.exp_reward ? Layout.exp(content.exp_reward) : '-'),
+		Layout.col(languages.custom[530], content.gil_reward ? Layout.gil(content.gil_reward) : '-'),
+    ])
+}}
+
+{# category + genre #}
+{{
+    Layout.row([
+		Layout.col(languages.custom[316], content.category_name|replace({ '-': '<br>' })|raw),
+		Layout.col(languages.custom[580], content.genre_name),
+    ])
+}}
+
+{# start/end npcs #}
+{{
+    Layout.row([
+		Layout.col(languages.custom[628], Layout.npc(content.npc_start)),
+		Layout.col(languages.custom[581], Layout.npc(content.npc_end)),
+    ])
+}}
+
+{# quest location #}
+{{
+    Layout.row([
+		Layout.col(languages.custom[641], Layout.placename(content.placename)),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

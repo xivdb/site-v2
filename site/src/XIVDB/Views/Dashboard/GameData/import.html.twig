@@ -1,0 +1,54 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Import - Game Data{% endset %}
+{% set page = 'gamedata' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Game Data' },
+    { title: 'Import' }
+]) }}
+
+{% include 'Dashboard/Default/gamedata.html.twig' %}
+
+<div class="container-fluid">
+
+    <h1><a href="/gamedata">Game Data</a> - Import ({{ patch.name_en }})</h1>
+
+    {# if dev #}
+    {% if defines.DEV %}
+        <button class="btn btn-success" onclick="GameData.processAll();">Process All Tables</button>
+    {% else %}
+        <div class="alert alert-danger">Data importing disabled on production</div>
+    {% endif %}
+
+    <br><br>
+
+    <table width="100%" class="table table-sm">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>File</th>
+                <th>Status 1</th>
+                <th>Status 2</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for name in names %}
+            <tr class="row-{{ name }}" data-name="{{ name }}">
+                <td width="5%" valign="middle"><strong>{{ loop.index }}</strong></td>
+                <td width="35%" valign="middle" class="name" style="font-size:16px;"><a href="/gamedata/import/{{ name }}">{{ name }}</a></td>
+                <td width="15%" valign="middle" class="status1"></td>
+                <td width="25%" valign="middle" class="status2"></td>
+                <td width="20%" valign="middle" align="right">
+                {% if defines.DEV %}
+                    <button onclick="GameData.processSingle('{{ name }}');" class="btn btn-primary btn-sm">Process</button>
+                    <a href="/gamedata/import/{{ name }}/process" target="_blank" class="btn btn-success btn-sm">Open</a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

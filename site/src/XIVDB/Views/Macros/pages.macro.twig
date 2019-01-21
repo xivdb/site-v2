@@ -1,0 +1,23 @@
+{# Show heading 1 #}
+{% macro heading1(title, subtitle, centered) %}
+<div class="page-heading-1 {{ centered ? 'page-heading-1-centered' : '' }}">
+	<h1>{{ title|raw }}</h1>
+	{% if subtitle %}
+		<p>{{ subtitle|raw }}</p>
+	{% endif %}
+</div>
+{% endmacro %}
+
+{# Show heading #}
+{% macro heading2(title) %}
+<div class="page-heading-2">
+	<h2>{{ title|raw }}</h2>
+</div>
+{% endmacro %}
+
+{# Show heading #}
+{% macro heading3(title) %}
+<div class="page-heading-3">
+	<h2>{{ title|raw }}</h2>
+</div>
+{% endmacro %}

@@ -1,0 +1,78 @@
+<h2>Summary</h2>
+
+{% set achievements_total = (achievements_score_reborn + achievements_score_legacy) %}
+{% set achievements_total_max = (achievements_score_reborn_total + achievements_score_legacy_total) %}
+
+{# Progress #}
+<div class="ac-block">
+	{% set percent = ((achievements_total / achievements_total_max) * 100)|round(2) %}
+	{% set togo = achievements_total_max - achievements_total %}
+	<h6>{{ languages.custom[1206] }}</h6>
+	<div class="ac-data">
+		<div>
+			<span class="ac-data-figure">{{ achievements_total|number_format }}</span>
+			<span class="ac-data-value">/ {{ achievements_total_max|number_format }}</span>
+			<span class="ac-data-percent">({{ percent }}%)</span>
+		</div>
+		<div>
+			<span class="ac-data-togo">{{ togo|number_format }} togo</span>
+		</div>
+	</div>
+	<div class="cp-bar"><div class="green" style="width:{{ percent }}%;"></div></div>
+	<div class="ac-data">
+		<p class="ac-small">{{ languages.custom[1213] }} {{ achievements_last_updated|moment }}</p>
+	</div>
+
+	<hr>
+
+	<div class="cc-block-sub">
+		{% set percent = ((achievements_score_reborn / achievements_score_reborn_total) * 100)|round(2) %}
+		{% set togo = achievements_score_reborn_total - achievements_score_reborn %}
+		<h5>{{ languages.custom[1211] }}</h5>
+		<small>{{ languages.custom[1214] }}</small>
+		<div class="cc-data">
+			<div>
+				<span class="cc-data-figure">{{ achievements_score_reborn|number_format }}</span>
+				<span class="cc-data-value">/ {{ achievements_score_reborn_total|number_format }}</span>
+				<span class="cc-data-percent">({{ percent }})</span>
+			</div>
+			<div>
+				<span class="cc-data-togo">{{ togo|number_format }} togo</span>
+			</div>
+		</div>
+		<div class="cp-bar">
+			<div class="yellow" style="width:{{ percent }}%;"></div>
+		</div>
+
+	</div>
+
+</div>
+
+{# Recent #}
+{% if achievements_recent is defined and achievements_recent is not empty %}
+<h6 class="spacer">{{ languages.custom[1212] }}</h6>
+<div class="cp-recent-achieves">
+	{% for id in achievements_recent %}
+	{% set achieve = achievements[id] %}
+	<div class="cp-achieve-row">
+		<div>
+			<img src="/img/loader/loading2.gif" data-src="{{ achieve.icon }}" height="32">
+		</div>
+		<div>
+			<div class="cp-achieve-top">
+				<div>
+					<span class="cp-achieve-points">+{{ achieve.points }} Points</span>
+                    {% if achieve.obtained|first != '@' %}
+					<span class="cp-achieve-date">{{ achieve.obtained|moment }}</span>
+					{% endif %}
+				</div>
+				<a href="{{ achieve.url }}" data-xivdb-replace="1">{{ achieve.name }}</a>
+			</div>
+			<div class="cp-achieve-info">
+				{{ achieve.help }}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endif %}

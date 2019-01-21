@@ -1,0 +1,66 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Python Strings{% endset %}
+{% set page = 'gamedata' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Game Data' },
+    { title: 'Python Strings' },
+]) }}
+
+{% include 'Dashboard/Default/gamedata.html.twig' %}
+
+<div class="container">
+    <h2><a href="/gamedata">Game Data</a> - Python Strings</h2>
+
+	<form method="post">
+    	<div class="row">
+			<div class="col-md-2">
+				<fieldset class="form-group">
+		    		<label for="id">ID</label>
+		    		<input type="text" class="form-control" name="id" id="id" value="{{ app.request.get('id') }}">
+		    	</fieldset>
+			</div>
+			<div class="col-md-4">
+				<fieldset class="form-group">
+		    		<label for="name">Name</label>
+		    		<input type="text" class="form-control" name="name" id="name" value="{{ app.request.get('name') }}">
+		    	</fieldset>
+			</div>
+			<div class="col-md-6">
+				<fieldset class="form-group">
+		    		<label for="table">Table</label>
+		    		<input type="text" class="form-control" name="table" id="table" value="{{ app.request.get('table') }}">
+		    	</fieldset>
+			</div>
+		</div>
+
+		<div align="center">
+			<button type="submit" class="btn btn-success" name="create" value="create">Generate Code</button>
+		</div>
+    </form>
+
+	{% if result %}
+
+		<hr>
+
+		<fieldset class="form-group">
+			<label for="result_python">Python</label>
+			<input type="text" class="form-control" name="result_python" value="{{ result.python }}">
+		</fieldset>
+
+		<fieldset class="form-group">
+			<label for="result_python">SQL</label>
+			<textarea class="form-control" width="100%" rows="5">{{ result.sql }}</textarea>
+		</fieldset>
+
+        <fieldset class="form-group">
+			<label for="result_python">PHP</label>
+			<textarea class="form-control" width="100%" rows="4">{{ result.php }}</textarea>
+		</fieldset>
+
+	{% endif %}
+
+
+</div>
+{% endblock %}

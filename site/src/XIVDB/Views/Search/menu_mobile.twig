@@ -1,0 +1,207 @@
+{% if devices.mobile and not nomobile %}
+    <nav class="mobile-menu" role="navigation">
+
+        <div class="mobile-menu-top">
+            <h2>Menu</h2>
+            <button class="user-menu-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+        </div>
+
+
+        {# Search #}
+        <h1>{{ languages.custom[657] }}</h1>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.all.main %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+                {% for link in menu.database.all.special %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                {% for link in menu.database.all.misc %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Patches #}
+        <h3>{{ languages.custom[388] }}</h3>
+        <div class="mobile-menu-list-normal">
+            <div>
+                {% for link in menu.patches[4] %}
+                    <a href="{{ link.url }}">{{ link.title|raw }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <h1>{{ languages.custom[648] }}</h1>
+
+        {# Weapons #}
+        <h3>{{ menu.database.equipment.weapons.title }}</h3>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.equipment.weapons.menu.classes.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+
+                {% set shields = menu.database.equipment.shields %}
+                <a href="{{ shields.url }}">{{ shields.title }}</a>
+            </div>
+            <div>
+                {% for link in menu.database.equipment.weapons.menu.jobs.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+                {% for link in menu.database.equipment.weapons.menu.other_jobs.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Tools #}
+        <h3>{{ menu.database.equipment.tools.title }}</h3>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.equipment.tools.menu.crafting.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                {% for link in menu.database.equipment.tools.menu.gathering.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Armor #}
+        <h3>{{ menu.database.equipment.armor.title }}</h3>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.equipment.armor.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                {% for link in menu.database.equipment.accessories.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Materials #}
+        <h3>{{ languages.custom[408] }}</h3>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.items.materials.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                {% for link in menu.database.items.misc.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Crafting + Gathering #}
+        <h3>{{ languages.custom[729] }}</h3>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.hnl.crafting.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                {% for link in menu.database.hnl.gathering.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Crafting + Gathering #}
+        <h3>{{ languages.custom[225] }}</h3>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.actions.classes.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+                {% for link in menu.database.actions.jobs.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+
+            </div>
+            <div>
+                {% for link in menu.database.actions.crafting.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+                {% for link in menu.database.actions.gathering.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+                {% for link in menu.database.actions.other_jobs.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Crafting + Gathering #}
+        <h3>{{ languages.custom[730] }}</h3>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.activities.adventure.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                {% for link in menu.database.activities.battle.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Crafting + Gathering #}
+        <h3>{{ languages.custom[435] }}</h3>
+        <div class="mobile-menu-list">
+            <div>
+                {% for link in menu.database.other.misc.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                {% for link in menu.database.other.pages.menu %}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <h1>XIVDB</h1>
+
+        {# Community #}
+        <h3>{{ languages.custom[433] }}</h3>
+        <div class="mobile-menu-list-normal">
+            <div>
+                <a href="/about">{{ languages.custom[230] }}</a>
+                <a href="/support">{{ languages.custom[215] }}</a>
+                <a href="/feedback">{{ languages.custom[726] }}</a>
+                <a href="/translations">{{ languages.custom[442] }}</a>
+
+                <button type="button" class="language-button tt">
+                    {{ languages.custom[660] }}
+                </button>
+            </div>
+        </div>
+
+        {# Tools #}
+        <h3>{{ languages.custom[433] }}</h3>
+        <div class="mobile-menu-list-normal">
+            <div>
+                <button type="button" data-action="shopping-cart"><i class="fa fa-level-down" aria-hidden="true"></i> {{ languages.custom[734] }}</button>
+                <button type="button" data-action="gearsets"><i class="fa fa-level-down" aria-hidden="true"></i> {{ languages.custom[1017] }}</button>
+
+                <a href="/maps">{{ languages.custom[732] }}</a>
+                <a href="/lore-finder">{{ languages.custom[803] }}</a>
+            </div>
+        </div>
+
+
+    </nav>
+{% endif %}

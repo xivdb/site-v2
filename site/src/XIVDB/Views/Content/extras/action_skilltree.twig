@@ -1,0 +1,10 @@
+<h4>{{ languages.custom[141] }}</h4>
+{% if content.json %}
+	<p>{{ languages.custom[849] }}</p>
+	<div class="lc-skill-tree">
+		{{ Layout.skilltree(content.json) }}
+	</div>
+{% else %}
+	<p>{{ languages.custom[850] }}</p>
+{% endif %}
+

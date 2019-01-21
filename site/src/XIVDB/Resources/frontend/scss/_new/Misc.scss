@@ -1,0 +1,43 @@
+.maintenance-page {
+    @include center();
+    display: inline-block;
+    text-align: center;
+
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    width: 500px;
+    padding: 50px;
+    border-radius: 5px;
+    top: 400px;
+
+    p {
+        font-size: 16px;
+    }
+}
+
+.btn-menu-mobile {
+    display: none;
+}
+
+//
+// Make jquery draggable stuff high z-index
+//
+.ui-draggable-dragging {
+    z-index: 99999999;
+}
+
+.desktop-switch {
+    display: none;
+
+    @include mq($until: desktop) {
+        display: block;
+        padding: 15px 10px;
+        text-align: center;
+
+        a {
+            background-color: $blue;
+            padding: 5px 15px;
+            color: #fff;
+        }
+    }
+}

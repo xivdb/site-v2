@@ -1,0 +1,119 @@
+{# Progress #}
+<div class="cc-block">
+	{# Progress to full level 60 #}
+	<h6>{{ languages.custom[1225] }} {{ defines.GAME_MAX_LEVEL }}</h6>
+	<div class="cc-block-sub cc-block-sub-margin">
+		<h5>{{ languages.custom[1224] }}</h5>
+		<div class="cc-data">
+			<div>
+				<span class="cc-data-figure">{{ stats_summary.total_exp_gained|number_format }}</span>
+				<span class="cc-data-value">/ {{ stats_summary.total_exp_max|number_format }}</span>
+				<span class="cc-data-percent">({{ stats_summary.total_exp_gained_percent }}%)</span>
+			</div>
+			<div>
+				<span class="cc-data-togo">{{ stats_summary.total_exp_togo|number_format }} togo</span>
+			</div>
+		</div>
+		<div class="cp-bar"><div class="yellow" style="width:{{ stats_summary.total_exp_gained_percent }}%;"></div></div>
+	</div>
+	<div class="cc-block-sub">
+		<h5>{{ languages.custom[593] }}</h5>
+		<div class="cc-data">
+			<div>
+				<span class="cc-data-figure">{{ stats_summary.total_lvs_gained|number_format }}</span>
+				<span class="cc-data-value">/ {{ stats_summary.total_lvs_max|number_format }}</span>
+				<span class="cc-data-percent">({{ stats_summary.total_lvs_gained_percent }}%)</span>
+			</div>
+			<div>
+				<span class="cc-data-togo">{{ stats_summary.total_lvs_togo|number_format }} togo</span>
+			</div>
+		</div>
+		<div class="cp-bar"><div class="yellow" style="width:{{ stats_summary.total_lvs_gained_percent }}%;"></div></div>
+	</div>
+</div>
+
+{# Level table #}
+<div class="cc-role-list">
+	{% for role in data.classjobs %}
+	<div class="cc-role {{ role.level == defines.GAME_MAX_LEVEL ? 'cc-role-cap' : '' }}">
+		<div>
+			<img src="/img/loader/loading2.gif" data-src="{{ role.data.icon }}" height="24">
+		</div>
+		<div class="cc-role-level">
+			{{ role.level }}
+		</div>
+		<div class="cc-role-name">
+			{{ role.data.name }}
+		</div>
+		<div>
+			<div class="cc-role-exp">
+				{{ role.exp.total_gained|number_format }}
+				/ <em>{{ role.exp.total_max|number_format }}</em>
+			</div>
+			<div class="cp-bar"><div class="{{ role.level == defines.GAME_MAX_LEVEL ? 'green' : 'yellow' }}" style="width:{{ role.exp.total_percent }}%;"></div></div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{# Need to find a good chart library, chart js too expensive #}
+
+{# Best EXP Event #}
+{% if events and stats_summary.best_exp_event is defined %}
+<div class="cc-best">
+	<h5>
+		<span><i class="fa fa-star-o" aria-hidden="true"></i></span>{{ languages.custom[1219] }}
+	</h5>
+	<div>
+	{{
+		'Gained <em>%s</em> exp on <span>%s</span>'|format(
+			stats_summary.best_exp_event.gained|number_format,
+			data.classjobs[stats_summary.best_exp_event.jobclass].data.name
+		)|raw
+	}}
+	</div>
+	<span>
+		{{ stats_summary.best_exp_event.time|date('F jS, Y') }}
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		{{ stats_summary.best_exp_event.old|number_format }}
+		<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+		{{ stats_summary.best_exp_event.new|number_format }}
+	</span>
+</div>
+
+{# Best Level Event #}
+{% if events and stats_summary.best_lv_event is defined %}
+<div class="cc-best">
+	<h5>
+		<span><i class="fa fa-star-o" aria-hidden="true"></i></span>{{ languages.custom[1220] }}
+	</h5>
+	<div>
+	{{
+		'Gained <em>%s</em> levels on <span>%s</span>'|format(
+			stats_summary.best_lv_event.gained|number_format,
+			data.classjobs[stats_summary.best_lv_event.jobclass].data.name
+		)|raw
+	}}
+	</div>
+	<span>
+		{{ stats_summary.best_lv_event.time|date('F jS, Y') }}
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		{{ stats_summary.best_lv_event.old|number_format }}
+		<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+		{{ stats_summary.best_lv_event.new|number_format }}
+	</span>
+</div>
+{% endif %}
+
+{# Started tracking date #}
+<div class="cc-best">
+	<h5>
+		<span><i class="fa fa-clock-o" aria-hidden="true"></i></span>{{ languages.custom[1226] }}
+	</h5>
+	<div>
+		Started: <span>{{ stats_summary.events_duration_start|moment }}</span>
+		&nbsp;&nbsp;-&nbsp;&nbsp;
+		Latest: <span>{{ stats_summary.events_duration_finish|moment }}</span>
+	</div>
+</div>
+{% endif %}

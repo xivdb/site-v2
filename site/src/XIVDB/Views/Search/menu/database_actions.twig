@@ -1,0 +1,20 @@
+<div class="subdropdown-container">
+    <div id="sub-actions" class="dropdown-slot active">
+        {{ mm.column([
+            mm.list(menu.database.actions.classes),
+        ], 'dropdown-column-short') }}
+
+        {{ mm.column([
+            mm.list(menu.database.actions.jobs),
+        ], 'dropdown-column-short') }}
+
+        {{ mm.column([
+            mm.list(menu.database.actions.crafting),
+        ], 'dropdown-column-short') }}
+
+        {{ mm.column([
+            mm.list(menu.database.actions.gathering),
+            mm.list(menu.database.actions.other_jobs),
+        ], 'dropdown-column-short') }}
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<h5>{{ content.gathering|length }} {{ languages.custom[235] }}</h5>
+<br>
+<table width="100%" class="placename_gathering">
+    <thead>
+    <th width="5%">{{ languages.custom[1055] }}</th>
+    <th>{{ languages.custom[474] }}</th>
+    <th>{{ languages.custom[1054] }}</th>
+    </thead>
+    <tbody>
+    {% for data in content.gathering %}
+        <tr>
+            <td align="center"><img src="{{ data.icon.image }}" height="20"></td>
+            <td>{{ data.name }}</td>
+            <td>X: {{ data.position.x }} - Y: {{ data.position.y }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $(function() {
+        $('.placename_gathering').tablesorter({ widthFixed: true, widgets: ['zebra'] });
+    });
+</script>

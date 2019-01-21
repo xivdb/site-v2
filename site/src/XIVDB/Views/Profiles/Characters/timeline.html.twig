@@ -1,0 +1,70 @@
+{% macro timelineButton(year, month, timeline_count, isFirst) -%}
+	<button data-tl="{{ year }},{{ month }}"{% if isFirst %} class="active"{% endif %}>
+		<span class="tl-list-dot"></span>
+		<em>{{ timeline_count[year ~ month] }}</em>
+		{{ month|monthname }}
+	</button>
+{%- endmacro %}
+
+{% if timeline %}
+<div class="character-timeline">
+	<div>
+		{% for year, months in timeline %}
+			{% set isFirstYear = loop.first %}
+			{% for month, events in months %}
+				{% set isFirstMonth = loop.first %}
+				<div class="tl-page {{ (isFirstYear and isFirstMonth) ? 'active' : '' }}" data-tl="{{ year }},{{ month }}">
+
+					<div class="tl-header">
+						<div><strong>{{ timeline_count[year ~ month] }}</strong> events</div>
+						<div>{{ month|monthname|title }} <em>{{ year }}</em></div>
+					</div>
+
+					<div class="tl-data">
+						{% for timestamp, list in events %}
+							<div class="tl-data-block">
+								<div>
+									{{ timestamp|moment('l jS') }}
+									<span></span>
+								</div>
+								<div>
+								{% for event in list %}
+									{% if event.type != 'free_company' %}
+										{% include 'Profiles/Characters/timeline.events.html.twig' %}
+									{% else %}
+										<div>{{ name }} moved free company.</div>
+									{% endif %}
+								{% endfor %}
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+	<div>
+		{% for year, months in timeline %}
+		{% set isFirstYear = loop.first %}
+		<div class="tl-list {{ isFirstYear ? 'active' : '' }}" data-tl="{{ year }}">
+			<div class="tl-list-group">
+				<div class="tl-list-title"><span>{{ year }}</span></div>
+				<div class="tl-list-months">
+				{% for month, events in months %}
+					{{ _self.timelineButton(year, month, timeline_count, (isFirstYear and loop.first)) }}
+				{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% else %}
+	<div class="achievements-private">
+		<div>
+			<img src="/img/ui/cac.png">
+		</div>
+		<div class="pink">{{ languages.custom[1253] }}</div>
+		{{ languages.custom[1252] }}
+	</div>
+{% endif %}

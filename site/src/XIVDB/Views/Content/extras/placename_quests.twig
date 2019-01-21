@@ -1,0 +1,33 @@
+<h5>{{ content.quests|length }} {{ languages.custom[189] }}</h5>
+<br>
+<table width="100%" class="placename_enemies">
+    <thead>
+    <th width="5%">{{ languages.custom[1055] }}</th>
+    <th>{{ languages.custom[457] }}</th>
+    <th>{{ languages.custom[474] }}</th>
+    <th>{{ languages.custom[1125] }}</th>
+    <th>{{ languages.custom[316] }}</th>
+    <th>{{ languages.custom[1149] }}</th>
+    </thead>
+    <tbody>
+    {% for data in content.quests %}
+        <tr>
+            <td align="center"><img src="{{ data.icon }}" height="32" ></td>
+            <td class="yellow">{{ data.class_level_1 }} {{ data.class_category_1 }}</td>
+            <td><a href="{{ data.url }}" data-xivdb-replace="0">{{ data.name }}</a></td>
+            <td><a href="{{ data.npc_url }}" data-xivdb-replace="0">{{ data.npc_name }}</a></td>
+            <td>
+                {{ data.category_name }}
+                <div class="faint">{{ data.genre_name }}</div>
+            </td>
+            <td{% if data.exp_reward > 0 %} class="lime"{% endif %}>{{ data.exp_reward|number_format }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $(function() {
+        $('.placename_enemies').tablesorter({ widthFixed: true, widgets: ['zebra'] });
+    });
+</script>

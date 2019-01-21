@@ -1,0 +1,10 @@
+<div class="filter-panel filter-panel-npcs" data-filter-type="npcs">
+{% spaceless %}
+
+    {{ SearchFilter.empty('NPCs') }}
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.npcs) }}
+
+{% endspaceless %}
+</div>

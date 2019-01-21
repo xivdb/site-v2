@@ -1,0 +1,111 @@
+{% if content.connected == false or content.id < 20 %}
+<div class="layout-block">
+    <div class="lc-help red">
+        This piece of content links to too much data and has been restricted.
+    </div>
+</div>
+{% endif %}
+
+{# help text #}
+{% if content.help is not empty %}
+    {{ Layout.block('<div class="lc-help">'~ content.help ~'</div>') }}
+{% endif %}
+
+{# Parameters #}
+{% if content.attributes_params is not empty and content.attributes_base %}
+    {{ Layout.attributes(content.attributes_base, content.attributes_params) }}
+{% endif %}
+
+{# set bonus #}
+{% if content.attributes_params_special and content.bonus_name is not empty %}
+    <div class="lc-bonus">
+    	{{ content.bonus_name }} <em class="lime">{{ content.series_name }}</em>
+    </div>
+    {{ Layout.attributesSpecial(content.attributes_params_special) }}
+{% endif %}
+
+{# ilv, level, jobclass #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[587], content.level_item, 'yellow'),
+        Layout.col(languages.custom[616], content.level_equip),
+        Layout.col(languages.custom[384], content.classjob_category ? content.classjob_category : '-'),
+    ])
+}}
+
+{# category, kind, slot, rarity #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[316], content.category_name),
+        Layout.col(languages.custom[589], content.kind_name),
+        Layout.col(languages.custom[625], content.slot_name),
+        Layout.col(languages.custom[378], Layout.rarity(content.rarity)),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+{# materia, sell price, buy price #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[370], Layout.materia(content.materia_slot_count)),
+        Layout.col(languages.custom[355], Layout.sellprice(content.price_sell, content.price_sell_hq)),
+        Layout.col(languages.custom[895], content.shops ? Layout.sellprice(content.price_mid, 0) : null),
+        Layout.col(languages.custom[120], content.item_duration > 0 ? content.item_duration|number_format ~' '~ languages.custom[188] : null),
+    ])
+}}
+
+{# Repair #}
+{% if content.item_repair %}
+    {{ Layout.repair(content.item_repair, content.classjob_repair, content.repair_cost) }}
+{% endif %}
+
+{# Glamour #}
+{% if content.item_glamour %}
+    {{ Layout.block([
+        '<h4>'~ languages.custom[889] ~'</h4>',
+        Layout.item(content.item_glamour)
+    ]) }}
+{% endif %}
+
+{# Pre-Achievements #}
+{% if content.achievements %}
+    {# Format pre achievements #}
+    {% set html = ['<h4>'~ languages.custom[897] ~'</h4>'] %}
+    {% set total = 0 %}
+    {% for id, achievement in content.achievements %}
+        {% set html = html|merge([ Layout.achievement(achievement) ]) %}
+        {% set total = total + achievement.points %}
+    {% endfor %}
+    {% set html = html|merge([ '<div class="lc lc-total">'~ total ~' '~ languages.custom[831] ~'</div>' ]) %}
+    {{ Layout.block(html) }}
+{% endif %}
+
+{# Is Statements #}
+{%  if content.is_dated
+    or content.is_unique
+    or content.is_untradable
+    or content.is_legacy
+    or content.is_crest_worthy
+    or content.is_crest_worthy
+    or content.is_desynthesizable
+    or content.is_projectable
+    or content.is_dyeable
+    or content.is_convertible
+    or content.is_reducible %}
+        {{ Layout.block(Layout.isStatements(content)) }}
+{% endif %}
+
+
+{# Format quests into something nice #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[1055], '<img src="'~ content.icon ~'" class="lc-bigicon">'),
+
+    ])
+}}

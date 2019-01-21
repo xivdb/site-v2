@@ -1,0 +1,41 @@
+//
+// Styles for enemies tabs when they're shown in "extras"
+//
+.enemy-group {
+    display: flex;
+    padding: 15px;
+    background-color: #2a2a2a;
+    margin-bottom: 2px;
+    border-radius: 2px;
+
+    h4 {
+        font-size: 24px;
+        margin-bottom: 10px;
+
+        small {
+            font-size: 14px;
+        }
+    }
+
+    > div:first-of-type {
+        flex: 0 1 5%;
+
+        @include mq($until: desktop) {
+            display: none;
+        }
+    }
+
+    > div:last-of-type {
+        flex: 0 1 95%;
+        padding-left: 15px;
+
+        @include mq($until: desktop) {
+            flex: 0 1 100%;
+            padding-left: 0;
+        }
+    }
+
+    .enemy_spawn_table img {
+        margin: -7px 0;
+    }
+}

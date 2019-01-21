@@ -1,0 +1,17 @@
+<div class="filter-panel filter-panel-fates" data-filter-type="fates">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs active" data-tab="general">
+        <div class="filter-param-row">
+            {{ SearchFilter.level('LEVEL', 'class_level') }}
+            {{ SearchFilter.level('SYNC LEVEL', 'class_level_max') }}
+            {{ SearchFilter.select('ZONE', 'placename', [filters.placenames, 'id', 'name'], ['placenames', 'id', 'name']) }}
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.fates) }}
+
+{% endspaceless %}
+</div>

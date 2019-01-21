@@ -1,0 +1,18 @@
+{% extends 'Email/default.twig' %}
+
+{% block email_title %}Database Error{% endblock %}
+{% block email_body %}
+    <h2>Database Error</h2>
+
+    <pre>{{ url }}</pre>
+    <pre>{{ message }}</pre>
+	<pre><strong>SQL Statement:</strong> {{ sql }}</pre>
+
+    <hr>
+
+    <h3>Data</h3>
+    <pre>{{ server_data|raw }}</pre>
+
+    <h3>Stack Trace:</h3>
+    <pre>{{ backtrace|raw }}</re>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% include 'Content/content_tabs/tabs.twig' with { tabs: [
+    [ languages.custom[732], content.map_data ? content.map_data.points : false, 'Content/extras/npc_maps.twig' ],
+    [ languages.custom[189], content.quests, 'Content/extras/npc_quests.twig' ],
+    [ languages.custom[196], content.shops, 'Content/extras/npc_shop.twig' ],
+]} %}

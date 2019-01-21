@@ -1,0 +1,33 @@
+{# Search Embed #}
+<div class="tool-cart form">
+
+    <div class="alert alert-danger">
+        <h5>THIS TOOL IS NO LONGER SUPPORTED</h5>
+        <div style="background-color: #111; border: solid 1px #000; margin-top: 10px; padding: 15px; border-radius: 5px;">
+            <p>The shopping cart will be dropped in XIVDB v3, for more information, <a href="https://xivdb.com/devblog?id=26">click here for more information</a>.</p>
+            <p>I recommend using: <a href="https://ffxivteamcraft.com/home" target="_blank">FFXIV Team-Craft</a> as a replacement, it is better, cleaner and bares a great developer!</p>
+        </div>
+    </div>
+
+	<a href="{{ defines.SECURE }}/account/tools" class="tool-cart-load" target="_blank">{{ languages.custom[1034] }}</a>
+	<div class="title">{{ languages.custom[734] }}</div>
+	<p>{{ languages.custom[1018] }} <a href="/shopping-cart" target="_blank">{{ languages.custom[963] }}</a></p>
+
+	<div class="tool-cart-items">
+		<em>{{ languages.custom[738] }}</em>
+	</div>
+
+	<button class="blue tool-cart-checkout disabled">{{ languages.custom[739] }}</button>
+
+	{# Templates #}
+	{% raw %}
+	<script id="ui-cart-item" type="text/x-mustache-template">
+		<span class="cart-item" id="cartitem{{ id }}">
+			<img src="{{ icon }}" height="60" data-tt="{{ name }}">
+			<input type="text" id="quantity" data-tt="Adjust the quantity" value="{{ quantity }}" data-item-id="{{ id }}" maxlength="3">
+			<button id="remove" data-tt="Remove" data-item-id="{{ id }}"><i class="fa fa-times"></i></button>
+		</span>
+	</script>
+	{% endraw %}
+
+</div>

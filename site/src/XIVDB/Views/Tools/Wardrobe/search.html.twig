@@ -1,0 +1,239 @@
+{% macro slot(num, showMateria) %}
+<div data-slot="{{ num }}">
+	<div class="tlw-slot-container">
+		<button class="tlw-remove-button" data-tt="{{ languages.custom[1019] }}">
+			<i class="fa fa-times"></i>
+		</button>
+		<button class="tlw-hq-button" data-tt="{{ languages.custom[1022] }}">
+			<img src="/img/ui/hq.png" height="12">
+		</button>
+		<div class="tlw-slot" data-equipped="0"></div>
+	</div>
+
+	{% if showMateria %}
+	<div class="tlw-materia">
+		<span data-materia="1"></span>
+		<span data-materia="2"></span>
+		<span data-materia="3"></span>
+		<span data-materia="4"></span>
+		<span data-materia="5"></span>
+	</div>
+	{% endif %}
+</div>
+{% endmacro %}
+
+
+{# Search Embed #}
+<div class="tool-wardrobe form">
+
+    <div class="alert alert-danger">
+        <h5>THIS TOOL IS NO LONGER SUPPORTED</h5>
+        <div style="background-color: #111; border: solid 1px #000; margin-top: 10px; padding: 15px; border-radius: 5px;">
+            <p>The wardrobe/gearset tool will be dropped in XIVDB v3, for more information, <a href="https://xivdb.com/devblog?id=26">click here for more information</a>.</p>
+            <p>I recommend using: <a href="https://ffxiv.ariyala.com/" target="_blank">Ariyala Toolkit</a> as a replacement.</p>
+        </div>
+    </div>
+
+	<div class="tlw-loading">
+		<i class="fa fa-refresh fa-spin"></i>
+		<div>{{ languages.custom[262] }}</div>
+	</div>
+
+	<div class="tlw-loading-set">
+		<i class="fa fa-refresh fa-spin"></i>
+		<div>{{ languages.custom[262] }}</div>
+		<div><em></em></div>
+	</div>
+
+	{# save #}
+	<div class="tlw-save-window">
+		<button class="mini gray tlw-close-btn" id="gs-close-btn">{{ languages.custom[662]|title }}</button>
+		<div class="title">{{ languages.custom[22] }} / {{ languages.custom[1030] }}</div>
+		<br>
+
+		<div class="tlw-save-load-container">
+			<div>
+				<div class="tlw-group tlw-group-left">
+					<div class="subtitle">{{ languages.custom[474] }}</div>
+					<input id="gs-name" type="text" placeholder="{{ languages.custom[474] }}" class="small">
+					<br><br>
+					<div class="subtitle">{{ languages.custom[315] }}</div>
+					<textarea id="gs-desc" class="small" rows="5" placeholder="{{ languages.custom[315] }}"></textarea>
+				</div>
+				<div class="tlw-group tlw-group-right">
+					<div class="subtitle">{{ languages.custom[146] }}</div>
+					<select id="gs-type" class="small">
+						<option value="1">{{ languages.custom[327] }}</option>
+						<option value="2">{{ languages.custom[331] }}</option>
+						<option value="3">{{ languages.custom[329] }}</option>
+						<option value="4">{{ languages.custom[234] }}</option>
+						<option value="5">{{ languages.custom[235] }}</option>
+						<option value="0">{{ languages.custom[435] }}</option>
+					</select>
+					<br><br>
+					<div class="subtitle">{{ languages.custom[384] }}</div>
+					<select id="gs-classjob" class="small">
+						<optgroup label="{{ languages.custom[1026] }}">
+							{% for role in filters.jobs %}
+							<option value="{{ role.id }}">{{ role.name }}</option>
+							{% endfor %}
+						</optgroup>
+						<optgroup label="{{ languages.custom[1027] }}">
+							{% for role in filters.other_jobs %}
+							<option value="{{ role.id }}">{{ role.name }}</option>
+							{% endfor %}
+						</optgroup>
+						<optgroup label="{{ languages.custom[1028] }}">
+							{% for role in filters.classes %}
+							<option value="{{ role.id }}">{{ role.name }}</option>
+							{% endfor %}
+						</optgroup>
+						<optgroup label="{{ languages.custom[234] }}">
+							{% for role in filters.crafting %}
+							<option value="{{ role.id }}">{{ role.name }}</option>
+							{% endfor %}
+						</optgroup>
+						<optgroup label="{{ languages.custom[235] }}">
+							{% for role in filters.gathering %}
+							<option value="{{ role.id }}">{{ role.name }}</option>
+							{% endfor %}
+						</optgroup>
+					</select>
+					<br><br><br>
+					<input type="hidden" id="gs-saveid">
+					<button id="saveGearset" class="green small">{{ languages.custom[22] }}</button>
+				</div>
+				<div class="tlw-response"></div>
+			</div>
+			<div>
+				<div class="subtitle">{{ languages.custom[1030] }}</div>
+				<div class="tlw-loaded-gearsets"></div>
+			</div>
+		</div>
+	</div>
+
+	{# header #}
+	<div class="tlw-header">
+		<div>
+			<div class="title">{{ languages.custom[1017] }} <em>BETA</em></div>
+			{{ languages.custom[1018] }}
+			<a href="/gearsets" target="_blank">{{ languages.custom[1025] }}</a>
+		</div>
+		<div>
+			{% if user == false %}
+				<a href="{{ defines.SECURE }}/login" style="padding-bottom:3px;display:inline-block;">{{ languages.custom[755] }}</a>
+			{% endif %}
+
+			<button class="mini gray" id="gs-reset-btn">{{ languages.custom[1032] }}</button>
+			<button class="mini gray" id="gs-cart-btn">{{ languages.custom[1031] }}</button>
+			{% if user %}
+				<button class="mini green" id="gs-save-btn">{{ languages.custom[22] }} / {{ languages.custom[1030] }}</button>
+			{% endif %}
+		</div>
+	</div>
+
+	{# main container #}
+	<div class="tlw-container">
+		<div>
+			<div class="tlw-slots">
+				{# main hand + off hand #}
+				<div>
+					<div class="tlw-slots-title">
+						{{ languages.slots[1] }} &nbsp;/&nbsp;
+						{{ languages.slots[2] }}
+					</div>
+					<div class="tlw-slots-icons">
+						{{ _self.slot(1, true) }}
+						{{ _self.slot(2, true) }}
+					</div>
+				</div>
+
+				{# head, body, hands, waist, legs, feet #}
+				<div>
+					<div class="tlw-slots-title">
+						{{ languages.slots[3] }} &nbsp;/&nbsp;
+						{{ languages.slots[4] }} &nbsp;/&nbsp;
+						{{ languages.slots[5] }} &nbsp;/&nbsp;
+						{{ languages.slots[6] }} &nbsp;/&nbsp;
+						{{ languages.slots[7] }} &nbsp;/&nbsp;
+						{{ languages.slots[8] }}
+					</div>
+					<div class="tlw-slots-icons">
+						{{ _self.slot(3, true) }}
+						{{ _self.slot(4, true) }}
+						{{ _self.slot(5, true) }}
+						{{ _self.slot(6, true) }}
+						{{ _self.slot(7, true) }}
+						{{ _self.slot(8, true) }}
+					</div>
+				</div>
+
+				{# ear, neck, wrists, ring 1, ring 2, soul #}
+				<div>
+					<div class="tlw-slots-title">
+						{{ languages.slots[9] }} &nbsp;/&nbsp;
+						{{ languages.slots[10] }} &nbsp;/&nbsp;
+						{{ languages.slots[11] }} &nbsp;/&nbsp;
+						{{ languages.slots[12] }} &nbsp;/&nbsp;
+						{{ languages.slots[12] }}
+					</div>
+					<div class="tlw-slots-icons">
+						{{ _self.slot(9, true) }}
+						{{ _self.slot(10, true) }}
+						{{ _self.slot(11, true) }}
+						{{ _self.slot(121, true) }}
+						{{ _self.slot(122, true) }}
+					</div>
+				</div>
+
+				{# Food and Medicine #}
+				<div>
+					<div class="tlw-slots-title">
+						{{ languages.slots[14] }} &nbsp;/&nbsp;
+						{{ languages.slots[15] }}
+					</div>
+					<div class="tlw-slots-icons">
+						{{ _self.slot(14) }}
+						{{ _self.slot(15) }}
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div>
+			<div class="subtitle">{{ languages.custom[629] }}</div>
+			<div class="tlw-stats-window"></div>
+		</div>
+	</div>
+
+	{# materia attach window #}
+	<div class="tlw-materia-window">
+		<button class="tlw-materia-close gray small"><i class="fa fa-times"></i> {{ languages.custom[662]|title }}</button>
+		<div class="title">{{ languages.custom[27] }}</div>
+		<div class="tlw-materia-preview">
+			<div>[icon]</div>
+			<div>[name]</div>
+			<div>[attribute]</div>
+		</div>
+		<div class="tlw-materia-noitems red">
+			{{ languages.custom[28] }}
+		</div>
+		<div class="tlw-materia-hasitems">
+			<p>{{ languages.custom[1021] }}</p>
+			<div class="tlw-materia-items"></div>
+		</div>
+	</div>
+
+	{# materia manage window #}
+	<div class="tlw-materia-manage">
+		<button class="tlw-materia-manage-close gray small"><i class="fa fa-times"></i> {{ languages.custom[662]|title }}</button>
+		<div class="title">{{ languages.custom[438] }}</div>
+		<div class="tlw-materia-manage-noitems red">
+			{{ languages.custom[1024] }}
+		</div>
+		<div class="tlw-materia-manage-hasitems">
+			<p>{{ languages.custom[1023] }}</p>
+			<div class="materia-manage-list"></div>
+		</div>
+	</div>
+</div>

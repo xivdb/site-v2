@@ -1,0 +1,95 @@
+//
+// Styles for instances a
+//
+.content-instance-list
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    > div {
+        flex: 0 1 calc(50% - 10px);
+        background-color: #2a2a2a;
+        margin: 5px;
+        border-radius: 3px;
+    }
+
+    h3 {
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #888;
+        margin-bottom: 10px;
+    }
+
+    h4 {
+        font-size: 11px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    &--banner {
+        text-align: center;
+        padding: 10px;
+
+        img {
+            border: 1px solid #000;
+            border-radius: 2px;
+            box-shadow: 0 0 2px #666;
+        }
+    }
+
+    &--data {
+        padding: 0 20px 20px 20px;
+    }
+
+    &--name {
+        @include cf();
+        font-size: 20px;
+        font-weight: 300;
+        margin-bottom: 10px;
+
+        a {
+            float: left;
+            display: block;
+            width: calc(100% - 100px);
+        }
+
+        img {
+            vertical-align: bottom;
+            margin-right: 10px;
+            margin-top: 3px;
+            float: left;
+        }
+    }
+
+    &--help {
+        font-size: 11px;
+        color: #aaa;
+        text-shadow: none;
+        margin-bottom: 10px;
+    }
+
+    &--stats {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            flex: 0 1 calc(50% - 4px);
+            margin: 2px;
+            padding: 6px 10px;
+            border: solid 1px #444;
+            border-radius: 3px;
+            font-size: 12px;
+            list-style: none;
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    {% if content.placename.name is defined %}
+        {{ Layout.dataline(languages.custom[1126], content.placename.name )}}
+    {% endif %}
+
+    {% if content.position.x is defined %}
+        {% set html %}
+            <span class="xivdb-light">X</span> {{ content.position.x|round(0, 'floor') }}
+            &nbsp;&nbsp;/&nbsp;&nbsp;
+            <span class="xivdb-light">Y</span> {{ content.position.y|round(0, 'floor')  }}
+        {% endset %}
+        {{ Layout.dataline(languages.custom[1054], html)}}
+    {% endif %}
+
+    {% if content.quests %}
+        <hr>
+        <div class="xivdb-dt">{{ languages.custom[189] }}</div>
+        {% for quest in content.quests %}
+            <div>
+                <span style="width:50px;display:inline-block;">
+                    <span class="xivdb-light">Lv</span>&nbsp;<span class="xivdb-yellow">{{ quest.class_level_1 }}</span>
+                </span>
+                {{ quest.name }} - {{ quest.genre_name }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endspaceless %}
+{% endblock %}

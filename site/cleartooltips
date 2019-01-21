@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo rm -rf web/tooltips
+sudo mkdir web/tooltips
+sudo chmod -R 777 web/tooltips

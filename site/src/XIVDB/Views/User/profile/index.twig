@@ -1,0 +1,72 @@
+{% set bgcss = 'bg-account' %}
+{% extends 'Default/index_simplified.twig' %}
+{% set pagetitle %}{{ languages.custom[669] }}{% endset %}
+
+{% block body %}
+{% include 'User/base/header.twig' %}
+<div class="acc-heading">
+	<h1>{{ languages.custom[669] }} <a href="/logout" class="acc-logout">{{ languages.custom[223]|title }}</a></h1>
+</div>
+<div class="acc-content">
+
+	{% include 'User/base/notices.twig' %}
+
+	<div class="acc-title">{{ languages.custom[670] }}</div>
+	<br>
+	<form method="post" action="/account/save">
+		{{ FormMacro.formRow(languages.custom[680], 'username', user.username, 'text') }}
+		{{ FormMacro.formRow(languages.custom[681], 'email', user.email, 'text') }}
+		<hr>
+		{{ FormMacro.formRow(languages.custom[683], 'password1', null, 'password') }}
+		{{ FormMacro.formRow(languages.custom[684], 'password2', null, 'password') }}
+		<hr>
+		{{ languages.custom[991] }}
+		<div class="acc-bg-preview"></div>
+		{{ FormMacro.formRow(languages.custom[924], 'site_background', user.data.site_background is defined ? user.data.site_background : null, 'select', languages.custom[988], {
+			0: languages.custom[989],
+			1: languages.custom[990],
+			2: languages.custom[992],
+			3: languages.custom[993],
+			4: languages.custom[994],
+			5: languages.custom[995],
+			6: languages.custom[1035],
+			7: languages.custom[1036],
+			8: languages.custom[1037],
+			9: languages.custom[1038],
+			10: languages.custom[1039],
+
+			21: languages.custom[1040],
+			22: languages.custom[1041],
+			23: languages.custom[1042],
+			24: languages.custom[1043],
+			25: languages.custom[1044],
+
+			41: 'Patch 3.1-3.4',
+		}) }}
+
+		<input type="hidden" name="_token" value="{{ _token }}">
+
+		<div class="form-footer">
+			<button class="green" type="submit">{{ languages.custom[22] }}</button>
+		</div>
+	</form>
+
+	<div style="margin:30px -30px -30px -30px;padding:30px;background-color: #222;border-top:solid 1px #000;">
+		<h1 style="font-size:20px;text-transform:uppercase;">Account Deletion</h1>
+		<p>You can delete your account at anytime. This is cannot be undone,
+		all comments and screenshots you have posted on the site will be deleted.
+		Characters will be removed from your account.</p>
+
+		<a href="/account/delete" style="display:inline-block;padding: 10px 14px;font-size:18px;color: #fff;background-color:orangered;">Delete Account</a>
+
+		<br><br><br><br>
+		<h1 style="font-size:20px;text-transform:uppercase;">Download Account Information</h1>
+		<p>You can download your data at anytime, click below to receive a text
+		document containing all information XIVDB holds about you.</p>
+
+		<a href="/account/download" style="display:inline-block;padding: 10px 14px;font-size:18px;color: #fff;background-color:#006dac;">Download Account Information</a>
+
+	</div>
+
+</div>
+{% endblock %}

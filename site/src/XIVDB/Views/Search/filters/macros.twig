@@ -1,0 +1,232 @@
+{# filter box #}
+{% macro box(title, html, noBorders) %}
+    <div class="filter-param">
+        <div class="filter-param-title">{{ title }}</div>
+        <div class="filter-param-container {{ noBorders ? 'filter-param-container-borderless' : '' }}">{% spaceless %}{{ html|raw }}{% endspaceless %}</div>
+    </div>
+{% endmacro %}
+
+{# add a level box #}
+{% macro level(title, field) %}
+    {% set html %}
+    <div class="filter-input-split">
+        <input type="number" class="filter-param-input mini" data-size="60" data-filter-field="{{ field }}|gt" min="1" max="60" maxlength="4" pattern="[0-9]{4}" placeholder="min">
+        <input type="number" class="filter-param-input mini" data-size="60" data-filter-field="{{ field }}|lt" min="1" max="60" maxlength="4" pattern="[0-9]{4}" placeholder="max">
+    </div>
+    {% endset %}
+    {{ _self.box(title, html) }}
+{% endmacro %}
+
+{# add a number box #}
+{% macro number(title, field) %}
+    {% set html %}
+    <div class="filter-input-split">
+        <input type="number" class="filter-param-input mini" data-size="80" data-filter-field="{{ field }}|gt" min="1" maxlength="16" pattern="[0-9]{16}" placeholder="min">
+    </div>
+    {% endset %}
+    {{ _self.box(title, html) }}
+{% endmacro %}
+
+{# add a select box #}
+{% macro select(title, field, arrA, arrB) %}
+
+    {# Name and ID for array A #}
+    {% if arrA[1] is defined %}
+        {% set aId = arrA[1] %}
+        {% set aName = arrA[2] %}
+    {% endif %}
+
+    {# Name and ID for array B #}
+    {% if arrB %}
+        {% set bIndex = arrB[0] %}
+        {% set bId = arrB[1] %}
+        {% set bName = arrB[2] %}
+    {% endif %}
+
+    {% set html %}
+        <select class="filter-param-select mini" data-filter-field="{{ field }}|et">
+            <option value="">-</option>
+            {% for value in arrA[0] %}
+                {# if array values exist #}
+                {% if arrA[1] is defined %}
+                    {# set arrays A: ID and name #}
+                    {% set aIdValue = value[aId] %}
+                    {% set aNameValue = value[aName] %}
+
+                    {# if sub array exists #}
+                    {% if arrB %}
+                        <optgroup label="{{ aNameValue }}">
+                            {% for subvalue in value[bIndex] %}
+                                {% if arrB[1] is defined %}
+                                    {# set arrays A: ID and name #}
+                                    {% set bIdValue = subvalue[bId] %}
+                                    {% set bNameValue = subvalue[bName] %}
+                                    <option value="{{ bIdValue }}">{{ bNameValue|title }}</option>
+                                {% else %}
+                                    <option value="{{ subvalue }}">{{ subvalue|title }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </optgroup>
+                    {% else %}
+                        <option value="{{ aIdValue }}">{{ aNameValue|title }}</option>
+                    {% endif %}
+                {% else %}
+                    <option value="{{ value }}">{{ value|title }}</option>
+                {% endif %}
+            {% endfor %}
+    </select>
+    {% endset %}
+    {{ _self.box(title, html) }}
+{% endmacro %}
+
+{# special select for rarity #}
+{% macro rarity(title, field, arr) %}
+    {% set html %}
+        <select class="filter-param-select mini" data-filter-field="{{ field }}|et">
+            <option value="">-</option>
+            {% for id, value in arr %}
+                <option value="{{ id }}" class="rarity-{{ value }}">{{ value|title }}</option>
+            {% endfor %}
+        </select>
+    {% endset %}
+    {{ _self.box(title, html) }}
+{% endmacro %}
+
+{# special: order #}
+{% macro order(order, patches) %}
+    <span class="filter-param filter-param-footer right">
+        <div class="filter-input-split">
+            <select class="filter-param-select filter-param-patches mini" data-filter-field="patch|et">
+                <option value="">- Patch Release</option>
+                {% for patch in patches %}
+                    <option value="{{ patch.number }}">{{ patch.name|title }}</option>
+                {% endfor %}
+            </select>
+            <select class="filter-param-select mini" data-filter-field="order_field">
+                <option value="">- Results Sorting</option>
+                {% for id, value in order %}
+                    <option value="{{ id }}">{{ value|title }}</option>
+                {% endfor %}
+            </select>
+            <select class="filter-param-select mini" data-filter-field="order_direction">
+                <option value="">- Results Order</option>
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+            </select>
+        </div>
+    </span>
+{% endmacro %}
+
+{# special: and/or #}
+{% macro andor(title, field, arr) %}
+    {% set html %}
+        <select class="filter-param-select mini" data-filter-field="{{ field }}">
+            <option value="and">{{ arr.and }}</option>
+            <option value="or">{{ arr.or }}</option>
+        </select>
+    {% endset %}
+    {{ _self.box(title, html) }}
+{% endmacro %}
+
+{# add a submit button #}
+{% macro submit(title, css) %}
+    <button class="mini {{ css }}">{{ title|raw }}</button>
+{% endmacro %}
+
+{# special: attributes #}
+{% macro attributes(title, id) %}
+    <div class="filter-special-attributes">
+        <div class="filter-param">
+            <div class="filter-param-title">{{ title }}</div>
+            <div class="filter-param-container filter-input-split">
+
+                <select class="filter-param-select filter-param-attribute-1 mini extend">
+                    {% for attr in filters.attributes if attr.id not in [15, 47, 68, 69] %}
+                        <option value="{{ attr.id }}">{{ attr.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <select class="filter-param-select filter-param-attribute-2 mini auto tac">
+                    <option value="gt">&nbsp;&gt;&nbsp;</option>
+                    <option value="lt">&nbsp;&lt;&nbsp;</option>
+                </select>
+
+                <input type="number" class="filter-param-input filter-param-attribute-3 mini" placeholder="value" min="1" max="999999" maxlength="8" pattern="[0-9]{8}" value="1">
+
+                <select class="filter-param-select filter-param-attribute-4 mini auto">
+                    <option value="0">Low Quality</option>
+                    <option value="1">High Quality</option>
+                </select>
+
+                <button type="button" class="filter-param-button mini blue">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+
+            </div>
+            <div class="filter-param-attribute-container">
+                <div class="filter-special-attributes-empty">NO ATTRIBUTES ADDED</div>
+                <div class="filter-special-attributes-set"></div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{# special: classjob #}
+{% macro classjobs(filters, craftOnly) %}
+    {% if craftOnly %}
+        <div class="filter-param-row">
+            {{ _self.classjobsRow('crafting', filters.crafting) }}
+        </div>
+    {% else %}
+        <div class="filter-param-row">
+            {{ _self.classjobsRow('classes', filters.classes) }}
+            {{ _self.classjobsRow('jobs', filters.jobs) }}
+            {{ _self.classjobsRow('crafting', filters.crafting) }}
+            {{ _self.classjobsRow('gathering', filters.gathering) }}
+            {{ _self.classjobsRow('other jobs', filters.other_jobs) }}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{# special: classjobs row #}
+{% macro classjobsRow(title, list) %}
+    <div class="filter-param">
+        <div class="filter-param-title">{{ title|upper }}</div>
+        <div class="filter-param-container">
+            {% for cj in list %}
+                <button type="button" data-id="{{ cj.id }}" style="background-image:url(/img/classes/set2/{{ cj.icon }}.png);" data-tt="({{ cj.abbr }}) {{ cj.name }}">&nbsp;</button>
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{# filter footer #}
+{% macro footer(order, patches) %}
+    <div class="filter-panel-footer">
+        <div>
+            {{ _self.submit('CLEAR', 'filter-reset red', 'left') }}
+        </div>
+        <div>
+            {{ _self.order(order, patches) }}
+        </div>
+        <div>
+            {{ _self.submit('SEARCH <i class="fa fa-search"></i>', 'filter-search blue', 'right') }}
+        </div>
+
+    </div>
+{% endmacro %}
+
+{# Add a checkbox #}
+{% macro checkbox(title, field, tooltip) %}
+    {% set html %}
+        <input type="checkbox" id="{{ field }}" name="{{ field }}" data-filter-field="{{ field }}" class="filter-param-checkbox mini"{% if tooltip %} data-tt="{{ tooltip }}"{% endif %}>
+    {% endset %}
+    {{ _self.box(title, html, true) }}
+{% endmacro %}
+
+{# No filters #}
+{% macro empty(title) %}
+<div class="filter-panel-empty">
+    No filters for <em>{{ title }}</em> just yet, sorry!
+</div>
+{% endmacro %}

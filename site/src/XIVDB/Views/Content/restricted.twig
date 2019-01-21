@@ -1,0 +1,25 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}Content Restricted{% endset %}
+
+{% block body %}
+<div class="content-block tool-icons">
+
+	<div class="ti-top">
+
+		<h1>Content Restricted</h1>
+
+	</div>
+
+	<div class="ti-content">
+
+        This content is currently restricted, it will be unlocked: <span class="yellow">{{ defines.HIDDEN_PATCH_REMOVAL|moment }}</span>
+
+	</div>
+
+	<div class="ti-footer">
+		ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD AND MAY NOT BE REDISTRIBUTED FOR COMMERCIAL USE. FINAL FANTASY XIV ©2010-2013
+        SQUARE ENIX CO., LTD. FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd. All material used under license.
+	</div>
+
+</div>
+{% endblock %}

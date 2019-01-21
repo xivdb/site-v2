@@ -1,0 +1,62 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+   {{ Layout.header(content, true, template_categories) }}
+
+    {% if content.banner %}
+        <div class="xivdb-cb" style="background-image:url({{ content.banner }});"></div>
+    {% endif %}
+
+    {# other info #}
+    {{ Layout.dataline(languages.custom[457], content.level, 'xivdb-yellow') }}
+
+    {% if content.level_sync > 0 and content.level_sync != content.level %}
+        {{ Layout.dataline(languages.custom[122], content.level_sync) }}
+    {% endif %}
+
+    {% set html %}
+        {% if content.item_level %}
+            <span class="xivdb-yellow">{{ content.item_level }}</span>
+
+            {% if content.item_level_sync > 0 and content.item_level_sync != content.level_sync %}
+                &nbsp;<i class="fa fa-long-arrow-right"></i>&nbsp;
+                <span class="xivdb-yellow">{{ content.item_level_sync }}</span>
+            {% endif %}
+        {% else %}
+            <span class="xivdb-purple">{{ languages.custom[1142] }}</span>
+        {% endif %}
+    {% endset %}
+    {{ Layout.dataline(languages.custom[587], html) }}
+
+    {{ Layout.dataline(languages.custom[633], content.time_limit ~' minutes') }}
+    {{ Layout.dataline(languages.custom[1138], content.players_per_party) }}
+
+    {% set html %}
+        <span class="xivdb-blue">
+            {{ content.tanks_per_party > 0 ? content.tanks_per_party : 'Any' }} Tanks
+        </span>
+        <span class="xivdb-light">&nbsp;&nbsp;&bull;&nbsp;&nbsp;</span>
+        <span class="xivdb-green">
+            {{ content.healers_per_party > 0 ? content.healers_per_party : 'Any' }} Healing
+        </span>
+        <br>
+        <span class="xivdb-orange">
+            {{ content.melees_per_party > 0 ? content.melees_per_party : 'Any' }} DPS
+            </span>
+        <span class="xivdb-light">&nbsp;&nbsp;&bull;&nbsp;&nbsp;</span>
+        <span class="xivdb-yellow">
+            {{ content.ranged_per_party > 0 ? content.ranged_per_party : 'Any' }} Ranged
+        </span>
+    {% endset %}
+    {{ Layout.dataline(languages.custom[1139], html) }}
+    {{ Layout.dataline(languages.custom[1140], content.party_count) }}
+    {{ Layout.dataline(languages.custom[1141], content.force_party_setup ? '<em class="xivdb-green">✔</em>' : '<em class="xivdb-red">✖</em>' ) }}
+    {{ Layout.dataline(languages.custom[861], content.roulette_name is not empty ? content.roulette_name : '<em class="xivdb-red">✖</em>') }}
+
+{% endspaceless %}
+{% endblock %}

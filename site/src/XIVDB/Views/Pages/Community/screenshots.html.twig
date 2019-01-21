@@ -1,0 +1,25 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}{{ languages.custom[620] }}{% endset %}
+
+{% block body %}
+<div class="content-block nopad page-content page-flexbox">
+
+	<div class="page-pad-30">
+
+		{{ PageMacro.heading1(languages.custom[620], languages.custom[929]|replace({ '{value}':total|number_format })) }}
+
+		<div class="page-screenshots-list">
+			{% if not devices.mobile %}
+				{% for screenshot in recent %}
+					<a href="{{ screenshot.url }}" style="background-image:url({{ screenshot.small }})" data-xivdb-replace="0"></a>
+				{% endfor %}
+			{% else %}
+				<div class="panel">
+                    {{ languages.custom[1191] }}
+                </div>
+            {% endif %}
+		</div>
+	</div>
+
+</div>
+{% endblock %}

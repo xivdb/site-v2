@@ -1,0 +1,64 @@
+{# banner #}
+{% if content.banner is not empty and content.banner %}
+    {{ Layout.bannerContent(content.banner) }}
+{% endif %}
+
+{# help text #}
+{% if content.help is not empty %}
+    {{ Layout.block('<div class="lc-help">'~ content.help ~'</div>') }}
+{% endif %}
+
+{# Tomestones Tokens #}
+{% set html %}
+    <h4>{{ languages.custom[868] }}</h4>
+    {% if content.currency_a_item %}
+        {{ Layout.tomestone(content.currency_a_item.item, content.currency_a, content.currency_a_item.weekly_limit) }}
+    {% endif %}
+    {% if content.currency_b_item %}
+        {{ Layout.tomestone(content.currency_b_item.item, content.currency_b, content.currency_b_item.weekly_limit) }}
+    {% endif %}
+    {% if content.currency_c_item %}
+        {{ Layout.tomestone(content.currency_c_item.item, content.currency_c, content.currency_c_item.weekly_limit) }}
+    {% endif %}
+{% endset %}
+{% if content.currency_a_item or content.currency_b_item or content.currency_c_item %}
+    {{ Layout.block(html) }}
+{% endif %}
+
+{# some basic info #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[587], content.item_level ? content.item_level : '-'),
+        Layout.col(languages.custom[867], content.item_level_sync ? content.item_level_sync : '-', 'yellow'),
+        Layout.col(languages.custom[457], content.level ? content.level : '-'),
+        Layout.col(languages.custom[122], content.level_sync ? content.level_sync : '-', 'yellow'),
+    ])
+}}
+
+{# Max Formation #}
+{#
+    // couldn't find data for this
+    Layout.col(languages.custom[874], content.force_party_setup ? '<em class="red">✖</em>' : '<em class="green">✔</em>')
+
+    Layout.col(languages.custom[870], content.tanks_per_party, 'sky'),
+    Layout.col(languages.custom[871], content.healers_per_party, 'lime'),
+    Layout.col(languages.custom[872] ~ ' ('~ languages.custom[873] ~')', content.dps_per_party ~' ('~ content.ranged_per_party ~')', 'orange'),
+#}
+
+{# Roulette #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[121], content.players_per_party),
+        Layout.col(languages.custom[861], content.roulette_name ? content.roulette_name : languages.custom[876]),
+        Layout.col(languages.custom[633], content.time_limit ~ ' ' ~ languages.custom[925]),
+    ])
+}}
+
+{# Zone #}
+{% if content.placename %}
+{{
+    Layout.row([
+        Layout.col(languages.custom[641], Layout.placename(content.placename)),
+    ])
+}}
+{% endif %}

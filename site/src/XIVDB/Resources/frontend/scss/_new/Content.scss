@@ -1,0 +1,1119 @@
+//
+// Styles related to the main content pages
+//
+.content-data-line {
+    @extend .cf;
+    margin-bottom: 5px;
+}
+
+//
+// The "See Also" section
+//
+.content-seealso-comment {
+    display: block;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    line-height: 20px;
+    padding: 10px 15px;
+    background-color: #333;
+
+    .content-seealso-bywho {
+        margin-bottom: 5px;
+    }
+
+    .content-seealso-title {
+        color: $yellow;
+        display: block;
+
+    }
+}
+
+.dev-container {
+    display: block;
+    font-size: 11px;
+    border-radius: 3px;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+//
+// Content blocks
+//
+.content-block-global {
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+
+    background-color: #444;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    // background-image: url(/img/textures/bg2.png);
+    background-repeat: repeat-x;
+}
+
+.content-block-simple {
+    @extend .content-block-global;
+    @extend .cf;
+
+    padding: 0;
+    margin: 0;
+}
+
+.content-block {
+    @extend .content-block-global;
+    @extend .cf;
+
+    padding: 30px 30px 32px 30px;
+
+    &.content-main, &.content-nopad {
+        padding: 0;
+    }
+
+    // content padding
+    &.p10 { padding: 10px; }
+    &.p20 { padding: 20px; }
+    &.p30 { padding: 30px; }
+    &.p40 { padding: 40px; }
+    &.p50 { padding: 50px; }
+
+    &.nopad { padding: 0; }
+
+    .is-statements {
+        em {
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 500;
+            color: lighten($purple, 10%);
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+
+    //
+    // Content header
+    //
+    .content-header {
+        @include cf;
+
+        @include vertical-gradient(#444, 0%, #333, 100%);
+        background-color: #111;
+
+        border-bottom: solid 1px #000;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 3px #222;
+
+        padding: 10px;
+        display: flex;
+
+        > div:nth-of-type(1) {
+            flex: 0 1 100px;
+
+            @include mq($until: desktop) {
+                flex: 0 1 42px;
+            }
+
+            // content icon
+            .icon {
+                position: relative;
+                overflow: hidden;
+                width: 80px;
+                height: 80px;
+
+                border-radius: 5px;
+                float: left;
+
+                background-color: #444;
+                border: solid 1px #111;
+                box-shadow: 0 1px 3px #222;
+
+                @include mq($until: desktop) {
+                    width: 42px;
+                    height: 42px;
+                }
+
+                > img {
+                    @include center();
+                    position: absolute;
+                    z-index: 4;
+                    max-width: 105%;
+                    max-height: 105%;
+
+                    &.icon-blur {
+                        width: 100px;
+                        height: 100px;
+                        max-width: 100px;
+                        max-height: 100px;
+                        filter: blur(10px);
+                    }
+                }
+
+                &.icon-minion {
+                    background-color: transparent;
+                    box-shadow: none;
+                    border: none;
+                    max-width: 97px;
+                    max-height: 97px;
+                }
+            }
+        }
+
+        > div:nth-of-type(2) {
+            flex: 0 1 calc(100% - 350px);
+
+            @include mq($until: desktop) {
+                flex: 0 1 calc(100% - 42px);
+                padding-left: 10px;
+            }
+
+            h1 {
+                font-weight: 300;
+                font-size: 28px;
+                margin-top: 5px;
+
+                @include mq($until: desktop) {
+                    font-size: 18px;
+                    margin-top: 0;
+                }
+
+                .fa-h1-title {
+                    display: inline-block;
+                    width: 15px;
+                    font-size: 20px;
+                }
+            }
+
+            .categories {
+                padding-top: 5px;
+                font-size: 13px;
+                text-transform: uppercase;
+
+                @include mq($until: desktop) {
+                    font-size: 11px;
+                    padding-top: 0;
+                }
+            }
+        }
+
+        > div:nth-of-type(3) {
+            flex: 0 1 250px;
+            text-align: right;
+            padding: 10px 10px 0 0;
+
+            @include mq($until: desktop) {
+                flex: none;
+                display: none;
+            }
+
+            .patch-title {
+                color: #999;
+                font-size: 11px;
+            }
+
+            .patch-info {
+                font-size: 16px;
+                em {
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    //
+    // Content area
+    //
+    .content-area
+    {
+        display: flex;
+
+        @include mq($until: desktop) {
+            width: 100%;
+        }
+
+        > .tab-nav {
+            flex: 0 1 15%;
+
+            @include mq($until: desktop) {
+                flex: none;
+                width: 100%;
+                margin-left: -100%;
+                transition: .2s;
+
+                &.open {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        > .tab-section {
+            flex: 0 1 85%;
+
+            @include mq($until: desktop) {
+                flex: 0 1 100%;
+                width: 100%;
+            }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 300;
+        }
+    }
+
+    .content-main {
+        @include cf;
+        padding: 0 10px;
+
+        hr {
+            background-color: #666;
+            height: 2px;
+            margin: 15px 0;
+        }
+    }
+
+    .tab-details {
+        .content-data {
+            float: left;
+            width: 495px;
+
+            @include mq($until: desktop) {
+                width: 100%;
+                float: none;
+                padding-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        .additional-content-container {
+            display: none;
+            float: right;
+            min-width: 300px;
+            max-width: 300px;
+            margin-top: 0;
+
+            @include mq($until: desktop) {
+                float: none;
+                min-width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+
+    //----------------------------------------------------
+    //      bits in the main blocks
+    //----------------------------------------------------
+
+    .other-info {
+        @include cf;
+
+        .title {
+            color: $highlight;
+            font-size: 12px;
+            padding-top: 3px;
+        }
+
+        .value {
+            color: #fff;
+        }
+
+        > div {
+            @include cf;
+        }
+    }
+
+    //----------------------------------------------------
+    //      left feint column contents
+    //----------------------------------------------------
+
+    .left-row {
+        text-align: left;
+        margin-bottom: 20px;
+
+        .title {
+            color: #aaa;
+            font-size: 11px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .value {
+            font-size: 13px;
+            color: $white;
+        }
+
+        .btn {
+            display: block;
+            font-size: 12px;
+            background-color: darken($blue, 15%);
+            color: #fff;
+            border-radius: 2px;
+            text-align: center;
+            padding: 7px 0;
+            margin-right: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+
+            &:hover { background-color: darken($blue, 25%); }
+            &:active { background-color: darken($blue, 35%); }
+
+            &.danger {
+                background-color: darken($red, 15%);
+
+                &:hover { background-color: darken($red, 25%); }
+                &:active { background-color: darken($red, 35%); }
+            }
+        }
+    }
+
+    //----------------------------------------------------
+    //      main item data
+    //----------------------------------------------------
+
+
+    .attributes-base {
+        @extend .cf;
+        display: block;
+        margin-bottom: 10px;
+        width: 400px;
+        text-align: center;
+    }
+
+    .attr-block {
+        @extend .cf;
+
+        position: relative;
+        display: inline-block;
+        margin: 0 5px;
+        width: 120px;
+        min-height: 35px;
+        box-shadow: inset 0 -6px 0 rgba(200,200,200,0.1);
+        border-radius: 3px;
+
+        &.attr-block-bottom {
+            margin-top: 10px;
+        }
+
+        .attr-title {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            font-size: 10px;
+            text-align: right;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: $highlighter;
+        }
+
+        .attr-values {
+            text-align: right;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            font-size: 18px;
+            color: $blue;
+        }
+
+        .attr-figure-hq {
+            color: lighten($green, 10%);
+            font-size: 16px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+
+    .param-row {
+        @extend .cf;
+        font-size: 12px;
+
+        .attr-title {
+            color: $highlighter;
+            text-transform: uppercase;
+            display: inline-block;
+            padding-top: 4px;
+            letter-spacing: 1px;
+            font-size: 11px;
+        }
+
+        .attr-figure, .attr-figure-hq {
+            font-weight: 400;
+            color: $blue;
+            font-size: 16px;
+        }
+
+        .attr-figure-hq {
+            color: lighten($green, 10%);
+        }
+    }
+
+    //----------------------------------------------------
+    //      unsorted, unfinished stuff
+    //----------------------------------------------------
+
+    .content_category_kind {
+        font-size: 12px;
+        margin: 5px 0 10px 0;
+    }
+
+    .gil {
+        height: 16px;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    .types-angle {
+        display: inline-block;
+        margin: 0 5px;
+        color: #ccc;
+        text-shadow: none;
+    }
+
+    .title-icon {
+        vertical-align: bottom;
+    }
+
+    .simple-icon {
+        height: 18px;
+        margin: -3px 8px 0 0;
+        vertical-align: bottom;
+        box-shadow: 0 1px 2px #000;
+    }
+
+    .repair-icon {
+        vertical-align: bottom;
+        margin: -3px 5px -4px 0;
+    }
+
+    .right-box {
+        display: block;
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 3px;
+        padding: 10px;
+        margin: 0 0 10px 0;
+
+        .button {
+            height: 29px;
+        }
+    }
+
+    .table-stars {
+        padding-top: 9px;
+    }
+
+    .instance-row {
+        background-color: #222;
+        border-radius: 3px;
+    }
+
+    .instance-image {
+        display: block;
+        width: 350px;
+        height: 115px;
+        background-position: center center;
+        border-radius: 4px 0 0 4px;
+        box-shadow: 5px 0 0 #333,
+            inset 0 0 0 1px rgba(0,0,0,0.8),
+            inset 0 0 0 4px rgba(0,0,0,0.3),
+            inset 0 0 50px rgba(180,180,180,0.5);
+    }
+
+    .instance-icon {
+        display: inline-block;
+        margin: 0 7px -2px 0;
+        width: 18px; height: 18px;
+        background-position: center center;
+        background-size: 110% 110%;
+        border-radius: 50%;
+        box-shadow: 0 1px 2px #000;
+    }
+
+    .table-content-icon,
+    .table-item-icon {
+        margin: -2px 0;
+        border-radius: 50%;
+        box-shadow: 0 1px 2px #222;
+    }
+
+    .placename-banner {
+        display: block;
+        height: 180px;
+        margin-top: 20px;
+        border-radius: 3px;
+        border: solid 1px #000;
+        box-shadow: inset 0 0 10px #000;
+        background-position: center center;
+        background-size: cover;
+    }
+
+    .quest-spoilers-alert {
+        background-color: darken($orange, 10%);
+        padding: 30px;
+        text-align: center;
+        border-radius: 3px;
+
+        &:hover {
+            background-color: $orange;
+            cursor: pointer;
+        }
+    }
+
+    .quest-spoilers {
+        display: none;
+    }
+
+    .quest-text-box {
+        margin-bottom: 15px;
+        padding: 10px 10px 10px 20px;
+
+        > div:first-of-type {
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        > div:last-of-type {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+
+    .quest-todo-box,
+    .quest-text-dialogue {
+        padding: 20px;
+        border-radius: 3px;
+        background-color: #2a2a2a;
+    }
+
+    .quest-journal {
+        > div {
+            padding: 20px;
+            border-radius: 3px;
+            background-color: #2a2a2a;
+            margin-bottom: 2px;
+            display: flex;
+
+            > div:first-of-type {
+                flex: 0 1 10%;
+                font-size: 24px;
+                font-weight: 300;
+                color: #666;
+            }
+
+            > div:last-of-type {
+                flex: 0 1 90%;
+                font-size: 14px;
+                line-height: 20px;
+            }
+        }
+    }
+
+    .quest-todo-box > div {
+        padding: 15px 0;
+        border-bottom: dashed 2px #444;
+
+        &.completed .text {
+            color: $green;
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: $pink;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        i {
+            margin-top: 3px;
+            margin-left: 10px;
+        }
+    }
+
+    .title-icon, .item-icon {
+        border-radius: 5px;
+        box-shadow: 0 0 3px 1px #666;
+        border: solid 1px #000;
+        width: 42px;
+        height: 42px;
+    }
+
+    .instance-boss-icon {
+        vertical-align: top;
+        margin: -4px 8px 0 0;
+    }
+
+    .recipe-item-icon {
+        border-radius: 5px;
+        box-shadow: 0 0 3px 1px #666;
+        border: solid 1px #000;
+        width: 42px;
+        height: 42px;
+    }
+
+    .recipe-item {
+        padding-left: 20px;
+    }
+
+    /*
+     * On mobile only show level 1 of the tree
+     * so the css would be something like
+     * > div:not(.tree-branch-level-1) { display: none; }
+     *
+     * branches have an max depth of 5, but usually dont surpass 3,
+     * very rare to be 4.
+     */
+    .recipe-tree {
+        padding: 20px;
+        border-radius: 3px;
+        background-color: #2a2a2a;
+
+        .tree-branch {
+            background-color: rgba(150,150,150,0.1);
+            padding: 10px 0 10px 10px;
+            border-radius: 3px 0 0 3px;
+            margin-bottom: 3px;
+
+            &.tree-branch-1 {
+                background-color: transparent;
+                padding: 20px 0 40px 20px;
+                margin: -15px;
+            }
+        }
+
+        .tree-item-cat {
+            font-size: 13px;
+            color: #aaa;
+            margin: 0 0 0 10px;
+
+            .extend {
+                user-select: none;
+                color: #777;
+                padding: 4px 6px;
+                border-radius: 3px;
+                border: solid 1px #555;
+                margin-left: 10px;
+
+                .fa {
+                    display: inline-block;
+                    margin-right: 6px;
+                }
+
+                &:hover {
+                    color: $pink;
+                    border: solid 1px $pink;
+                    opacity: 1;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .tree-class-icon {
+            float: left;
+            width: 26px; height: 26px;
+            margin: -2px 20px 0 0;
+            vertical-align: top;
+        }
+
+        .tree-class-info {
+            font-size: 16px;
+        }
+
+        .tree-synth {
+            margin: 2px 0px 8px 22px;
+        }
+
+        .tree-item-icon {
+            float: left;
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            box-shadow: 0 1px 2px #000;
+            margin: -5px 15px 0 0;
+        }
+
+        .tree-synth-row {
+            padding: 15px 0 0 0;
+        }
+
+        .tree-quantity {
+            display: inline-block;
+            width: 30px;
+        }
+
+        .tree-subsynth {
+            margin: 10px 0 0 60px;
+            display: none;
+        }
+
+        .tree-needs {
+            text-align: right;
+            padding: 0 10px 0 0;
+            font-size: 13px;
+        }
+    }
+
+    .recipe-expand-all {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+
+    .materia-slot {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        margin: 0 0 2px 5px;
+        vertical-align: bottom;
+        border: solid 2px $green;
+        border-radius: 50%;
+        box-shadow: 0 1px 5px #111, inset 0 0 10px darken($green, 25%), inset 0 0 3px 1px #000;
+    }
+
+    .no-data {
+        padding: 50px;
+
+        h3 {
+            color: $pink;
+            font-weight: 300;
+        }
+    }
+
+    .no-tab-data {
+        padding: 50px;
+        text-align: center;
+
+        h3 {
+            color: $purple;
+            font-weight: 300;
+        }
+    }
+
+    .stats-list {
+        margin-left: 30px;
+        margin-bottom: 20px;
+        list-style: none;
+
+        em {
+            display: inline-block;
+            color: $highlight;
+            width: 240px;
+            text-align: right;
+            padding-right: 20px;
+        }
+    }
+
+    .leve-display {
+        position: relative;
+        float: left;
+        width: 160px;
+        height: 254px;
+        margin: 0 18px 0 0;
+
+        .img1, .img2, .img3 {
+            position: absolute;
+            display: inline-block;;
+        }
+
+        .img1 {
+            top: 4px;
+            left: 13px;
+        }
+
+        .img2 {
+            top: 0;
+            left: 0;
+        }
+
+        .img3 {
+            right: 9px;
+            bottom: 1px;
+            width: 90px;
+            height: 25px;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+
+    .leve-data {
+        float: left;
+        width: 350px;
+    }
+
+
+}
+
+.content-mobile-open {
+    display: none;
+
+    @include mq($until: desktop) {
+        display: block;
+        margin: 10px 0;
+        padding: 0 10px;
+
+        button {
+            width: 100%;
+            background-color: #222;
+            color: #fff;
+            font-size: 13px;
+            text-transform: uppercase;
+            padding: 6px 0;
+            border: none;
+        }
+    }
+}
+
+// ----------------------------------------------------------------------
+// Tabs on content pages
+// ----------------------------------------------------------------------
+.tab-nav {
+    // border-right: solid 1px #000;
+
+    background-image: url(/img/textures/fade-left.png);
+    background-size: auto auto;
+    background-position: top left;
+    background-repeat: no-repeat;
+    padding-bottom: 40px;
+
+    span {
+        display: block;
+        padding: 8px 10px;
+        font-size: 13px;
+        font-weight: 400;
+        cursor: pointer;
+
+        &.nodata {
+            opacity:0.3;
+        }
+
+        &:hover {
+            background-color: darken($blue, 30%);
+            color: #fff;
+            opacity: 1;
+        }
+
+        &.active {
+            background-color: darken($blue, 10%);
+            color: #fff;
+            opacity: 1;
+        }
+
+        em, i {
+            display: inline-block;
+            width: 32px;
+        }
+    }
+}
+
+.tab-section {
+    padding: 0 10px 25px 10px;
+    margin: 0;
+
+    @include mq($until: desktop) {
+        min-width: 300px;
+    }
+
+    .tab-block {
+        @include cf();
+        display: none;
+        position: relative;
+
+        &.active {
+            display: block;
+        }
+    }
+
+    .error {
+        margin: 15px 0 5px 0;
+    }
+}
+
+// ----------------------------------------------------------------------
+// Content
+// ----------------------------------------------------------------------
+//
+//
+// "Craftable" on content pages
+//
+.item-craftable-panel {
+    display: block;
+    background-color: #444;
+    border: solid 1px #111;
+    border-radius: 3px;
+    overflow: hidden;
+    background-image: url(/img/ui/contentfade-rev.png);
+    background-repeat: repeat-x;
+    margin-bottom: 10px;
+
+    .item-craftable-role {
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 300;
+
+        em {
+            opacity: 0.6;
+        }
+    }
+
+    .item-craftable-top {
+        display: block;
+        padding: 10px;
+        background-color: rgba(0,0,0,0.3);
+
+        .item-craftable-data {
+            margin: 0 20px 0 0;
+            display: inline-block;
+
+            &.fr {
+                margin: 0;
+            }
+        }
+    }
+
+    .item-craftable-container {
+        padding: 10px;
+        border-top: solid 1px #333;
+    }
+
+    .item-craftable-container {
+        display: block;
+        vertical-align: top;
+
+        img {
+            border-radius: 50%;
+            max-height: 18px;
+            vertical-align: bottom;
+            margin: -2px 10px 0px 0;
+            box-shadow: 0 1px 2px #000;
+        }
+
+        .item-craftable-sr-quantity,
+        .item-craftable-sr-name {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .item-craftable-sr-quantity {
+            color: $yellow;
+            margin: 1px 20px 0 0;
+        }
+
+        .item-craftable-sr-name {
+            display: inline-block;
+            width: 300px;
+            font-size: 14px;
+        }
+    }
+
+    .item-craftable-goto {
+        display: inline-block;
+        padding: 6px 8px;
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 2px;
+    }
+}
+
+//
+// Lightbox for images
+//
+.lightbox {
+    background-color: rgba(0,0,0,0.8);
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: none;
+
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    .controls {
+        text-align: right;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    button {
+        height: 40px;
+        line-height: 40px;
+        background-color: darken($red, 20%);
+        color: #fff;
+        border: none;
+        padding: 0 20px;
+    }
+
+    a {
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        background-color: #444;
+        color: #fff;
+        border: none;
+        padding: 0 20px;
+    }
+
+    img {
+        @include center();
+        position: absolute;
+        max-width: 90%;
+        max-height: 90%;
+    }
+}
+
+//
+// Banner images on content
+//
+.content-user-banner {
+    display: block;
+    height: 120px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 3px;
+    border: solid 1px #222;
+    box-shadow: 0 0 2px #666;
+    margin-bottom: 10px;
+}
+
+.content-banner-container {
+    position: relative;
+    background-color: #2a2a2a;
+    border: solid 1px #2a2a2a;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 2px;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.content-banner {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 350px;
+    height: 100px;
+    background-size: 376px 120px;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    box-shadow: 0 1px 4px #000;
+    border: solid 1px #000;
+    border-radius: 3px;
+    z-index: 5;
+}
+
+.content-banner-blur {
+    position: absolute;
+    background-position: center center;
+    background-size: 110% 110%;
+    top: 0; left: 0; right: 0; bottom: 0;
+    filter: blur(5px);
+    overflow: hidden;
+}
+
+.tab-noshow {
+    text-align: center;
+    background-color: #444;
+    padding: 20px;
+    margin: 0 1px 10px 1px;
+}

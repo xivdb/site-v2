@@ -1,0 +1,182 @@
+//
+// Site Settings
+//
+$font: 'Open Sans', sans-serif, Helvetica, Arial, Verdana;
+$fontJa: Helvetica, Arial, Verdana;
+$code: 'Lucida Console', Monaco, monospace;
+
+$fontWeight: 400;
+$fontSize: 14px;
+$fontColor: #fff;
+$siteWidth: 970px;
+$siteWidthMobile: 530px;
+$siteWidthMobileMin: 300px;
+$bgColor: #111;
+$globalTextShadow: 0 1px 2px #222;
+
+//
+// Google Colors
+// based on: http://www.google.co.uk/design/spec/style/color.html#color-color-palette
+//
+$red: #ff3a36;
+$blue: #13a8ff;
+$green: #31ff0c;
+$yellow: #f7e649;
+$orange: #ff8d00;
+$purple: #ff4efa;
+$white: #fff;
+$gray: #aaa;
+$black: #000;
+$danger: #ff5252;
+$pink: #ff3e7f;
+$highlight: #ffc99a;
+$highlighter: #ffd664;
+$lime: #bfff43;
+$link: #2bceff;
+
+// icon sizes
+$iconSize: 92px;
+
+//
+// Game rarity colors
+//
+$rarity-common: #fff;
+$rarity-scares: #C4F58B;
+$rarity-rare: #78D4FF;
+$rarity-relic: #E55FFC;
+$rarity-aetherial: #FE82AC;
+
+//
+// Media queries
+//
+$mq-responsive: true;
+$mq-breakpoints: (
+    desktop: $siteWidthMobile
+);
+
+//
+// Third party scss
+//
+@import "libs/_resetalize";
+@import "libs/_mixins";
+@import "libs/_mq";
+
+//
+// Auto gen
+//
+@import "generated/_autogen";
+@import "generated/_quickies";
+
+
+
+// ----------------------------------------------
+
+
+
+//
+// Content pages
+//
+@import "theme/content/maps";
+@import "theme/content/extra_enemies";
+@import "theme/content/extra_instances";
+@import "theme/content/extra_loottable";
+@import "theme/content/extra_quests";
+
+//
+// Misc pages
+//
+@import "theme/pages/ranking";
+@import "theme/pages/profiles";
+
+//
+// Maps
+//
+@import "theme/tools/maps/general";
+@import "theme/tools/maps/embed";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+// Site scss
+//
+@import "_new/Base";
+@import "_new/BaseForms";
+@import "_new/BaseTables";
+@import "_new/Misc";
+@import "_new/MiscModules";
+@import "_new/MiscStar";
+
+//
+// Content
+//
+@import "_new/Content";
+@import "_new/ContentAccount";
+@import "_new/ContentAPI";
+@import "_new/ContentCommunity";
+@import "_new/ContentDev";
+@import "_new/ContentFeedback";
+@import "_new/ContentHome";
+@import "_new/ContentStatistics";
+@import "_new/ContentSecure";
+@import "_new/ContentBlogs";
+@import "_new/ContentBlocks";
+@import "_new/ContentPages";
+@import "_new/ContentSubmitInformation";
+@import "_new/ContentCharacters";
+
+//
+// Pages
+//
+@import "_new/Pages";
+
+//
+// Tools
+//
+@import "_new/ToolsMaps";
+@import "_new/ToolsLoreFinder";
+@import "_new/ToolsIcons";
+@import "_new/ToolShoppingCart";
+@import "_new/ToolWardrobe";
+@import "_new/ToolsSync";
+
+//
+// Layout
+//
+@import "_new/LayoutFilters";
+@import "_new/LayoutHeader";
+@import "_new/LayoutSearch";
+
+//
+// ZAM
+//
+@import "_new/ZAM";
+@import "_new/ZAMAds";
+
+//
+// ACP
+//
+@import "_new/ACP";

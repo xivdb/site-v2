@@ -1,0 +1,20 @@
+{# help text #}
+{% if content.help is not empty %}
+    {{ Layout.block([
+        '<div class="lc-help">'~ content.help|nl2pa|raw ~'</div>',
+    ]) }}
+{% endif %}
+
+{# Roulette #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[1119], content.is_company_status ? '<em class="green">✔</em>' : '<em class="red">✖</em>'),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

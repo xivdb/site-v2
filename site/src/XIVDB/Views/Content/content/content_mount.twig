@@ -1,0 +1,27 @@
+{# help text #}
+{% if content.info1 is not empty %}
+    {{ Layout.block([
+        '<div class="lc-help">'~ content.info1|nl2pa|raw ~'</div><br>',
+		'<div class="lc-help lc-help-highlight">'~ content.info2|nl2pa|raw ~'</div>'
+    ]) }}
+{% endif %}
+
+{# summon #}
+{% if content.summon %}
+	<div class="layout-panel layout-row">
+		<div>
+			<img src="{{ content.icon2 }}">
+		</div>
+		<div>
+			<h4>Summon</h4>
+			<div class="lc-help">{{ content.summon|nl2pa|raw }}</div>
+		</div>
+	</div>
+{% endif %}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

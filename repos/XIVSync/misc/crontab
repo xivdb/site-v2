@@ -1,0 +1,54 @@
+#
+# Character Sync
+#
+
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 0
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 1
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 2
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 3
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 4
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 5
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 6
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 7
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 8
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 9
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 10
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 11
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 12
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 13
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 14
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 15
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateCharacters.php 16
+
+#
+# Achievements Sync
+#
+
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 0
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 1
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 2
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 3
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 4
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 5
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 6
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 7
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 8
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 9
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 10
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 11
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 13
+
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 20
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 21
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 22
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 22
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 24
+#* * * * * /usr/bin/php /home/xivsync/sync/autoUpdateAchievements.php 25
+
+#
+# General Sync
+#
+
+* * * * * /usr/bin/php /home/xivsync/sync/autoAddCharacters.php 0
+* * * * * /usr/bin/php /home/xivsync/sync/autoAddFreeCompany.php 0
+* * * * * /usr/bin/php /home/xivsync/sync/autoAddFreeCompanyMembers.php 0

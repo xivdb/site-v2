@@ -1,0 +1,156 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Game Data{% endset %}
+{% set page = 'gamedata' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Game Data' }
+]) }}
+
+{% include 'Dashboard/Default/gamedata.html.twig' %}
+
+<div class="container">
+    <h1>Game Data ({{ patch.name_en }})</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <button type="button" class="btn btn-success fr" onclick="GameData.runLodestone();">Start</button>
+                    <h4>Lodestone Parse</h4>
+                    <p><strong>{{ lodestone.items|length }}</strong> items require lodestone verification.</p>
+                    <div class="ls-verify">
+                        <progress class="progress progress-success" value="0" max="100">0%</progress>
+                        <div class="mt10 fs13 light setup-status">Ready.</div>
+                        <div class="mt5 fs13 light setup-time"><i class="fa fa-clock-o"></i> <span>(Not Started)</span></div>
+                    </div>
+                    <script>var items = {{ lodestone.items|json_encode|raw }};</script>
+                    <br>
+                    <textarea id="lodestone-results" style="width: 100%; height: 200px;"></textarea>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <button type="button" class="btn btn-success fr" onclick="GameData.runConnections();">Start</button>
+                    <h4>Connections</h4>
+                    <p>Run {{ connections }} connections between data content</p>
+
+                    <div class="dataconnections">
+                        <progress class="progress progress-success" value="0" max="100">0%</progress>
+                        <div class="mt10 fs13 light setup-status">Ready.</div>
+                    </div>
+                    <script>var size = {{ connections }};</script>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <br>
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h4>Actions</h4>
+            <ul>
+                <li><a href="/gamedata/nulls">Remove Null Entries</a></li>
+                <li><a href="/gamedata/copyicons">Copy Game Icons</a></li>
+                <li><a href="/gamedata/maps">Import Map Positions</a></li>
+                <li><a href="/gamedata/fixleveitems">Import Leve Items</a></li>
+                <li><a href="/misc/pythoncsv">Fix Python Extracted CSV</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <br><br>
+
+    <h2>Patch Update Process</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h4>First: Setup</h4>
+                    <ol>
+                        <li>Update game client</li>
+                        <li><a href="/gamedata/patches">Create a new patch</a>, ensure the extract folder is set as this will automatically create a folder and setup the PHP defines. It will also update the python config with the current patch set.</li>
+                        <li>Run the following python commands (from: <code>tools/data-extract/</code>):
+                            <ul>
+                                <li><code>dump_exd.bat</code> (or: <code>python xivdmcli.py extract json</code>)</li>
+                            </ul>
+                        </li>
+                        <li>Run the following saint commands (from: <code>tools/saint-coinach-cmd/SaintCoinach.Cmd.exe</code>):
+                            <ul>
+                                <li><code>rawexd</code></li>
+                                <li><code>ui</code></li>
+                                <li><code>maps layers</code></li>
+                            </ul>
+                        </li>
+                        <li>Copy: <code>[patch date]/**</code> to: <code>extracts/[patch folder]/saint/**</code></li>
+                        <li>Rename rawexd to exd</li>
+                        <li>Copy icons manually, too slow otherwise</li>
+                        <li>Compress maps manually, and copy across</li>
+                    </ol>
+                </li>
+                <li class="list-group-item">
+                    <h4>Second: Extract + Import</h4>
+                    <ol>
+                        <li>Upload Maps</li>
+                        <li>Make sure nothing major has changed using Winmerge or w/e!</li>
+                        <li>Run: <strong>Data Import > Process All</strong></li>
+                        <li><a href="/gamedata/nulls" target="_blank">Remove Null Entries</a></li>
+                        <li><a href="/gamedata/fixleveitems">Import Leve Items</a></li>
+                        <li>Upload icons to site</li>
+                        <li>Run: <strong>Lodestone Parse</strong> (above, not all complete)</li>
+                        <li>Run: <strong>Connections</strong> (above)</li>
+                        <li>Go into vagrant, <code>cd /vagrant/server/database/</code>, run: <code>bash dump_updated.sh</code></li>
+                        <li>Upload SQL dump to: <code>/var/www/xivdbv25/server/database</code>, make sure to run <code>bash backup.sh</code> and then run: <code>bash import_updated.sh</code> to import.</li>
+                        <li>Update <code>db_patch</code> manually</li>
+                        <li>On live, run: <code>redis-cli flushall</code></li>
+                        <li>Check stuff works</li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h4>Manual Intervention</h4>
+
+                    <p>If the patch folder fails to create:</p>
+                    <ol>
+                        <li>Create patch folder in extracts, eg: <code>extracts/extract-325</code></li>
+                        <li>Append this onto: <code>app/settings.patches.php</code></li>
+                    </ol>
+
+                    <p>If the patch config fails in python:</p>
+                    <ol>
+                        <li>Update: <code>tools/data-extract/config.cfg</code> output path to new patch folder</li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Python Commands</h2>
+            <ul>
+                <li>python xivdmcli.py extract exd</li>
+                <li>python xivdmcli.py extract exh</li>
+                <li>python xivdmcli.py extract json</li>
+                <li>python xivdmcli.py extract gen -n icons</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h2>Saint Commands</h2>
+            <ul>
+                <li>rawexd</li>
+                <li>ui</li>
+                <li>maps layers</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

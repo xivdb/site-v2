@@ -1,0 +1,19 @@
+{% extends 'Email/default.twig' %}
+
+{% block email_body %}
+
+    <h1>Welcome to XIVDB</h1>
+
+    <p><strong>Hello {{ username }}!</strong></p>
+
+    <p>Your account has been created, you can <a href="{{ defines.SECURE }}/login" target="_blank">login</a>.</p>
+
+    <p>Being a member allows you to join the community for one of the largest databases and resources for
+        Final Fantasy XIV, your voice will be heard and you can share your knowledge.
+        You can post screenshots, comment and reply to other players, help someone find their way!</p>
+
+    <p>If you need any help at all, please email: <strong>kupo@xivdb.com</strong>.</p>
+
+    <p>Enjoy!</p>
+
+{% endblock %}

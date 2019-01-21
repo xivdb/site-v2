@@ -1,0 +1,134 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% set hasAttributeStats = false %}
+{% set hasBaseStats = false %}
+
+{% block html %}
+{% spaceless %}
+    {# header #}
+    {{ Layout.header(content, template_categories) }}
+
+    {# help text #}
+    {{ Layout.datahelp(content.help) }}
+
+    {# Attributes #}
+    {% if content.attributes_base is defined and content.attributes_base is not empty %}
+
+        {% set attributes = [
+            { 'title': languages.params[12], 'field': 'damage', 'hq': 'damage_hq' },
+            { 'title': languages.params[13], 'field': 'magic_damage', 'hq': 'magic_damage_hq' },
+            { 'title': languages.params[21], 'field': 'defense', 'hq': 'defense_hq' },
+            { 'title': languages.params[24], 'field': 'magic_defense', 'hq': 'magic_defense_hq' },
+            { 'title': languages.params[18], 'field': 'block_strength', 'hq': 'block_strength_hq' },
+            { 'title': languages.params[17], 'field': 'block_rate', 'hq': 'block_rate_hq' },
+            { 'title': languages.params[20], 'field': 'auto_attack', 'hq': 'auto_attack_hq' },
+            { 'title': 'DPS', 'field': 'dps', 'hq': 'dps_hq', 'bottom': true },
+            { 'title': languages.params[14], 'field': 'delay', 'hq': 'delay_hq', 'bottom': true },
+        ] %}
+
+        <div class="xivdb-cc" align="center">
+        {% for attr in attributes %}
+            {% if content.attributes_base[attr.field] is defined and content.attributes_base[attr.field] > 0 %}
+                {% set hasBaseStats = true %}
+
+                <span class="xivdb-cc-block">
+                    <div class="xivdb-cc-bt">{{ attr.title }}</div>
+                    <div class="xivdb-cc-bn">
+                        {{ content.attributes_base[attr.field]|round(2) }}
+                        {% if content.attributes_base[attr.hq] > 0 and content.attributes_base[attr.hq] != content.attributes_base[attr.field] %}
+                            &nbsp;<span style="color:#95b153;font-size:18px;">{{ content.attributes_base[attr.hq]|round(2) }}</span>
+                        {% endif %}
+                    </div>
+                </span>
+
+            {% endif %}
+        {% endfor %}
+        </div>
+
+    {% endif %}
+
+    <div class="gap15"></div>
+
+    {# Params #}
+    {% if content.attributes_params is defined and content.attributes_params is not empty %}
+    <div class="xivdb-cs">
+        {% for param in content.attributes_params if param.name is not empty %}
+            {% set hasAttributeStats = true %}
+            <div>
+                <span class="xivdb-csb-title">{{ param.name }}</span>
+                <span class="xivdb-csb-number">{{ param.value }}</span>
+                <span class="xivdb-csb-number2">
+                    {% if param.value_hq > 0 and param.value != param.value_hq %}
+                        {{ param.value_hq }}
+                    {% endif %}
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if hasAttributeStats or hasBaseStats %}<hr>{% endif %}
+
+    {{ Layout.dataline(languages.custom[587], content.level_item, 'xivdb-yellow') }}
+    {{ Layout.dataline(languages.custom[1136], content.level_equip, 'xivdb-yellow') }}
+
+    {% if content.classjobs is defined and content.classjobs %}
+        {{ Layout.dataline(languages.custom[372], content.classjob_category.name) }}
+    {% endif %}
+
+    {% set html %}
+        {% set slots = (content.materia_slot_count -1) %}
+        {% if content.materia_slot_count > 0 %}
+            {{ content.materia_slot_count }}
+            {% for i in range(0, slots) %}
+                <span class="materia-slot"></span>
+            {% endfor %}
+        {% else %}
+            <em class="xivdb-light">{{ languages.custom[880] }}</em>
+        {% endif %}
+    {% endset %}
+    {{ Layout.dataline(languages.custom[370], html) }}
+
+    {% set html %}
+        {% if content.price_sell > 0 %}
+            {{ content.price_sell|number_format }}
+        {% else %}
+            <span class="xivdb-light">{{ languages.custom[354] }}</span>
+        {% endif %}
+        {% if content.price_sell_hq > 0 %}
+            &nbsp;(<em class="xivdb-yellow fs11">HQ</em>&nbsp;<em class="xivdb-lime">{{ content.price_sell_hq|number_format }}</em>)
+        {% endif %}
+    {% endset %}
+    {{ Layout.dataline(languages.custom[355], html) }}
+
+
+    {% if content.is_reducible %}
+        {% set html %}
+            <em class="xivdb-sky">Lv</em>&nbsp; {{ content.reducible_level }}
+            &nbsp;
+            <img src="{{ defines.URL }}/img/classes/set1/{{ content.reducible_classjob.icon }}.png" class="repair-icon" height="24">
+            {{ content.reducible_classjob.name }}
+        {% endset %}
+        {{ Layout.dataline(languages.custom[887], html) }}
+    </div>
+    {% endif %}
+
+    {% if content.item_repair > 0 %}
+        {% set repairItem = content.item_repair %}
+        {% set repairClass = content.classjob_repair %}
+        {% set html %}
+            {{ repairItem.name }} (<span class="xivdb-yellow">Lv {{ repairClass.level }}</span> {{ repairClass.name }})
+        {% endset %}
+        {{ Layout.dataline(languages.custom[1137], html) }}
+    {% endif %}
+
+    <div class="xivdb-isz">
+        {% include template_flags ignore missing %}
+    </div>
+
+{% endspaceless %}
+{% endblock %}

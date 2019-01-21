@@ -1,0 +1,15 @@
+{# Render a character row #}
+{% macro character(data, isMain) %}
+	{% set isMain = isMain ? true : data.character_is_main %}
+	<div class="acc-char-row">
+		<img src="{{ data.character_avatar }}" height="42" width="42">
+		<div class="acc-char-info">
+			{{ data.character_name }}<em>{{ data.character_server }}</em>
+
+			<a href="/account/characters/delete/{{ data.lodestone_id }}" class="red">{{ languages.custom[330] }}</a>
+			{% if isMain == false %}
+				<a href="/account/characters/switch/{{ data.lodestone_id }}">{{ languages.custom[970] }}</a>
+			{% endif %}
+		</div>
+	</div>
+{% endmacro %}

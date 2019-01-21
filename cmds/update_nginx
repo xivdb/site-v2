@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+rm /etc/nginx/sites-available/default
+cp /vagrant/server/nginx/default /etc/nginx/sites-available/default
+cp /vagrant/server/nginx/nginx.conf /etc/nginx/nginx.conf
+sudo service nginx configtest
+sudo service nginx restart
+
+echo "Complete";

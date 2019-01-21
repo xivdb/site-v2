@@ -1,0 +1,158 @@
+// ----------------------------------------------------------------------
+// Tables
+// ----------------------------------------------------------------------
+table:not(.xivdb-frame):not(.table-clean) {
+    border: solid 1px #222;
+    width: 100%;
+
+    th, td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    th {
+        color: #fff;
+        font-weight: 500;
+        text-align: left;
+        background-color: #555;
+        border-right: solid 1px #222;
+        border-bottom: solid 1px #222;
+        user-select: none;
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 400;
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+
+    tr {
+        td {
+            background-color: rgba(100,100,100,0.3);
+            border-right: solid 1px #222;
+            font-size: 13px;
+
+            &:last-child {
+                border-right: none;
+            }
+
+            &.block {
+                border-top: solid 1px rgba(0,0,0,0.3);
+                border-bottom: solid 1px rgba(0,0,0,0.3);
+                background-color: rgba(130,130,130,0.3);
+                padding: 3px;
+            }
+
+            &.unique {
+                background-color: rgba(70,70,70,0.3);
+                border-bottom: solid 1px rgba(0,0,0,0.3);
+            }
+
+            &.icon {
+                line-height: 3px;
+                text-align: center;
+            }
+
+            em.td-note {
+                font-size: 12px;
+                margin-left: 5px;
+                color: #aaa;
+            }
+
+            img {
+                vertical-align: bottom;
+            }
+        }
+
+        &:nth-of-type(even) {
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        &:hover td:not(.block):not(.nohover) {
+            background-color: rgba(0,0,0,0.1);
+        }
+    }
+
+    &:not(.not-sortable) th:hover {
+        cursor: pointer;
+        background-color: darken($blue, 10%);
+        color: #fff;
+    }
+}
+
+.table-clean {
+    border-radius: 3px;
+    width: 100%;
+    border: solid 1px #282828;
+
+    th {
+        text-transform: uppercase;
+        font-size: 11px;
+        background-color: #282828;
+    }
+
+    th,td {
+        font-size: 11px;
+        padding: 5px;
+
+        color: #ccc;
+        text-align: left;
+        border-right: solid 1px #282828;
+        border-bottom: solid 1px #282828;
+        user-select: none;
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+// Page is used when a table has paging added to it.
+.table-pager {
+    text-align: center;
+    font-size: 13px;
+    user-select: none;
+
+    div {
+        background-color: #555;
+        display: inline-block;
+        border-radius: 0 0 2px 2px;
+        overflow: hidden;
+    }
+
+    span {
+        color: #fff;
+        display: inline-block;
+        padding: 6px 15px;
+        background-color: #555;
+
+        &.first i, &.prev i {
+            margin-right: 5px;
+        }
+
+        &.next i, &.last i {
+            margin-left: 5px;
+        }
+
+        &.prev {
+            border-left: solid 1px #111;
+        }
+
+        &.next {
+            border-right: solid 1px #111;
+        }
+
+        &:hover:not(.pagedisplay) {
+            background-color: #666;
+            cursor: pointer;
+        }
+
+        &.pagedisplay
+        {
+            background-color: #3a3a3a;
+            border-left: solid 1px #111;
+            border-right: solid 1px #111;
+        }
+    }
+}

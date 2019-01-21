@@ -1,0 +1,34 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}{{ post.subject }}{% endset %}
+{% set pagedescription -%}{{ post.text|replace({ "\n" : " ", "<p>" : " <p>" })|slice(0, 500)|raw }}...{% endset %}
+
+{% block body %}
+<div class="content-block content-nopad">
+    <div class="bp-top">
+        <div>
+            <span>{{ languages.custom[1192] }}</span>
+            <span>{{ post.subject }}</span>
+            <span>{{ post.updated|date('F j, Y') }}</span>
+        </div>
+    </div>
+    <div class="bp-more">
+        <button type="button">{{ languages.custom[918] }}</button>
+        <div class="bp-list">
+            {% for blog in blogs %}
+                <div>
+                    <a href="/devblog?id={{ blog.id }}">{{ blog.subject }}</a>
+                    <em>{{ blog.updated|date('F j, Y') }}</em>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="bp-text">
+        {{ post.text|raw }}
+    </div>
+</div>
+<script type="text/javascript">
+$('.bp-more button').on('click', function() {
+    $('.bp-list').toggle();
+})
+</script>
+{% endblock %}

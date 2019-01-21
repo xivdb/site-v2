@@ -1,0 +1,44 @@
+<div class="tab-block" id="tab-block-screenshots">
+
+    {% if user %}
+    <div id="screenshot-form" class="screenshot-form">
+        <div class="ss-instruction1">{{ languages.custom[1085] }}</div>
+        <div class="ss-instruction2">{{ languages.custom[1086] }}</div>
+    </div>
+    {% else %}
+    <div class="not-logged-in">
+        <a href="{{ defines.SECURE }}/login">{{ languages.custom[263] }}</a> or <a href="{{ defines.SECURE }}/register">{{ languages.custom[1073] }}</a> to post screenshots!
+    </div>
+    {% endif %}
+
+    <div class="no-screenshots">
+        <span class="moogleface"></span>
+        <span class="green">{{ languages.custom[1084] }}</span>
+    </div>
+
+    <div class="screenshots">
+    </div>
+
+</div>
+
+{% raw %}
+<script id="ui-image" type="text/x-mustache-template">
+    <span class="screenshot-post tt {{#is_author}}screenshot-author{{/is_author}}">
+        <a href="{{ file }}" target="_blank">
+            <img src="{{ small }}" data-img-id="{{ id }}">
+        </a>
+
+        <div class="screenshot-uploader">
+        {{#if character_name}}
+            {{ character_name }} - {{ username }}
+        {{else}}
+            {{ username }}
+        {{/if}}
+        </div>
+
+        {{#if is_author}}
+            <button type="button" data-tt="Delete image" class="screenshot-delete" data-id="{{ id }}"><i class="fa fa-trash-o"></i></button>
+        {{/if}}
+    </span >
+</script>
+{% endraw %}

@@ -1,0 +1,32 @@
+<?php
+
+$liveEnvironment = false;
+
+// cache detect
+$cached = $liveEnvironment;
+if (!isset($console) && isset($_COOKIE['cache']) && $_COOKIE['cache'] == 'disable') {
+    $cached = false;
+}
+
+// environment settings
+define('DEV', $liveEnvironment ? false : true);
+define('CACHE', false);
+define('SHOW', $liveEnvironment ? false : true);
+define('TRACKING', false);
+
+// url settings
+define('URL', 'http://xivdb.local');
+define('API', 'http://api.xivdb.local');
+define('SECURE', 'http://secure.xivdb.local');
+define('XIVSYNC', 'http://xivdb.local');
+//define('XIVSYNC', 'https://xivsync.com:8443');
+
+// cookies
+define('COOKIE_DOMAIN', '.xivdb.local');
+
+// storage
+define('BLOCK_STORAGE', __DIR__.'/../mnt');
+define('BLOCK_STORAGE_ENABLED', true);
+
+// global defines
+require __DIR__ .'/defines.global.php';

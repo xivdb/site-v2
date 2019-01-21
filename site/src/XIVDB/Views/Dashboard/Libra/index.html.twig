@@ -1,0 +1,43 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Libra{% endset %}
+{% set page = 'gamedata' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Game Data' },
+	{ title: 'Libra' }
+]) }}
+
+{% include 'Dashboard/Default/gamedata.html.twig' %}
+
+<div class="container">
+    <h1>Libra</h1>
+    <div class="row">
+
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="/libra/import/process" class="btn btn-primary btn-block">Process Libra SQLite</a>
+
+                    <br>
+
+                    <p>Libra process will only affect items which have not parsed Lodestone already.</p>
+
+                    <p><strong>Current processed items:</strong></p>
+
+                    <ul>
+                        <li>Items: Lodestone ID</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Sqlite File:</strong> <code>{{ filename }}</code>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

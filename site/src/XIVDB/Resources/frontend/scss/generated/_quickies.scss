@@ -1,0 +1,98 @@
+// ----------------------------------------------------------------------
+// Bunch of quick css which would be used in on site templating (wiki like)
+// ----------------------------------------------------------------------
+.nopad { padding: 0 !important; margin: 0 !important; }
+.nomar { margin: 0 !important; }
+.circle { border-radius: 50%; }
+.split { width: 1px; background-color: #666; display: inline-block; }
+
+.tal { text-align: left; }
+.tar { text-align: right; }
+.tac { text-align: center !important; }
+
+.vat { vertical-align: top; }
+.vab { vertical-align: bottom; }
+.vam { vertical-align: middle; }
+
+.fl { float: left !important; }
+.fr { float: right !important; }
+.fh { height: 100%; position: relative; bottom: 0; top: 0; }
+
+.i, .italic { font-style: italic; }
+.b, .bold { font-weight: bold; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.zero { left: 0; top: 0; }
+.faint { opacity: 0.6; &:hover { opacity: 1; } }
+.fainter { opacity: 0.3; &:hover { opacity: 1; }  }
+.light { opacity: 0.8; }
+.lighter { opacity: 0.4;  }
+.upper { text-transform: uppercase; }
+.pointer { cursor: pointer; }
+.hide { display: none; }
+.inline { display: inline-block; }
+.code { font-family: $code; }
+.underline { text-decoration: underline; }
+.wordwrap { word-wrap: break-word; }
+.fw400 { font-weight: 400; }
+.bull {
+    display: inline-block;
+    margin: 4px 5px 0 5px;
+    text-shadow: none;
+    font-size: 6px;
+    vertical-align: top;
+    opacity: 0.4;
+    text-shadow: none;
+}
+
+.pure { color: #fff !important }
+.white { color: $white !important; }
+.light { color: darken($white, 30%) !important; }
+.red { color: $red !important; }
+.blue { color: $blue !important; }
+.green { color: $green !important; }
+.yellow { color: $yellow !important; }
+.orange { color: $orange !important; }
+.purple { color: $purple !important; }
+.gray { color: $gray !important; }
+.lime { color: $lime !important; }
+.pink { color: $pink !important; }
+.sky { color: lighten($blue, 15%) !important; }
+.magenta { color: lighten($purple, 15%) !important; }
+.highlight { color: $highlight !important; }
+
+a.red:hover { color: lighten($red, 20%); }
+a.blue:hover { color: lighten($blue, 20%); }
+a.green:hover { color: lighten($green, 20%); }
+a.yellow:hover { color: lighten($yellow, 20%); }
+a.orange:hover { color: lighten($orange, 20%); }
+a.purple:hover { color: lighten($purple, 20%); }
+a.gray:hover { color: lighten($gray, 20%); }
+a.lime:hover { color: lighten($green, 30%); }
+
+// rarity colors
+.r-common { background: $rarity-common; }
+.r-scares { background: $rarity-scares; }
+.r-rare { background: $rarity-rare; }
+.r-relic { background: $rarity-relic; }
+.r-aetherial { background: $rarity-aetherial; }
+
+.rarity-common  { color: $rarity-common; }
+.rarity-scares { color: $rarity-scares; }
+.rarity-rare { color: $rarity-rare; }
+.rarity-relic { color: $rarity-relic; }
+.rarity-aetherial { color: $rarity-aetherial; }
+
+// clear float
+.cf {
+    *zoom: 1;
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}

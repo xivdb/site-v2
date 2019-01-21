@@ -1,0 +1,1434 @@
+{#
+
+    block
+        - Full width
+        - With background color
+
+    Row
+        - Full with
+        - No background color
+        - setup expecting columns (flexbox)
+
+    Col
+        - Flexbox columns
+
+
+
+    Individual content is not wrapped in anything, this
+    should be done on the content template as multiple
+    pieces of content (eg a list of quests) should be
+    wrapped in its own block.
+
+    View content_achievement.twig as an example.
+#}
+
+{# Show a block, can be an array #}
+{% macro block(html) %}
+    {% spaceless %}
+    <div class="layout-block">
+        {% if html is iterable %}
+            {% for line in html %}
+                {{ line|raw }}
+            {% endfor %}
+        {% else %}
+            {{ html|raw }}
+        {% endif %}
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{% macro multiblock(title, html) %}
+    <div class="layout-block">
+        <h4>{{ title }}</h4>
+        {% for line in html %}
+            {{ line|raw }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{# Flexbox wrapper #}
+{% macro row(elements) %}
+    {% spaceless %}
+    <div class="layout-row">
+        {% for html in elements %}
+            {% if html|trim|length > 2 %}
+            <div>
+                {{ html }}
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+
+{% macro comment(post) %}
+    {% if post %}
+    <h4>
+        <strong style="color: #fff">Comment:&nbsp;&nbsp;</strong>
+        {% if post.character_name %}
+            <strong>{{ post.character_name }}</strong>
+        {% else %}
+            <strong>{{ post.username }}</strong>
+        {% endif %}
+        &nbsp;-&nbsp;
+        {{ post.time|date('F jS, Y') }}
+        &nbsp;-&nbsp;
+        Patch: {{ post.patch }}
+    </h4>
+    <div>
+        {{ post.text|raw }}
+    </div>
+    {% else %}
+        <small>No comments, be the first and post one!</small>
+    {% endif %}
+{% endmacro %}
+
+{# Flexbox stat item (add to wrapper) #}
+{% macro col(title, value, value_color) %}
+    {% spaceless %}
+        {% if value or value > 0 %}
+            <h4>{{ title }}</h4>
+            <p{% if value_color is defined %} class="{{ value_color }}"{% endif %}>{{ value|raw }}</p>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
+{# Show a banner image #}
+{% macro bannerUser(type, id, image) %}
+    <div class="content-user-banner" style="background-image:url(/screenshots/{{ type }}/{{ id }}/{{ image.filename }});"></div>
+{% endmacro %}
+
+{# Show a banner image #}
+{% macro bannerContent(image) %}
+    <div class="content-banner-container">
+        <div class="content-banner-blur" style="background-image:url({{ image }});"></div>
+        <div class="content-banner" style="background-image:url({{ image }});"></div>
+    </div>
+{% endmacro %}
+
+{#
+    ----------- Content specific -----------
+#}
+
+{# Display a title #}
+{% macro title(title) %}
+    {% spaceless %}
+    <div class="lc lc-title">
+        <i class="fa fa-mars"></i>
+        <a href="{{ title.url }}" data-xivdb-seturlicon="false">{{ title.name }}</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <i class="fa fa-venus pr10"></i>
+        <a href="{{ title.url }}" data-xivdb-seturlicon="false">{{ title.name_female }}</a>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a item #}
+{% macro item(item) %}
+    {% spaceless %}
+    <div class="lc lc-item">
+        <img src="{{ item.icon }}" height="18">
+        <a href="{{ item.url }}" data-xivdb-seturlicon="false">{{ item.name }}</a>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a quest #}
+{% macro quest(quest) %}
+    {% spaceless %}
+    <div class="lc lc-quest">
+        <img src="/img/game/071000/071021.png" height="18">
+        <a href="{{ quest.url }}" data-xivdb-seturlicon="false">{{ quest.name }}</a>
+        <em>{{ quest.genre_name }}</em>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a placename #}
+{% macro placename(placename, x, y) %}
+    {% if placename.url is defined %}
+    {% spaceless %}
+    <div class="lc lc-placename">
+        <div class="lc-sub">
+            <div class="lc-left">
+                <img src="/img/ui/aether.png" width="32">
+            </div>
+            <div class="lc-right">
+                <a href="{{ placename.url }}" data-xivdb-ignore="1">{{ placename.name }}</a>
+                {% if placename.region.name is defined and placename.region.name is not empty %}
+                    <em>({{ placename.region.name }})</em>
+                {% endif %}
+                {% if x and y %}
+                    <br>
+                    <span class="faint">X:</span> {{ x }},
+                    <span class="faint">Y:</span> {{ y }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endspaceless %}
+    {% endif %}
+{% endmacro %}
+
+{# Display a achievement #}
+{% macro achievement(achievement) %}
+    {% spaceless %}
+    <div class="lc lc-achievement">
+        <img src="{{ achievement.icon }}" height="18">
+        <a href="{{ achievement.url }}" data-xivdb-seturlicon="false">{{ achievement.name }}</a>
+        <em class="yellow">+{{ achievement.points }}</em>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a enemy #}
+{% macro enemy(enemy) %}
+    {% spaceless %}
+    <div class="lc lc-enemy">
+        <a href="{{ enemy.url }}" data-xivdb-seturlicon="false">{{ enemy.name }}</a>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a npc #}
+{% macro npc(npc) %}
+    {% spaceless %}
+    <div class="lc lc-npc">
+        {% if npc.url is defined %}
+            <a href="{{ npc.url }}" data-xivdb-ignore="1" class="lc-npc-name">{{ npc.name }}</a>
+
+            {% if npc.map_primary %}
+                {{ _self.placename(npc.map_primary.placename, npc.map_primary.position.x, npc.map_primary.position.y) }}
+            {% elseif npc.placename %}
+                {{ _self.placename(npc.placename) }}
+            {% endif %}
+        {% else %}
+            ???
+        {% endif %}
+
+
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a zone (that contains a placename) #}
+{% macro zone(zone) %}
+    {% spaceless %}
+    <div class="lc lc-zone">
+        <img src="{{ zone.icon }}" height="18">
+        <a href="{{ zone.placename.url }}" data-xivdb-ignore="1">{{ zone.placename.name }}</a>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a tomestone token #}
+{% macro tomestone(tomestone, value, limit) %}
+    {% spaceless %}
+    <div class="lc-tomestone">
+        <div>
+            <img src="{{ tomestone.icon }}" height="36">
+        </div>
+        <div>
+            <div>
+                <em class="yellow">{{ value }}</em>
+                &nbsp;
+                <a href="{{ tomestone.url }}" data-xivdb-seturlicon="false">{{ tomestone.name }}</a>
+            </div>
+            <div>
+                {{ languages.custom[1063] }}: <strong>{{ limit ? limit : languages.custom[880] }}</strong>
+            </div>
+        </div>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display an event item #}
+{% macro eventitem(item) %}
+    {% spaceless %}
+    <div class="lc lc-eventitem">
+        <img src="{{ item.icon }}" height="18">
+        <span class="rarity-{{ item.color }}">{{ item.name }}</span>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a fate objective list #}
+{% macro fateobjectives(fate) %}
+    {% spaceless %}
+    <div class="layout-block">
+        <h4>{{ languages.custom[844] }}</h4>
+        <div class="lc-objectives">
+            <p>{{ fate.objective_0 }}</p>
+            {% if fate.objective_1 %}
+        </div>
+
+        <h4>{{ languages.custom[863] }}</h4>
+        <div class="lc-objectives">
+            <ul>
+                <li>{{ fate.objective_1 }}</li>
+                {% if fate.objective_2 %}<li>{{ fate.objective_2 }}</li>{% endif %}
+                {% if fate.objective_3 %}<li>{{ fate.objective_3 }}</li>{% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display materia #}
+{% macro materia(slots) %}
+    {% spaceless %}
+    {% if slots > 0 %}
+        {{ slots }}
+        {% for i in range(1, slots) %}
+            <span class="materia-slot"></span>
+        {% endfor %}
+    {% else %}
+        {{ languages.custom[880] }}
+    {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display is statements #}
+{% macro isStatements(content) %}
+    {% spaceless %}
+    <div class="is-statements">
+    {% set flags = [
+        [ languages.custom[881], content.is_dated ],
+        [ languages.custom[357], content.is_unique ],
+        [ languages.custom[356], content.is_untradable ],
+        [ languages.custom[804], content.is_legacy ],
+        [ languages.custom[882], content.is_crest_worthy ],
+        [ languages.custom[883], content.is_desynthesizable ],
+        [ languages.custom[884], content.is_projectable ],
+        [ languages.custom[885], content.is_dyeable ],
+        [ languages.custom[886], content.is_convertible ],
+        [ languages.custom[887], content.is_reducible ]
+    ] %}
+
+    {% for flag in flags %}
+        {% set title = flag[0] %}
+        {% set value = flag[1] %}
+
+        {% if value %}
+            <em>{{ title }}</em>
+        {% endif %}
+    {% endfor %}
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a sell price #}
+{% macro sellprice(price, price_hq) %}
+    {% spaceless %}
+    <div class="lc">
+        {% if price > 0 %}
+            <img src="/img/ui/gil.png" class="lc-icon" height="18">{{ price|number_format }}
+            {% if price_hq > 0 %}
+                ({{ price_hq|number_format }} <span class="yellow">{{ languages.custom[888] }}</span>)
+            {% endif %}
+        {% else %}
+            {{ languages.custom[363] }}
+        {% endif %}
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a sell price #}
+{% macro gil(price) %}
+    {% spaceless %}
+    <div class="lc">
+        {% if price > 0 %}
+            <img src="/img/ui/gil.png" class="lc-icon" height="18">{{ price|number_format }}
+        {% endif %}
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a exp value #}
+{% macro exp(exp) %}
+    {% spaceless %}
+    <div class="lc">
+        {% if exp > 0 %}
+            <img src="/img/ui/exp.png" class="lc-icon" height="18">{{ exp|number_format }}
+        {% endif %}
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a repair #}
+{% macro repair(item, classjob, price) %}
+    {% spaceless %}
+    <div class="layout-block">
+        <h4>{{ languages.custom[350] }}</h4>
+        <div class="lc lc-flex">
+            <div>
+                <img src="{{ item.icon }}" height="18" class="lc-icon circle">
+                <a href="{{ item.url }}" data-xivdb-seturlicon="false">{{ item.name }}</a>
+            </div>
+            {% if classjob %}
+            <div>
+                <img src="/img/classes/set1/{{ classjob.icon }}.png" class="lc-icon" height="18"> <span class="yellow">{{ classjob.level }}</span> {{ classjob.name }}
+            </div>
+            {% endif %}
+            {% if price > 0 %}
+            <div>
+                <img src="/img/ui/gil.png" class="lc-icon" height="18">{{ price|number_format }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a rarity #}
+{% macro rarity(id) %}
+    {% spaceless %}
+    {% set idToColors = {
+        1: 'common',
+        2: 'scares',
+        3: 'rare',
+        4: 'relic',
+        7: 'aetherial'
+    } %}
+    {% set idToName = {
+        1: languages.custom[380],
+        2: languages.custom[891],
+        3: languages.custom[382],
+        4: languages.custom[383],
+        7: languages.custom[125],
+    } %}
+    <span class="rarity-{{ idToColors[id] }}">{{ idToName[id] }}</span>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Display a sell price #}
+{% macro leveAssignment(name, icon) %}
+    {% spaceless %}
+    <div class="lc">
+        <img src="{{ icon }}" class="lc-icon" height="18">
+        {{ name }}
+    </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{#
+    ----------- Item : Attributes -----------
+#}
+
+{% macro attributes(base, params) %}
+    <div class="lc-attributes-base">
+        {% set attributes = [
+            { 'title': languages.params[12], 'field': 'damage', 'hq': 'damage_hq' },
+            { 'title': languages.params[13], 'field': 'magic_damage', 'hq': 'magic_damage_hq' },
+            { 'title': languages.params[21], 'field': 'defense', 'hq': 'defense_hq' },
+            { 'title': languages.params[24], 'field': 'magic_defense', 'hq': 'magic_defense_hq' },
+            { 'title': languages.params[18], 'field': 'block_strength', 'hq': 'block_strength_hq' },
+            { 'title': languages.params[17], 'field': 'block_rate', 'hq': 'block_rate_hq' },
+            { 'title': languages.params[20], 'field': 'auto_attack', 'hq': 'auto_attack_hq' },
+            { 'title': languages.custom[329], 'field': 'dps', 'hq': 'dps_hq' },
+            { 'title': languages.params[14], 'field': 'delay', 'hq': 'delay_hq' },
+        ] %}
+
+        {% for attr in attributes %}
+            {% if base[attr.field] is defined and base[attr.field] > 0 %}
+            <div>
+                <h4>{{ attr.title }}</h4>
+                <span class="lc-val">{{ base[attr.field]|round(2) }}</span>
+                {% if base[attr.hq] > 0 and base[attr.hq] != base[attr.field] %}
+                    <span class="lc-val-hq" style="margin:0 0 0 10px;">{{ base[attr.hq]|round(2) }}</span>
+                {% endif %}
+            </div>
+
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="lc-attributes-params">
+        {% for attr in params %}
+            {% if attr.value > 0 %}
+            <div>
+                <div>{{ attr.name }}</div>
+                <div>
+                    {% if attr.is_food %}
+                        {{ attr.percent }}% &nbsp;
+                        <em class="faint fs11">{{ languages.custom[878] }}</em> {{ attr.value }}
+                    {% else %}
+                        {{ attr.value }}
+                    {% endif %}
+                </div>
+
+                <div>
+                {% if attr.value_hq > 0 and attr.value != attr.value_hq %}
+                    {% if attr.is_food %}
+                        {{ attr.percent_hq }}% &nbsp;
+                        <em class="faint fs11">{{ languages.custom[878] }}</em> {{ attr.value_hq }}
+                    {% else %}
+                        {{ attr.value_hq }}
+                    {% endif %}
+                {% else %}
+                &nbsp;
+                {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro attributesSpecial(params) %}
+<div class="lc-attributes-params">
+    {% for attr in params %}
+        {% if attr.value > 0 %}
+        <div>
+            <div>{{ attr.name }}</div>
+            <div>{{ attr.value }}{{ attr.id == 52 ? '%' : '' }}</div>
+            <div>&nbsp;</div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{#
+    ----------- Action : Skill Tres -----------
+#}
+
+{# Show a skill tree #}
+{% macro skilltree(json) %}
+    {% for index, data in json %}
+        {% if data.left_operand is defined %}
+            {{ _self.skilltreeCondition(data) }}
+        {% elseif index is same as("no") %}
+            {{ _self.skilltreeConditionNo(data) }}
+        {% elseif index is same as("yes") %}
+            {{ _self.skilltreeConditionYes(data) }}
+        {% else %}
+            <div class="lc-row">
+                {% if data is iterable %}
+                    {{ _self.skilltree(data) }}
+                {% else %}
+                    <div class="lc-line"> {{ data }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro skilltreeCondition(data) %}
+    <div class="lc-st-if">
+        <em>{{ languages.custom[857] }}:</em>
+        <i class="lime">(</i>
+            {% set left = data.left_operand %}
+            {% set opt = data.operator %}
+            {% set right = data.right_operand %}
+
+            {% if data.left_operand is same as("class_job") %}
+                {% set left = languages.custom[384] %}
+                {% set right = filters.classjob[right].name %}
+            {% elseif data.left_operand is same as("level") %}
+                {% set left = languages.custom[457] %}
+            {% endif %}
+            <span class="lc-st-var">{{ left }}</span>
+            <span class="lc-st-opt">{{ opt }}</span>
+            <span class="lc-st-var">{{ right }}</span>
+        <i class="lime">)</i>
+    </div>
+{% endmacro %}
+
+{% macro skilltreeConditionNo(data) %}
+    <div class="lc-st-if-no">
+        <em>{{ languages.custom[855] }}:</em>
+        {% if data is iterable %}
+            <i class="sky">[</i>
+            {{ _self.skilltree(data) }}
+            <i class="sky">]</i>
+        {% else %}
+            {% if data is empty %}
+                <span class="lc-st-noperk">{{ languages.custom[848] }}</span>
+            {% else %}
+                <span class="lc-st-no">{{ data }}</span>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro skilltreeConditionYes(data) %}
+    <div class="lc-st-if-yes">
+        <em>{{ languages.custom[856] }}:</em>
+        {% if data is iterable %}
+            <i class="sky">[</i>
+            {{ _self.skilltree(data) }}
+            <i class="sky">]</i>
+        {% else %}
+            {% if data is empty %}
+                <span class="lc-st-noperk">{{ languages.custom[848] }}</span>
+            {% else %}
+                <span class="lc-st-yes">{{ data }}</span>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{#
+    ----------- Tables -----------
+#}
+
+{% macro lootTable(items, start, end) %}
+    {% for kind, categories in items %}
+        {% if loop.index >= start and loop.index < end %}
+            <h3>{{ kind ? kind : languages.custom[232] }}</h3>
+            <div class="content-loot-table--items">
+                {% for category, items in categories %}
+                    <h4>{{ category }} ({{ items|length }})</h4>
+                    {% for item in items %}
+                        <div class="content-loot-table--items-item">
+                            <div>
+                                <img src="{{ item.icon }}" height="42">
+                            </div>
+                            <div>
+                                {% if item.id != 1 %}
+                                <em class="yellow">i{{ item.level_item }}</em>&nbsp;&nbsp;
+                                {% endif %}
+                                <a href="{{ item.url }}" data-xivdb-seturlicon="0">{{ item.name }}</a>
+                                <div class="content-loot-table--items-info">
+                                    {% if item.classjob_category and item.level_equip > 0 %}
+                                        ({{ item.level_equip }})&nbsp;&nbsp;
+                                    {% endif %}
+                                    {{ item.classjob_category }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{# Add sorting/paging to a table #}
+{% macro tableSorting(type) %}
+<script> $(function() { $('.{{ type }}-table').tablesorter({ widthFixed: true, widgets: ['zebra'] }); });</script>
+{% endmacro %}
+
+{# Item Table #}
+{% macro tableItems(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="3%" class="tac"><i class="fa fa-picture-o"></i></th>
+                <th width="47%">{{ languages.custom[474] }}</th>
+                <th width="10%">{{ languages.custom[587] }}</th>
+                <th width="10%">{{ languages.custom[457] }}</th>
+                <th width="40%">{{ languages.custom[384] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in data %}
+        <tr>
+            <td class="tac"><img src="{{ item.icon }}" class="table-content-icon" height="20"></td>
+            <td>
+                <a href="{{ item.url }}" data-xivdb-seturlicon="0">{{ item.name }}</a>
+                <em class="td-note">({{ item.category_name }})</em>
+            </td>
+            <td class="yellow">{{ item.level_item }}</td>
+            <td class="yellow">{{ item.level_equip }}</td>
+            <td>{{ item.classjob_category }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Item Table #}
+{% macro tableItemShop(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="3%" class="tac"><i class="fa fa-picture-o"></i></th>
+                <th width="47%">{{ languages.custom[474] }}</th>
+                <th width="10%">{{ languages.custom[587] }}</th>
+                <th width="10%">{{ languages.custom[457] }}</th>
+                <th width="20%">{{ languages.custom[384] }}</th>
+                <th width="20%">{{ languages.custom[764] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in data %}
+        <tr>
+            <td class="tac"><img src="{{ item.icon }}" class="table-content-icon" height="20"></td>
+            <td>
+                <a href="{{ item.url }}" data-xivdb-seturlicon="0">{{ item.name }}</a>
+                <em class="td-note">({{ item.category_name }})</em>
+            </td>
+            <td class="yellow">{{ item.level_item }}</td>
+            <td class="yellow">{{ item.level_equip }}</td>
+            <td>{{ item.classjob_category }}</td>
+            <td class="yellow">
+                <img src="/img/ui/gil.png" class="lc-icon" height="18">
+                {{ item.price_mid|number_format }}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Chest Table #}
+{% macro tableChests(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="3%" class="tac"><i class="fa fa-picture-o"></i></th>
+                <th width="37%">{{ languages.custom[474] }}</th>
+                <th width="15%">{{ languages.custom[587] }}</th>
+                <th width="15%">{{ languages.custom[616] }}</th>
+                <th width="40%">{{ languages.custom[384] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for item in data %}
+                <tr>
+                    <td class="tac"><img src="{{ item.icon }}" class="table-content-icon" height="20"></td>
+                    <td>
+                        <a href="{{ item.url }}" data-xivdb-seturlicon="0">{{ item.name }}</a>
+                        <em class="td-note">({{ item.category_name }})</em>
+                    </td>
+                    <td class="yellow">{{ item.level_item }}</td>
+                    <td class="yellow">{{ item.level_equip }}</td>
+                    <td>{{ item.classjob_category }}</td>
+              </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Shop Table #}
+{% macro tableShops(type, data, price) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="25%">{{ languages.custom[402] }}</th>
+                <th width="25%">{{ languages.custom[474] }}</th>
+                <th width="25%">{{ languages.custom[641] }}</th>
+                <th width="25%">{{ languages.custom[895] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shop in data %}
+                <tr>
+                    <td>
+                        {% if shop.npc.name is defined %}
+                            <a href="{{ shop.npc.url }}" data-xivdb-seturlicon="0">{{ shop.npc.name }}</a>
+                        {% else %}
+                            -
+                        {% endif %}
+
+                    </td>
+                    <td><a href="{{ shop.url }}" data-xivdb-seturlicon="0">{{ shop.name }}</a></td>
+                    <td>-</td>
+                    <td>
+                        <img src="/img/ui/gil.png" class="lc-icon" height="18">
+                        {{ price|number_format }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Special Shop Table #}
+{% macro tableSpecialShops(type, data, contentId) %}
+    <table class="{{ type }}-table lc-specialshops-table">
+        <thead>
+            <tr>
+                <th>{{ languages.custom[474] }}</th>
+                <th>{{ languages.custom[372] }}</th>
+                <th width="4%">&nbsp;</th>
+                <th>{{ languages.custom[529] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shop in data %}
+                <tr>
+                    <td>
+                        <a href="{{ shop.url }}">{{ shop.name }}</a>
+                    </td>
+                    <td>
+                        {# Item 1 #}
+                        <div {% if shop.items.cost_item_1.id == contentId %}class="active"{% endif %}>
+                            <em class="yellow fs14">{{ shop.items.cost_count_1 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.items.cost_item_1.url }}">{{ shop.items.cost_item_1.name }}</a>
+                        </div>
+
+                        {# Collectable Rating #}
+                        {% if shop.items.cost_collectability_rating_1 > 0 %}
+                        <div class="collectable">
+                            <img src="/img/ui/collectable.png">
+                            &nbsp;
+                            <em class="yellow">{{ languages.custom[933] }}</em>
+                            {{ shop.items.cost_collectability_rating_1|number_format }}
+                        </div>
+                        {% endif %}
+
+                        {# Item 2 #}
+                        {% if shop.items.cost_item_2.name is defined %}
+                        <div {% if shop.items.cost_item_2.id == contentId %}class="active"{% endif %}>
+                            <em class="yellow fs14">{{ shop.items.cost_count_2 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.items.cost_item_2.url }}">{{ shop.items.cost_item_2.name }}</a>
+                        </div>
+                        {% endif %}
+
+                        {# Collectable Rating #}
+                        {% if shop.items.cost_collectability_rating_2 > 0 %}
+                        <div class="collectable">
+                            <img src="/img/ui/collectable.png">
+                            &nbsp;
+                            <em class="yellow">{{ languages.custom[933] }}</em>
+                            {{ shop.items.cost_collectability_rating_2|number_format }}
+                        </div>
+                        {% endif %}
+
+                        {# Item 3 #}
+                        {% if shop.items.cost_item_3.name is defined %}
+                        <div {% if shop.items.cost_item_3.id == contentId %}class="active"{% endif %}>
+                            <em class="yellow fs14">{{ shop.items.cost_count_3 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.items.cost_item_3.url }}">{{ shop.items.cost_item_3.name }}</a>
+                        </div>
+                        {% endif %}
+
+                        {# Collectable Rating #}
+                        {% if shop.items.cost_collectability_rating_3 > 0 %}
+                        <div class="collectable">
+                            <img src="/img/ui/collectable.png">
+                            &nbsp;
+                            <em class="yellow">{{ languages.custom[933] }}</em>
+                            {{ shop.items.cost_collectability_rating_3|number_format }}
+                        </div>
+                        {% endif %}
+
+                        {# Quest #}
+                        {% if shop.items.quest_item_1.name is defined %}
+                        <div>
+                            <em class="yellow fs14">{{ languages.custom[189] }}</em>
+                            &nbsp;
+                            <a href="{{ shop.items.quest_item_1.url }}">{{ shop.items.quest_item_1.name }}</a>
+                        </div>
+                        {% endif %}
+
+                    </td>
+                    <td valign="middle">
+                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </td>
+                    <td>
+                        {# Item 1 #}
+                        <div {% if shop.items.receive_item_1.id == contentId %}class="active"{% endif %}>
+                            <em class="yellow fs14">{{ shop.items.receive_count_1 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.items.receive_item_1.url }}">{{ shop.items.receive_item_1.name }}</a>
+                        </div>
+
+                        {# Item 2 #}
+                        {% if shop.items.receive_item_2.name is defined %}
+                        <div {% if shop.items.receive_item_2.id == contentId %}class="active"{% endif %}>
+                            <em class="yellow fs14">{{ shop.items.receive_count_2 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.items.receive_item_2.url }}">{{ shop.items.receive_item_2.name }}</a>
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Special Shop Items Table #}
+{% macro tableSpecialShopsItems(type, data) %}
+    <table class="{{ type }}-table lc-specialshops-table">
+        <thead>
+            <tr>
+                <th>{{ languages.custom[372] }}</th>
+                <th width="4%">&nbsp;</th>
+                <th>{{ languages.custom[529] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shop in data %}
+                <tr>
+                    <td>
+                        {# Item 1 #}
+                        <div>
+                            <em class="yellow fs14">{{ shop.cost_count_1 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.cost_item_1.url }}" data-xivdb-ignore="1">{{ shop.cost_item_1.name }}</a>
+                        </div>
+
+                        {# Collectable Rating #}
+                        {% if shop.cost_collectability_rating_1 > 0 %}
+                        <div class="collectable">
+                            <img src="/img/ui/collectable.png">
+                            &nbsp;
+                            <em class="yellow">{{ languages.custom[933] }}</em>
+                            {{ shop.cost_collectability_rating_1|number_format }}
+                        </div>
+                        {% endif %}
+
+                        {# Item 2 #}
+                        {% if shop.cost_item_2.name is defined %}
+                        <div>
+                            <em class="yellow fs14">{{ shop.cost_count_2 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.cost_item_2.url }}">{{ shop.cost_item_2.name }}</a>
+                        </div>
+                        {% endif %}
+
+                        {# Collectable Rating #}
+                        {% if shop.cost_collectability_rating_2 > 0 %}
+                        <div class="collectable">
+                            <img src="/img/ui/collectable.png">
+                            &nbsp;
+                            <em class="yellow">{{ languages.custom[933] }}</em>
+                            {{ shop.cost_collectability_rating_2|number_format }}
+                        </div>
+                        {% endif %}
+
+                        {# Item 3 #}
+                        {% if shop.cost_item_3.name is defined %}
+                        <div>
+                            <em class="yellow fs14">{{ shop.cost_count_3 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.cost_item_3.url }}">{{ shop.cost_item_3.name }}</a>
+                        </div>
+                        {% endif %}
+
+                        {# Collectable Rating #}
+                        {% if shop.cost_collectability_rating_3 > 0 %}
+                        <div class="collectable">
+                            <img src="/img/ui/collectable.png">
+                            &nbsp;
+                            <em class="yellow">{{ languages.custom[933] }}</em>
+                            {{ shop.cost_collectability_rating_3|number_format }}
+                        </div>
+                        {% endif %}
+
+                        {# Quest #}
+                        {% if shop.quest_item_1.name is defined %}
+                        <div>
+                            <em class="yellow fs14">{{ languages.custom[189] }}</em>
+                            &nbsp;
+                            <a href="{{ shop.quest_item_1.url }}">{{ shop.quest_item_1.name }}</a>
+                        </div>
+                        {% endif %}
+
+                    </td>
+                    <td valign="middle">
+                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </td>
+                    <td>
+                        {# Item 1 #}
+                        <div>
+                            <em class="yellow fs14">{{ shop.receive_count_1 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.receive_item_1.url }}">{{ shop.receive_item_1.name }}</a>
+                        </div>
+
+                        {# Item 2 #}
+                        {% if shop.receive_item_2.name is defined %}
+                        <div>
+                            <em class="yellow fs14">{{ shop.receive_count_2 }}</em>
+                            &nbsp;
+                            <a href="{{ shop.receive_item_2.url }}">{{ shop.receive_item_2.name }}</a>
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+
+{# Enemies Table #}
+{% macro tableEnemies(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="47%">{{ languages.custom[474] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enemy in data %}
+            <tr>
+                <td>
+                    <a href="{{ enemy.url }}" title="{{ enemy.name }}" data-xivdb-seturlicon="0">{{ enemy.name }}</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Gathering Table #}
+{% macro tableGathering(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="25%">{{ languages.custom[146] }}</th>
+                <th width="25%">{{ languages.custom[781] }}</th>
+                <th width="50%">{{ languages.custom[865] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for node in data %}
+                <tr>
+                    <td>
+                        <a href="{{ node.url }}" data-xivdb-seturlicon="0" data-xivdb-seturlname="0">{{ node.type_name }}</a>
+                    </td>
+                    <td class="yellow">{{ node.stars_html|raw }}</td>
+                    <td class="lc-node-point">
+                        {% for point in node.nodes %}
+                            <div>
+                                <span>Lv {{ point.level }}</span>
+                                {{ point.name }}
+                                <em>({{ point.region is defined ? point.region.name : '??' }})</em>
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Quests Table #}
+{% macro tableQuests(data) %}
+    {# <img src="{{ quest.header }}" width="360px"> #}
+    {% spaceless %}
+        <div class="content-quest-list">
+            {% for quest in data %}
+                <div>
+                    <div>
+                        <img src="{{ quest.icon }}">
+                        <img src="{{ quest.icon }}">
+                    </div>
+                    <div>
+                        <a href="{{ quest.url }}" data-xivdb-replace="0">{{ quest.name }}</a>
+                        <div>{{ quest.category_name }} - {{ quest.genre_name }}</div>
+                    </div>
+                    <div>
+                        <strong class="yellow">{{ quest.class_level_1 }}</strong>  {{ quest.class_category_1 }}
+                        {% if quest.npc_name %}
+                        <div>
+                            NPC: <a href="{{ quest.npc_url }}" data-xivdb-replace="0">{{ quest.npc_name }}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div style="background-image: url({{ quest.header }});">
+                        <div>&nbsp;</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# Leves Table #}
+{% macro tableLeves(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="40%">{{ languages.custom[474] }}</th>
+                <th width="30%">{{ languages.custom[384] }}</th>
+                <th width="30%">{{ languages.custom[641] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leve in data %}
+                <tr>
+                    <td>
+                        <a href="{{ leve.url }}" data-xivdb-seturlicon="0" data-xivdb-seturlname="0">{{ leve.name }}</a>
+                    </td>
+                    <td><em class="yellow">Lv {{ leve.class_level }}</em>, {{ leve.classjob_category }}</td>
+                    <td>
+                        {% if leve.placename.name is defined %}
+                            <a href="{{ leve.placename.name }}" data-xivdb-seturlicon="0" data-xivdb-seturlname="0">{{ leve.placename.name }}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Recipes Table #}
+{% macro tableRecipe(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="30%">{{ languages.custom[224] }}</th>
+                <th width="15%">{{ languages.custom[384] }}</th>
+                <th width="15%">{{ languages.custom[781] }}</th>
+                <th width="40%">{{ languages.custom[349] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in data %}
+                <tr>
+                    <td>
+                        <a href="{{ recipe.url }}" data-xivdb-seturlicon="0" data-xivdb-seturlname="0">
+                            <em class="lc-craft-count">x{{ recipe.craft_quantity }}</em> {{ recipe.item_name}}
+                        </a>
+                        <br><span class="fs11">{{ recipe.element_name }}</span>
+                    </td>
+                    <td>{{ recipe.level_view }} {{ recipe.class_name }}</td>
+                    <td>{{ recipe.stars_html|raw }}</td>
+                    <td class="lc-node-point">
+                        {% for item in recipe.tree %}
+                            <div>
+                                <a href="{{ item.url }}" data-xivdb-seturlicon="0" data-xivdb-seturlname="0">
+                                    <span class="lc-craft-count">x{{ item.quantity }}</span> {{ item.name }}
+                                </a>
+                                <em>({{ item.category_name }})</em>
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Leve Rewards Table #}
+{% macro tableLeveRewards(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="3%" class="tac"><i class="fa fa-picture-o"></i></th>
+                <th width="47%">{{ languages.custom[474] }}</th>
+                <th width="10%">{{ languages.custom[587] }}</th>
+                <th width="10%">{{ languages.custom[457] }}</th>
+                <th width="40%">{{ languages.custom[384] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for group in data %}
+        {% set item = group.item %}
+        <tr>
+            <td class="tac"><img src="{{ item.icon }}" class="table-content-icon" height="20"></td>
+            <td>
+                <em class="lc-craft-count2">{{ group.quantity|join('-') }}</em>
+                <a href="{{ item.url }}" data-xivdb-seturlicon="0">{{ item.name }}</a>
+                <em class="td-note">({{ item.category_name }})</em>
+            </td>
+            <td class="yellow">{{ item.level_item }}</td>
+            <td class="yellow">{{ item.level_equip }}</td>
+            <td>{{ item.classjob_category }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{# Item Table #}
+{% macro TableNPCs(type, data) %}
+    <table class="{{ type }}-table">
+        <thead>
+            <tr>
+                <th width="100%">{{ languages.custom[474] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for npc in data %}
+        <tr>
+            <td>
+                <a href="{{ npc.url }}" data-xivdb-seturlicon="0">{{ npc.name }}</a>
+                {% if npc.title %}
+                    <em class="td-note">({{ npc.title }})</em>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.tableSorting(type) }}
+{% endmacro %}
+
+{#
+    ----------- Lists : Like tables, but fancier -----------
+#}
+
+{% macro listInstances(type, data) %}
+{% spaceless %}
+<div class="content-instance-list">
+    {% for instance in data %}
+    <div>
+        <div class="content-instance-list--banner">
+            {% if instance.banner %}
+            <img src="{{ instance.banner }}" width="350px">
+            {% endif %}
+        </div>
+        <div class="content-instance-list--data">
+            <h4>{{ instance.content_name }}</h4>
+            <div class="content-instance-list--name">
+                <img src="{{ instance.icon }}" height="32">
+                <a href="{{ instance.url }}" data-xivdb-replace="0">{{ instance.name }}</a>
+            </div>
+            <div class="content-instance-list--help">
+                {{ instance.help }}
+            </div>
+            <ul class="content-instance-list--stats">
+                <li>
+                    <em class="highlight">{{ languages.custom[587] }}:</em>
+                    &nbsp;
+                    {{ instance.item_level ? instance.item_level : '-' }}
+                </li>
+                <li>
+                    <em class="highlight">{{ languages.custom[867] }}:</em>
+                    &nbsp;
+                    {{ instance.item_level_sync ? instance.item_level_sync : '-' }}
+                </li>
+                <li>
+                    <em class="highlight">{{ languages.custom[457] }}:</em>
+                    &nbsp;
+                    {{ instance.level ? instance.level : '-' }}
+                </li>
+                <li>
+                    <em class="highlight">{{ languages.custom[122] }}:</em>
+                    &nbsp;
+                    {{ instance.level_sync ? instance.level_sync : '-' }}
+                </li>
+                <li>
+                    <em class="highlight">{{ languages.custom[388] }}:</em>
+                    &nbsp;
+                    {{ instance.patch.number ? instance.patch.number : '-' }}
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endspaceless %}
+{% endmacro %}
+
+{#
+    ----------- Maps! : Replaces leaflet! -----------
+#}
+
+{% macro embedMap(className, mapId, callbackhtml) %}
+    {# map embed #}
+    <div class="lc-map-include"></div>
+
+    {# map footer #}
+    {% if map.url is defined %}
+    <div class="lc-map-footer">
+        <a href="{{ map.url }}" data-xivdb-ignore="1">{{ map.name }}</a>
+    </div>
+    {% endif %}
+
+    {# Map api #}
+    <script type="text/javascript">
+    XIVDBMaps.setOption('height', 300);
+    XIVDBMaps.embed('{{ className }}', {{ mapId }}, () => {
+        {{ callbackhtml|raw }}
+    });
+    </script>
+{% endmacro %}
+
+{# Adds an icon to map, assumes map is already initialized #}
+{# The icon doesn't get added here, just queued until map is loaded #}
+{% macro embedMapIcon(icon, x, y, scale, size, name) %}
+XIVDBMaps.Markers.add({
+    icon: '{{ icon }}',
+    x: {{ x }},
+    y: {{ y }},
+    size: {{ size }},
+    name: "{{ name }}",
+    focus: true,
+});
+{% endmacro %}
+
+{#
+    ----------- New Macros above this line, macros below need sorting -----------
+#}
+
+
+
+
+
+
+
+
+
+
+
+{#
+// --------------------------------------------
+// Data line, single line of data on a content page
+// --------------------------------------------
+#}
+{% macro addLeaflet() %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <style>
+    .leaflet-grid-label .lng {
+        margin-left: 8px;
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+    </style>
+{% endmacro %}
+
+{% macro addMap(mapId) %}
+    <div class="map-window map-small map-embed map-bg" id="mainMapWindow" data-full="0"></div>
+    <script>$(function() { Maps.show('{{ mapId }}'); });</script>
+{% endmacro %}
+
+{% macro addMapMarker(content, latlong, center) %}
+    {% set x = latlong.x %}
+    {% set y = latlong.y %}
+    {% set icon = content.icon_map %}
+    {% set icon_size = content.icon_map_size %}
+
+    {% spaceless %}
+    <script>$(function() {
+        Maps.marker('{{ icon }}', '{{ icon_size }}', '{{ x }}', '{{ y }}');
+        {% if center %}
+            Maps.position('{{ x }}', '{{ y }}');
+        {% endif %}
+    });</script>
+    {% endspaceless %}
+{% endmacro %}
+
+{% macro addMapLink(url) %}
+    <div class="tar">
+        <a href="{{ url }}" class="bubble bubble-small bubble-blue mt5" data-xivdb-ignore="1">
+            <i class="fa fa-map-marker"></i><em>Map Viewer</em>
+        </a>
+    </div>
+{% endmacro %}
+
+{% macro nomap(content, maps, user) %}
+<div class="panel p20 mb20">
+    <p class="fs16 pink"><img src="/img/game/060000/060435.png" class="vab"> The map position of "{{ content.name }}" is unknown.</p>
+    <p>If you know the position, would you mind filling in the form below to submit it!
+    <br><br>
+    If you need to submit multiple positions, seperate them in an obvious manor, eg: (x,y) (x,y) (x,y) etc..
+    If this {{ content._type }} can be found on multiple maps, submit each map seperately.
+    <br><br>
+    Submitted positions are manually added :)
+    </p>
+    <div class="form mt20 cf">
+        {% if user is not empty and (user.admin or user.moderator) %}<input type="hidden" value="1" id="pos_admin" name="admin">{% endif %}
+        <input type="hidden" value="{{ content._type|upper }}" id="pos_type">
+        <input type="hidden" value="{{ content.id }}" id="pos_id">
+        <input type="hidden" value="[{{ content._type|upper }}] ({{ content.id }}) {{ content.name }}" id="pos_info">
+
+        <textarea placeholder="(x,y) (x,y) (x,y) ..." class="w100 small" id="pos_xyz"></textarea>
+
+        <div class="cf mt10">
+            <div class="b80">
+                {% if user is not empty and (user.admin or user.moderator) %}
+                    <input type="text" id="pos_map" class="w100">
+                {% else %}
+                <select class="w100" id="pos_map">
+                    <option value="">Select Map</option>
+                    {% for region in maps if region.id != 21 %}
+                        <optgroup label="{{ region.name }}">
+                            {% for placename in region.placenames if 'region' not in placename.default %}
+                                <option value="`{{ placename.id }}` -- {{ placename.default }}, {{ placename.name }}">
+                                    {{ placename.name }}
+                                </option>
+                            {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            </div>
+            <div class="b20 pl10">
+                <button class="green w100" onclick="MapPositionSubmit.send();">Send</button>
+            </div>
+        </div>
+    </div>
+    <div class="submit-response"></div>
+</div>
+{% endmacro %}
+
+{% macro addMapInfo(content) %}
+    {# --- Zone --- #}
+    {% if content.zone.name is defined %}
+        {% set html %}<a href="{{ content.zone.url }}">{{ content.zone.name }}</a>{% endset %}
+        {{ _self.dataline('Zone', html )}}
+    {% endif %}
+
+    {# --- Region --- #}
+    {% if content.region.name is defined %}
+        {% set html %}<a href="{{ content.region.url }}">{{ content.region.name }}</a>{% endset %}
+        {{ _self.dataline('Region', html )}}
+    {% endif %}
+
+    {# --- Position --- #}
+    {% if content.coordinates.x is defined and content.coordinates.y is defined %}
+        {% set x = content.coordinates.x %}
+        {% set y = content.coordinates.y %}
+        {% set html %}<em class="faint">X</em> {{ x }} &nbsp;&nbsp;&nbsp; <em class="faint">Y</em> {{ y }}{% endset %}
+        {{ _self.dataline('Position', html )}}
+    {% endif %}
+
+    {# --- Position --- #}
+    {% if content.latlong.x is defined and content.latlong.y is defined %}
+        {% set x = content.latlong.x %}
+        {% set y = content.latlong.y %}
+        {% set html %}<em class="faint">X</em> {{ x }} &nbsp;&nbsp;&nbsp; <em class="faint">Y</em> {{ y }}{% endset %}
+        {{ _self.dataline('Latitude / Longitude', html )}}
+    {% endif %}
+{% endmacro %}
+
+{#
+// --------------------------------------------
+// Data line, single line of data on a content page
+// --------------------------------------------
+#}
+{% macro dataline(title, html, color) %}
+<div class="content-data-line">
+    <div class="b30 title highlight">{{ title }}</div>
+    <div class="b70 value {{ color|default('') }}">
+        {{ html ? html|raw : '-' }}
+    </div>
+</div>
+{% endmacro %}
+
+{#
+// --------------------------------------------
+// Data line, single line of data on a content page
+// --------------------------------------------
+#}
+{% macro datahelp(html) %}
+    <p class="content-help-info">{{ html|nl2br|raw }}</p>
+{% endmacro %}

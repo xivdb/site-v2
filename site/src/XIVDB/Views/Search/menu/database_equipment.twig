@@ -1,0 +1,21 @@
+<div class="subdropdown-container">
+
+    <div id="sub-armor" class="dropdown-slot active">
+        {{ mm.column([
+            mm.list(menu.database.equipment.armor),
+            mm.list(menu.database.equipment.accessories),
+        ]) }}
+
+        {{ mm.column([
+            mm.list(menu.database.equipment.rlv),
+            mm.list(menu.database.equipment.gc)
+        ]) }}
+
+        {{ mm.column([
+            mm.list(menu.database.equipment.ilv),
+        ]) }}
+    </div>
+
+    {# mm.list(menu.database.equipment.pvp, 'PVP'), #}
+
+</div>

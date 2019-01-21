@@ -1,0 +1,11 @@
+<div class="subdropdown-container">
+    <div id="sub-housing" class="dropdown-slot active">
+        {{ mm.column([
+            mm.list(menu.database.items.housing),
+        ], 'dropdown-column-bunched') }}
+
+        {{ mm.column([
+            mm.list(menu.database.items.airship),
+        ]) }}
+    </div>
+</div>

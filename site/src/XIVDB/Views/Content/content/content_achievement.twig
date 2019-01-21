@@ -1,0 +1,83 @@
+{# help text #}
+{% if content.help is not empty %}
+    {{ Layout.block('<div class="lc-help">'~ content.help ~'</div>') }}
+{% endif %}
+
+{# some basic info #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[479], '+'~ content.points, 'yellow'),
+        Layout.col(languages.custom[589], content.kind_name),
+        Layout.col(languages.custom[316], content.category_name),
+        Layout.col(languages.custom[146], content.type_name),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+{# Special: XIVSync statistics #}
+<div class="layout-block as-response">
+    <div class="as-loading"><i class="fa fa-circle-o-notch fa-spin"></i> {{ languages.custom[1091] }}</div>
+</div>
+<script>
+ContentAchievements.get({{ content.id }}, function(data) {
+    ContentAchievements.render($('.as-response'), data);
+});
+</script>
+
+{# item Reward #}
+{% if content.item %}
+    {{ Layout.block([
+        '<h4>'~ languages.custom[829] ~'</h4>',
+        Layout.item(content.item)
+    ]) }}
+{% endif %}
+
+{# title reward #}
+{% if content.title %}
+    {{ Layout.block([
+        '<h4>'~ languages.custom[821] ~'</h4>',
+        Layout.title(content.title)
+    ]) }}
+{% endif %}
+
+{# Pre-Quests #}
+{% if content.pre_quests %}
+    {# Format quests into something nice #}
+    {% set html = ['<h4>'~ languages.custom[822] ~'</h4>'] %}
+    {% for quest in content.pre_quests %}
+        {% set html = html|merge([ Layout.quest(quest) ]) %}
+    {% endfor %}
+    {{ Layout.block(html) }}
+{% endif %}
+
+{# Pre-Achievements #}
+{% if content.pre_achievements %}
+    {# Format pre achievements #}
+    {% set html = ['<h4>'~ languages.custom[830] ~'</h4>'] %}
+    {% set total = 0 %}
+    {% for achievement in content.pre_achievements %}
+        {% set html = html|merge([ Layout.achievement(achievement) ]) %}
+        {% set total = total + achievement.points %}
+    {% endfor %}
+    {% set html = html|merge([ '<div class="lc lc-total">'~ total ~' '~ languages.custom[831] ~'</div>' ]) %}
+    {{ Layout.block(html) }}
+{% endif %}
+
+{# Post-Achievements #}
+{% if content.post_achievements %}
+    {# Format pre achievements #}
+    {% set html = ['<h4>'~ languages.custom[832] ~'</h4>'] %}
+    {% set total = 0 %}
+    {% for achievement in content.post_achievements %}
+        {% set html = html|merge([ Layout.achievement(achievement) ]) %}
+        {% set total = total + achievement.points %}
+    {% endfor %}
+    {% set html = html|merge([ '<div class="lc lc-total">'~ total ~' '~ languages.custom[831] ~'</div>' ]) %}
+    {{ Layout.block(html) }}
+{% endif %}

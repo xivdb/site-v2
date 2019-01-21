@@ -1,0 +1,71 @@
+{% for recipe in content.craftable %}
+    <div class="item-craftable-panel">
+
+        <div class="item-craftable-top">
+            <span class="item-craftable-data item-craftable-role">
+                <em>{{ recipe.level_view }}</em> {{ recipe.classjob.name }}
+            </span>
+
+            <span class="item-craftable-data item-craftable-goto fr">
+                <a href="{{ recipe.url }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ languages.custom[877] }}</a>
+            </span>
+
+            <div class="gap10"></div>
+
+             <span class="item-craftable-data">
+                <em class="highlight">{{ languages.custom[210] }}:</em>
+                {{ recipe.level }}
+            </span>
+
+            {% if recipe.stars_html is not empty %}
+            <span class="item-craftable-data">
+                {{ recipe.stars_html|raw }}
+            </span>
+            {% endif %}
+
+            <span class="item-craftable-data">
+                <em class="highlight">{{ languages.custom[211] }}:</em>
+                {{ recipe.craft_quantity }}
+            </span>
+
+            <span class="item-craftable-data">
+                <em class="highlight">{{ languages.custom[1148] }}:</em>
+                {{ recipe.quality|number_format }}
+            </span>
+
+            <span class="item-craftable-data">
+                <em class="highlight">{{ languages.custom[1113] }}:</em>
+                {{ recipe.durability|number_format }}
+            </span>
+
+            <span class="item-craftable-data">
+                <em class="highlight">{{ languages.custom[781] }}:</em>
+                {{ recipe.difficulty|number_format }}
+            </span>
+
+            <span class="item-craftable-data">
+                <em class="highlight">{{ languages.custom[1115] }}</em>
+                &nbsp;
+                {{ recipe.can_hq ? '<em class="green">✔</em>' : '<i class="fa fa-times light"></i>' }}
+            </span>
+        </div>
+
+        {# tree #}
+        {% for sr in recipe.tree %}
+        <div class="item-craftable-container">
+            <a href="{{ sr.url }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0"><img src="{{ sr.icon }}"></a>
+            <span class="item-craftable-sr-quantity"><em class="faint">x</em>{{ sr.quantity }}</span>
+            <span class="item-craftable-sr-name"><a href="{{ sr.url }}"  data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ sr.name }}</a></span>
+            <span class="item-craftable-sr-synth">
+                {% if sr.synths is defined and sr.synths is not empty %}
+                    {% set srTree = sr.synths|first %}
+                    {% for srr in srTree.tree %}
+                        <a href="{{ srr.url }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0"><img src="{{ srr.icon }}"></a>
+                        <span class="item-craftable-sr-quantity"><em class="faint">x</em>{{ srr.quantity }}</span>
+                    {% endfor %}
+                {% endif %}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+{% endfor %}

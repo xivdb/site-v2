@@ -1,0 +1,38 @@
+{# screenshot banner #}
+{% if bannerScreenshot %}
+    {{ Layout.bannerUser(content.url_type, content.id, bannerScreenshot) }}
+{% endif %}
+
+{# some basic info #}
+{% if content.map_data %}
+{% set stats = content.map_data.stats %}
+{{
+    Layout.row([
+        Layout.col(languages.custom[593], stats.levelMin ~' - ' ~ stats.levelMax, 'yellow'),
+        Layout.col(languages.custom[459],
+            '%s - %s<br><small>Average: %s</small>'|format(
+                stats.hpMin|number_format, stats.hpMax|number_format, stats.hpAvg|number_format
+            )
+        ),
+        Layout.col(languages.custom[834],
+            '%s - %s<br><small>Average: %s</small>'|format(
+                stats.mpMin|number_format, stats.mpMax|number_format, stats.mpAvg|number_format
+            )
+        ),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+{{
+    Layout.row([
+        Layout.col('Map', Layout.placename(content.map_primary.placename)),
+        Layout.col('Spawns', content.map_data.points|length|number_format),
+    ])
+}}
+{% endif %}

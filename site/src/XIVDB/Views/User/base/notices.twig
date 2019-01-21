@@ -1,0 +1,29 @@
+{% set notices = app.session.getFlashBag.get('notice') %}
+{% set errors = app.session.getFlashBag.get('error') %}
+{% set success = app.session.getFlashBag.get('success') %}
+
+{% if notices %}
+	<div class="flashbag-notice">
+		<ul>
+		{% for message in notices %}
+			<li>{{ message|raw }}</li>
+		{% endfor %}
+		</ul>
+	</div>
+{% endif %}
+
+{% if errors %}
+	<div class="alert alert-danger">
+		{% for message in errors %}
+			<div>{{ message|raw }}</div>
+		{% endfor %}
+	</div>
+{% endif %}
+
+{% if success %}
+	<div class="alert alert-success">
+		{% for message in success %}
+			<div>{{ message|raw }}</div>
+		{% endfor %}
+	</div>
+{% endif %}

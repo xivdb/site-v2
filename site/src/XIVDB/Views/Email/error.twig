@@ -1,0 +1,24 @@
+{% extends 'Email/default.twig' %}
+
+{% block email_title %}Error on XIVDB{% endblock %}
+{% block email_body %}
+
+    <h2>Error on XIVDB!</h2>
+
+    <p><strong>Live: </strong> <a href="{{ url }}" target="_blank">{{ url }}</a></p>
+    <p><strong>Dev: </strong> <a href="{{ url|replace({'.com':'.dev'}) }}" target="_blank">{{ url|replace({'.com':'.dev'}) }}</a></p>
+
+    <pre>{{ message }}</pre>
+
+    <hr>
+
+    <h3>Data</h3>
+
+    <pre>{{ server_data|raw }}</pre>
+
+    <h3>Stack Trace:</h3>
+
+    <pre>{{ backtrace|raw }}</re>
+
+
+{% endblock %}

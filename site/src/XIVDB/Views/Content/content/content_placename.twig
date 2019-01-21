@@ -1,0 +1,17 @@
+{% if content.map.folder is defined %}
+    {{ Layout.embedMap('.lc-map-include', content) }}
+{% endif %}
+
+{# Folder / Region #}
+{{
+    Layout.row([
+
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

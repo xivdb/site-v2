@@ -1,0 +1,83 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}Character Privacy{% endset %}
+
+{% block body %}
+
+<div class="content-block page-content">
+
+	<div class="page-pad-30">
+
+        <h2>Character Privacy</h2>
+
+        {% if message %}
+            <br>
+            <h5 class="green"><img src="/img/ui/ls_update.png" height="32" style="vertical-align: middle"> &nbsp; {{ message }}</h5>
+        {% endif %}
+
+        <div class="panel" style="margin: 30px -60px;padding: 30px 60px; font-size: 14px; line-height:24px;">
+
+            <h5 class="highlight">Important information regarding privacy, please read.</h5>
+            <br>
+
+            <p>XIVDB tracks a lot of information about characters in the FINAL FANTASY XIV world.
+                This data is used to provide a historical view of a character's profile and allow
+                insights to their levelling statistics, achievement progress and recent activity.
+                Information includes, but is not limited to, character name and server changes.</p>
+
+            <p>Having the ability to track a characters whereabouts can be a very powerful tool for
+                certain people and can be open to exploitation. By hiding your character this will
+                prevent people from seeing your name and server changes. Please note: Free Company
+                leaders will have the ability to view the history of a character in their FC
+                regardless of any privacy setting.</p>
+
+            <p>If you would like to hide your character data, please follow the instructions below.
+                You can still continue to use XIVDB if you wish and view your profile, however, it will
+                be private to the outside world. Please understand that at this time The Lodestone provides
+                no privacy settings for profile information which is out of XIVDB's control.</p>
+
+        </div>
+
+        {% if user %}
+
+            {% if user.characters %}
+
+                <p>Below are a list of characters you can hide:</p>
+
+                <br>
+
+                <a href="/character/privacy?enable=1" style="background-color:#222;padding:10px 15px;" class="yellow">Hide my characters</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/character/privacy?enable=2" style="background-color:#222;padding:10px 15px;" class="green">Show my characters</a>
+
+                <br><br>
+
+                <table class="table">
+                    {% for character in user.characters %}
+                    <tr>
+                        <td width="5%">
+                            <img src="{{ character.character_avatar }}" height="42px">
+                        </td>
+                        <td>
+                            {{ character.character_name }} - {{ character.character_server }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+
+            {% else %}
+                <p>You must verify your characters, please go to the account section, add your character (even if
+                you see it on the site already) and verify you own the character. Then return to this page.</p>
+            {% endif %}
+
+        {% else %}
+            <h4 class="yellow">Please register or sign-in to XIVDB to use this feature.</h4>
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}

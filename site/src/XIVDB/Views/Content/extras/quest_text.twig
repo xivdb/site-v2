@@ -1,0 +1,19 @@
+<div class="quest-text-spoiler quest-spoilers-alert">
+    <div class="fs24">{{ languages.custom[904] }}</div>
+    <span class="fs16">{{ languages.custom[905] }}</span>
+</div>
+
+<div class="quest-text-spoilers quest-spoilers quest-text-dialogue">
+    {% for text in content.text.text %}
+        <div class="quest-text-box" style="border-left:solid 5px {{ text.color }};">
+            <div style="color:{{ text.color }};">{{ text.npc }}</div>
+            <div>{{ text.text }}</div>
+        </div>
+    {% endfor %}
+</div>
+<script>
+$('.quest-text-spoiler').on('click', function() {
+    $(this).hide();
+    $('.quest-text-spoilers').show();
+});
+</script>

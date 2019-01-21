@@ -1,0 +1,7 @@
+{% include 'Content/content_tabs/tabs.twig' with { tabs: [
+    [ languages.custom[1053], content.maps ? content.maps : false, 'Content/extras/placename_map.twig'],
+	[ languages.custom[189], content.quests, 'Content/extras/placename_quests.twig' ],
+	[ languages.custom[650], content.enemies, 'Content/extras/placename_enemies.twig' ],
+	[ languages.custom[402], content.npcs, 'Content/extras/placename_npcs.twig' ],
+    [ languages.custom[235], content.npcs, 'Content/extras/placename_gathering.twig' ],
+]} %}

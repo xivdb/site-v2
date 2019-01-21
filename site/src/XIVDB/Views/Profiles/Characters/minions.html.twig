@@ -1,0 +1,33 @@
+<div class="character-minions">
+	{# Progress #}
+	<div class="ac-block">
+		{% set percent = ((minionsObtained / minionsTotal) * 100)|round(2) %}
+		{% set togo = minionsTotal - minionsObtained %}
+		<h6>Progress to completion</h6>
+		<div class="ac-data">
+			<div>
+				<span class="ac-data-figure">{{ minionsObtained|number_format }}</span>
+				<span class="ac-data-value">/ {{ minionsTotal|number_format }}</span>
+				<span class="ac-data-percent">({{ percent }}%)</span>
+			</div>
+			<div>
+				<span class="ac-data-togo">{{ togo|number_format }} togo</span>
+			</div>
+		</div>
+		<div class="cp-bar"><div class="blue" style="width:{{ percent }}%;"></div></div>
+	</div>
+
+	<h6>Minions</h6>
+	<div class="mm-list">
+	{% for minion in all_minions %}
+		<div class="mm-list-entry{% if data.minions[minion.id] is defined %} obtained{% endif %}">
+			<div>
+				<img src="/img/loader/loading2.gif" data-src="{{ minion.icon }}" height="24">
+			</div>
+			<div>
+				<a href="{{ minion.url }}" data-xivdb-replace="1">{{ minion.name }}</a>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+</div>

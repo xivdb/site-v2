@@ -1,0 +1,11 @@
+<div class="xivdb-map xiv-cm-embed"></div>
+<script>
+    $(function() {
+        // loadmap via placename id
+        XIVDBMaps
+            .setOption('width', 820)
+            .embed('.xivdb-map', {{ content.id }}, function() {
+                XIVDBMaps.Markers.load();
+            });
+    });
+</script>

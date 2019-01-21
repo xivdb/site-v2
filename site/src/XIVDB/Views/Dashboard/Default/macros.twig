@@ -1,0 +1,13 @@
+{% macro breadcrumb(crumbs) %}
+<ol class="breadcrumb">
+    {% for data in crumbs %}
+    <li{% if loop.last %} class="active"{% endif %}>
+        {% if data.url is defined %}
+            <a href="{{ data.url }}">{{ data.title }}</a>
+        {% else %}
+            {{ data.title }}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ol>
+{% endmacro %}

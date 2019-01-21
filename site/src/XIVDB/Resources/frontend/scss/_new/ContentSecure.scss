@@ -1,0 +1,129 @@
+//
+// Flashbag
+//
+.flashbag-notice {
+    background-color: #333;
+    border-left: solid 3px $highlight;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    padding: 5px 15px;
+
+    > ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            padding: 8px 0;
+            margin: 0;
+        }
+    }
+}
+
+
+//
+// Backgrounds
+//
+
+.bg-login {
+    background-image: url('/img/backgrounds/secure.png');
+}
+
+.bg-register {
+    background-image: url('/img/backgrounds/secure.png');
+}
+
+.bg-forgotten {
+    background-image: url('/img/backgrounds/secure.png');
+}
+
+.bg-reset {
+    background-image: url('/img/backgrounds/secure.png');
+}
+
+.bg-account {
+    background-image: url('/img/backgrounds/secure.png');
+}
+
+.bg-login,
+.bg-account,
+.bg-register,
+.bg-forgotten,
+.bg-reset {
+    background-position: bottom left;
+    background-repeat: no-repeat;
+}
+
+.site-standalone {
+    width: $siteWidth;
+    margin: 0 auto;
+    padding: 60px 0 40px 0;
+
+    @include mq($until: desktop) {
+        padding: 0 10px 10px 10px;
+        width: 100%;
+    }
+
+    .logo {
+        text-align: center;
+        margin: 0 0 10px 0;
+
+        img {
+            height: 32px;
+        }
+    }
+
+    .frame {
+        @extend .cf;
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+        margin: 0 auto;
+
+        @include mq($until: desktop) {
+            display: block;
+        }
+    }
+
+    .left,
+    .right,
+    .center {
+        background-color: #222;
+        background-image: url(/img/textures/bg2.png);
+        background-repeat: repeat-x;
+        border-radius: 3px;
+        padding: 30px;
+        box-shadow: 0 1px 2px #000;
+        flex: 0 1 50%;
+        box-sizing: border-box;
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+
+        @include mq($until: desktop) {
+            flex: none;
+            padding: 20px;
+            margin: 0 0 10px 0 !important;
+        }
+    }
+
+    .left {
+        margin-right: 10px;
+    }
+
+    .right {
+        margin-left: 10px;
+    }
+
+    .center {
+        flex: 0 1 100%;
+    }
+
+    .input-group {
+        display: block;
+        margin-bottom: 30px;
+    }
+}

@@ -1,0 +1,434 @@
+$borderRadius: 1px;
+$formBackgroundColor: #555;
+$formBoxShadow: inset 0 0 2px #000;
+$formHeight: 40px;
+
+// ----------------------------------------------------------------------
+// Forms
+// ----------------------------------------------------------------------
+form,
+.form {
+    @include cf();
+
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    select,
+    textarea {
+        font-family: $font;
+        font-size: 14px;
+        color: #fff !important;
+
+        background: $formBackgroundColor;
+        border: none;
+        border-radius: $borderRadius;
+        box-sizing: border-box;
+
+        padding: 0 10px;
+        text-align: left;
+        outline: none;
+        vertical-align: bottom;
+
+        //box-shadow: $formBoxShadow;
+        line-height: $formHeight;
+        height: $formHeight;
+
+        &:hover {
+            //box-shadow: inset 0 0 0 1px #000;
+            background-color: darken($formBackgroundColor, 2%);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+        }
+
+        &.small {
+            padding: 0 6px;
+            line-height: 28px;
+            height: 28px;
+            font-size: 13px;
+        }
+
+        &.mini {
+            padding: 0 4px;
+            line-height: 24px;
+            height: 24px;
+            font-size: 12px;
+        }
+
+        &.form-light {
+            color: #fff;
+            background-color: #585858;
+        }
+
+        @include mq($until: desktop) {
+            font-size: 16px !important;
+        }
+    }
+
+    &.form-flex {
+        display: flex;
+
+        > div {
+            flex: 1 1 auto;
+            margin-right: 5px;
+            box-sizing: border-box;
+
+            &:last-of-type {
+                margin-right: 0;
+            }
+
+            > * {
+                width: 100%;
+            }
+        }
+    }
+
+    textarea {
+        resize: none;
+        padding: 10px;
+        line-height: 22px;
+        height: auto;
+
+        &.small {
+            padding: 3px 6px;
+            line-height: normal;
+            height: auto;
+            font-size: 13px;
+        }
+
+        &.mini {
+            padding: 2px 4px;
+            line-height: normal;
+            height: auto;
+            font-size: 12px;
+        }
+    }
+
+    select {
+        appearance: none;
+        display: inline-block;
+        font-family: $font;
+        font-size: 14px;
+        position: relative;
+        padding: 0 20px 0 8px;
+        background-image: url('../img/ui/arrow_light.png');
+        background-position: center right;
+        background-repeat: no-repeat;
+        background-size: auto auto;
+        min-width: 70px;
+        vertical-align: bottom;
+        line-height: $formHeight;
+        box-sizing: border-box;
+
+        &.form-light {
+            color: #fff;
+            background-color: #585858;
+        }
+
+        &.small {
+            padding: 0 20px 0 10px;
+            line-height: 28px;
+            height: 28px;
+            font-size: 13px;
+        }
+
+        &.mini {
+            padding: 0 20px 0 5px;
+            line-height: 24px;
+            height: 24px;
+            font-size: 12px;
+        }
+
+        &.short {
+            width: 60%;
+        }
+
+        &:hover {
+            z-index: 2;
+        }
+    }
+
+    label {
+        &.standout {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        &.acp {
+            font-size: 18px;
+            padding: 6px 0 0 0;
+            display: inline-block;
+            color: $highlight;
+        }
+
+        em {
+            font-size: 12px;
+            color: #aaa;
+            display: inline-block;
+            margin-left: 10px;
+        }
+    }
+
+    // -----------
+    // checkboxes
+    // -----------
+
+    input[type="checkbox"]
+    {
+        border: 0;
+        border-radius: $borderRadius;
+        background-image: url(/img/ui/cross.png);
+        background-color: $formBackgroundColor;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: 18px 18px;
+        -webkit-appearance: textfield;
+        appearance: textfield;
+        cursor: pointer;
+
+        height: $formHeight;
+        width: $formHeight;
+
+        &:checked {
+            background-image: url(/img/ui/tick.png);
+        }
+
+        &:focus {
+            outline: 0;
+        }
+
+        &.small {
+            height: 28px;
+            width: 28px;
+
+            background-size: 16px 16px;
+        }
+
+        &.mini {
+            height: 24px;
+            width: 24px;
+            background-size: 14px 14px;
+        }
+    }
+
+    // -----------
+    // Buttons
+    // -----------
+
+    input[type="button"],
+    input[type="file"],
+    input[type="submit"],
+    button,
+    .button {
+        display: inline-block;
+        vertical-align: bottom;
+
+        font-size: 14px;
+        font-weight: 400;
+        outline: none;
+        text-align: center;
+        border: none;
+        border-radius: $borderRadius;
+        box-sizing: border-box;
+
+        padding: 0 15px 0 15px;
+        line-height: $formHeight;
+        height: $formHeight;
+
+        cursor: pointer;
+        text-shadow: 0 1px 3px #222;
+        //box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+
+        &.small {
+            padding: 0 10px;
+            line-height: 30px;
+            height: 30px;
+            font-size: 13px;
+        }
+
+        &.mini {
+            padding: 0 10px;
+            line-height: 24px;
+            height: 24px;
+            font-size: 12px;
+        }
+
+        &.bubble {
+            font-size: 13px;
+            padding: 5px 10px;
+        }
+
+        &:disabled, &.disabled {
+            opacity: 0.5;
+        }
+
+        > i.fa {
+            text-shadow: none;
+        }
+
+        &.transparent {
+            opacity: 0.5;
+            background-color: transparent !important;
+            box-shadow: none;
+            line-height: 28px;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &.blue { border: solid 1px $blue; }
+            &.green { border: solid 1px $green; }
+            &.red { border: solid 1px $red; }
+            &.gray { border: solid 1px $gray; }
+            &.yellow { border: solid 1px $yellow; }
+            &.orange { border: solid 1px $orange; }
+            &.purple { border: solid 1px $purple; }
+        }
+    }
+
+    input[type="button"].dark, button.dark, .button.dark,
+    input[type="button"].blue, button.blue, .button.blue,
+    input[type="button"].green, button.green, .button.green,
+    input[type="button"].red, button.red, .button.red,
+    input[type="button"].gray, button.gray, .button.gray,
+    input[type="button"].yellow, button.yellow, .button.yellow,
+    input[type="button"].orange, button.orange, .button.orange,
+    input[type="button"].purple, button.purple, .button.purple {
+        color: #fff !important;
+    }
+
+    input[type="button"].dark, button.dark, .button.dark {
+        background-color: darken(#444, 10%);
+        &:hover { background-color: darken(#444, 20%); }
+        &:active, &:focus { background-color: darken(#444, 30%); }
+    }
+
+    input[type="button"].blue, button.blue, .button.blue {
+        background-color: darken($blue, 10%);
+        &:hover { background-color: darken($blue, 20%); }
+        &:active, &:focus { background-color: darken($blue, 30%); }
+    }
+
+    input[type="button"].green, button.green, .button.green {
+        background-color: darken($green, 15%);
+        &:hover { background-color: darken($green, 25%); }
+        &:active, &:focus { background-color: darken($green, 35%); }
+    }
+
+    input[type="button"].red, button.red, .button.red {
+        background-color: darken($red, 10%);
+        &:hover { background-color: darken($red, 20%); }
+        &:active, &:focus { background-color: darken($red, 30%); }
+    }
+
+    input[type="button"].gray, button.gray, .button.gray {
+        background-color: darken($gray, 10%);
+        &:hover { background-color: darken($gray, 20%); }
+        &:active, &:focus { background-color: darken($gray, 30%); }
+    }
+
+    input[type="button"].yellow, button.yellow, .button.yellow {
+        background-color: darken($yellow, 10%);
+        &:hover { background-color: darken($yellow, 20%); }
+        &:active, &:focus { background-color: darken($yellow, 30%); }
+    }
+
+    input[type="button"].orange, button.orange, .button.orange {
+        background-color: darken($orange, 10%);
+        &:hover { background-color: darken($orange, 20%); }
+        &:active, &:focus { background-color: darken($orange, 30%); }
+    }
+
+    input[type="button"].purple, button.purple, .button.purple {
+        background-color: darken($purple, 10%);
+        &:hover { background-color: darken($purple, 20%); }
+        &:active, &:focus { background-color: darken($purple, 30%); }
+    }
+
+    .form-row {
+        @extend .cf;
+        display: block;
+        margin-bottom: 15px;
+
+        &.form-row-flex {
+            display: flex;
+
+            @include mq($until: desktop) {
+                display: block;
+            }
+
+            > label {
+                color: $highlighter;
+                flex: 0 0 25%;
+                font-size: 14px;
+                padding: 5px 0 0 0;
+
+                @include mq($until: desktop) {
+                    display: block;
+                    flex: none;
+                    margin-bottom: 3px;
+                }
+            }
+
+            > .option {
+                flex: 0 0 75%;
+
+                @include mq($until: desktop) {
+                    display: block;
+                    flex: none;
+                }
+
+                > * {
+                    min-width: 50%;
+
+                    @include mq($until: desktop) {
+                        display: block;
+                        flex: none;
+
+                        min-width: 100%;
+                    }
+                }
+            }
+        }
+
+        &.form-row-bg {
+            padding: 15px;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 3px;
+        }
+
+        .form-row-help {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #ccc;
+        }
+    }
+
+    .form-footer {
+        margin-top: 25px;
+
+        button, a {
+            @include mq($until: desktop) {
+                display: block;
+                width:100%;
+            }
+        }
+    }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+*::-webkit-input-placeholder { color: #ccc; }
+*:-moz-placeholder { color: #ccc; }
+*::-moz-placeholder { color: #ccc; }
+*:-ms-input-placeholder { color: #ccc; }

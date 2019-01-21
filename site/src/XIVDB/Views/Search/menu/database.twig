@@ -1,0 +1,37 @@
+{% import 'Search/menu/macro.twig' as mm %}
+{% set mainmenu = [
+    [ menu.database.equipment.weapons.title, 'weapons', 'Search/menu/database_weapons.twig' ],
+    [ menu.database.equipment.tools.title, 'tools', 'Search/menu/database_tools.twig' ],
+    [ menu.database.equipment.armor.title, 'equipment', 'Search/menu/database_equipment.twig' ],
+
+
+    [ languages.custom[408], 'items', 'Search/menu/database_items.twig' ],
+    [ languages.custom[7], 'housing', 'Search/menu/database_housing.twig' ],
+
+    [ languages.custom[729], 'hnl', 'Search/menu/database_hnl.twig' ],
+    [ languages.custom[225], 'actions', 'Search/menu/database_actions.twig' ],
+    [ languages.custom[730], 'activities', 'Search/menu/database_activities.twig' ],
+    [ languages.custom[397], 'achievements', 'Search/menu/database_achievements.twig' ],
+    [ languages.custom[435], 'other', 'Search/menu/database_other.twig' ],
+]%}
+{% spaceless %}
+<div class="dropdown-container dropdown-database">
+    <ul class="dropdown-menu">
+        {% for i, submenu in mainmenu %}
+        {% set title = submenu[0] %}
+        {% set id = submenu[1] %}
+        {% set file = submenu[2] %}
+
+            <li data-submenu="submenu-{{ id }}">
+                <h2>{{ title }}</h2>
+
+                <div id="submenu-{{ id }}" class="dropdown-window {% if i == 0 %}dropdown-active{% endif %}">
+                    <div class="dropdown-content">
+                        {% include file ignore missing %}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endspaceless %}

@@ -1,0 +1,49 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Dev Tasks{% endset %}
+{% set page = 'devtasks' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Dev Tasks' },
+    { title: 'New/Edit' }
+]) }}
+
+<div class="container">
+
+	<h1>New/Edit Task</h1>
+    <a href="/devtasks/task" class="btn btn-success">Add Task</a>
+
+    <hr>
+
+    <form method="post">
+        <fieldset class="form-group">
+    		<label for="subject">Title</label>
+    		<input type="text" class="form-control form-control-lg" name="title" id="title" placeholder="Title" value="{{ editing ? editing.title : '' }}">
+    	</fieldset>
+        <div class="row">
+            <div class="col-md-4">
+                <fieldset class="form-group">
+            		<label for="subject">Priority</label>
+            		<input type="text" class="form-control form-control-lg" name="priority" id="priority" placeholder="Priority" value="{{ editing ? editing.priority : '' }}">
+            	</fieldset>
+            </div>
+            <div class="col-md-4">
+                <fieldset class="form-group">
+            		<label for="subject">Completed</label>
+                    <select name="completed" id="completed" class="form-control form-control-lg">
+                        <option value="0" {{ editing and editing.completed ? '' : 'selected' }}>No</option>
+                        <option value="1" {{ editing and editing.completed ? 'selected' : '' }}>Yes</option>
+                    </select>
+            	</fieldset>
+            </div>
+            <div class="col-md-4">&nbsp;</div>
+        </div>
+        <fieldset class="form-group">
+            <textarea id="text" name="text">{{ editing ? editing.text }}</textarea>
+            <script type="text/javascript">$(function() { $('#text').redactor({ imageUpload: '/devblog/upload' }); });</script>
+        </fieldset>
+        <button type="submit" class="btn btn-success" name="save" value="save"><i class="fa fa-pencil"></i> Save</button>
+    </form>
+
+</div>
+{% endblock %}

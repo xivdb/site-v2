@@ -1,0 +1,88 @@
+{% import 'Macros/pages.macro.twig' as PageMacro %}
+{% import 'Macros/form.macro.twig' as FormMacro %}
+{% import 'User/base/macros.twig' as AccountMacro %}
+{% set version = defines.DEV ? "now"|date('U') : defines.VERSION  %}
+{# set title #}
+{% if pagetitle is not defined %}{% set pagetitle = defines.META_TITLE %}
+{% else %}{% set pagetitle = '%s - %s'|format(pagetitle, defines.META_TITLE) %}{% endif %}
+{% if pagedescription is not defined %}{% set pagedescription = defines.META_DESC %}{% endif %}
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+    <head>
+        {# Analytics #}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49926949-8"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-49926949-8', { 'anonymize_ip': true });
+            function ga(a,b,c,d,e,f,g) {}
+        </script>
+        <script>
+            var APP = 'secure',
+                SITETITLE = '{{ pagetitle }}',
+                LANGUAGE = '{{ defines.LANGUAGE }}',
+                API_URL = '{{ defines.API }}',
+                SID = "{{ user ? user.id : '' }}",
+                USERNAME = "{{ user ? user.username : 'Not logged in' }}";
+        </script>
+
+        <title>{{ pagetitle }}</title>
+        <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+
+        {# enable mobile #}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="j0xlPWc0c-_3XWqdWoxt4F257R43A7BMkTtkkfgmhaE" />
+        <script type="text/javascript">function isOnMobile() { var state = {{ devices.mobile and not nomobile ? 'true' : 'false' }}; state = state ? state : Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 720 ? true : false; return state; }</script>
+
+        {# so meta #}
+        <meta charset="utf-8">
+        <meta name="author" content="{{ defines.META_SITE }}">
+        <meta name="publisher" content="{{ pagetitle }}">
+        <meta name="copyright" content="{{ pagetitle }}">
+        <meta name="description" content="{{ pagedescription }}">
+        <meta name="page-topic" content="{{ pagetitle }}">
+        <meta name="page-type" content="{{ defines.META_TYPE }}">
+        <meta name="audience" content="{{ defines.META_AUDIENCE }}">
+        <meta name="robots" content="{{ defines.META_ROBOTS }}">
+
+        {# Google analytics #}
+        {% include 'Default/ga.twig' %}
+
+        {# Google Font #}
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+        {# my styles #}
+        <link href="/assets/frontend.min.css?v={{ version }}" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
+
+        {# Javascripts !#}
+        <script src="/assets/libs.min.js?v={{ "now"|date('U') }}" type="text/javascript"></script>
+        <script src="/assets/frontend.min.js?v={{ "now"|date('U') }}" type="text/javascript"></script>
+
+        {# Translations #}
+        <script type="text/javascript">
+        languages.set('custom', {{ languages.custom|json_encode|raw }});
+        languages.set('params', {{ languages.params|json_encode|raw }});
+        </script>
+    </head>
+    <body>
+
+        {# top #}
+        {% include "Base/userbar.twig" %}
+
+        {# actual site #}
+        <div class="site site-standalone">
+
+            <main class="site-container">
+                {% block body %}{% endblock %}
+            </main>
+
+            {# footer #}
+            {% include "Base/footer.twig" %}
+
+        </div>
+    </body>
+</html>
+{% endspaceless %}

@@ -1,0 +1,25 @@
+<div class="home-note">
+    {{ languages.custom[1189] }}
+</div>
+
+
+{% set limit = devices.mobile and not nomobile ? 5 : 30 %}
+{% for i, post in lodestone.community if i < limit %}
+<div class="home-post">
+    <div>
+        <img src="{{ post.avatar }}" width="50px" height="50px">
+    </div>
+    <div>
+        <div>
+            <div class="home-post-title">
+                {{ post.name|title }}
+            </div>
+            <div class="home-post-info">
+                {{ post.timestamp|date('F j, Y') }}
+            </div>
+        </div>
+
+        <div class="home-post-text">{{ post.html|replace({'<br>':''})|raw }}</div>
+    </div>
+</div>
+{% endfor %}

@@ -1,0 +1,49 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}Icons{% endset %}
+
+{% block body %}
+<div class="content-block tool-icons">
+
+	<div class="ti-top">
+
+		<h1>Game Icons</h1>
+		<p>View icons in the Final Fantasy XIV Game Files.</p>
+		{% if path %}
+			<p>Path: <a href="/icons">Back</a> - <em class="yellow">{{ path }}</em></p>
+		{% endif %}
+
+		<div class="ti-options">
+			options
+		</div>
+
+	</div>
+
+	<div class="ti-content">
+		<h2>Folders</h2>
+		<div class="ti-folders">
+			{% for folder in folders %}
+				<a href="/icons?path={{ folder }}">{{ folder }}</a>
+			{% else %}
+				<p>No further folders</p>
+			{% endfor %}
+		</div>
+		<hr>
+		<h2>Icons</h2>
+		<p>Click to open icon in a new window.</p>
+		<div class="ti-icons">
+			{% for icon in icons %}
+				<a href="{{ icon }}" target="_blank">
+					<img src="{{ icon }}">
+				</a>
+			{% else %}
+				<p>Select a folder.</p>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="ti-footer">
+		ALL FINAL FANTASY XIV CONTENT IS PROPERTY OF SQUARE ENIX CO., LTD AND MAY NOT BE REDISTRIBUTED FOR COMMERCIAL USE. FINAL FANTASY XIV ©2010-2013 SQUARE ENIX CO., LTD. FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd. All material used under license.
+	</div>
+
+</div>
+{% endblock %}

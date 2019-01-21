@@ -1,0 +1,19 @@
+<div class="quest-journal-spoiler quest-spoilers-alert">
+    <div class="fs24">{{ languages.custom[904] }}</div>
+    <span class="fs16">{{ languages.custom[905] }}</span>
+</div>
+
+<div class="quest-journal-spoilers quest-spoilers quest-journal">
+    {% for journal in content.text.journal %}
+        <div>
+            <div>#{{ loop.index }}</div>
+            <div>{{ journal.text|nl2br }}</div>
+        </div>
+    {% endfor %}
+</div>
+<script>
+$('.quest-journal-spoiler').on('click', function() {
+    $(this).hide();
+    $('.quest-journal-spoilers').show();
+});
+</script>

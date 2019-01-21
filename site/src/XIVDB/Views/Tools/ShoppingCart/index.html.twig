@@ -1,0 +1,98 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}{{ languages.custom[734] }}{% endset %}
+
+{% block body %}
+<div class="content-block tool-shoppingcart-showcase">
+
+	{# Main intro #}
+	<div class="jumbo">
+		<div class="text">
+			<h1>{{ languages.custom[734] }} <em class="pink">{{ languages.custom[775] }}</em></h1>
+			<p>{{ languages.custom[792] }}</p>
+			<p>{{ languages.custom[793] }}</p>
+			<p>{{ languages.custom[794] }}</p>
+
+			<hr>
+
+			<p class="fs16 lime">{{ languages.custom[795]|replace({ '{icon}': '<i class="fa fa-shopping-cart"></i>' })|raw }}</p>
+
+		</div>
+
+		<div class="preview">
+			<img src="/img/tools/shoppingcart/shopping_cart_preview.png" height="400">
+		</div>
+	</div>
+
+	{# Other data #}
+	<div class="features">
+
+		<h2>{{ languages.custom[798] }}</h2>
+		<p>{{ languages.custom[797] }}</p>
+
+		<ul>
+			<li><a href="/?filters=aXRlbV91aV9jYXRlZ29yeSU3Q2V0PTQ2Jm9yZGVyX2ZpZWxkPWxldmVsX2l0ZW0mb3JkZXJfZGlyZWN0aW9uPWRlc2Mmb25lPWl0ZW1z">{{ languages.custom[436] }}</a></li>
+			<li><a href="/?filters=c291cmNlJTdDZXQ9Y3JhZnRhYmxlJm9uZT1pdGVtcyZwYWdlPTE=">{{ languages.custom[796] }}</a></li>
+		</ul>
+
+		<br><br>
+
+		<p>Open up the Shopping Cart Tool</p>
+		<img src="/img/tools/shoppingcart/open.png">
+
+		<br><br>
+
+		<p>Drag items (drag their icon!) you would like to make onto the cart. You can add as many items as you like but it is recommended
+			to keep them short, or the required materials can become quite long.</p>
+
+		<p>Once an item has been added, you can adjust the quantity you would like. The maximum is 1000</p>
+
+		<p>Once you're ready, click on the <strong class="green">Checkout</strong> button.</p>
+
+		<img src="/img/tools/shoppingcart/viewed.png">
+
+		<div class="section-alt">
+
+			<img src="/img/tools/shoppingcart/fulldetails.png">
+
+			<br><br>
+
+			<p>The full details of a cart shows a lot of information, to help understand each element, move your mouse over an element to view details about that specific part.</p>
+
+			<img src="/img/tools/shoppingcart/tooltip.png">
+
+		</div>
+
+		<h3>Features:</h3>
+
+		<br>
+
+		<ul>
+			<li>The left side consists of materials per crafting tree tier. A tier is just another step in the crafting tree if some item
+				can be crafted without purchasing. This provides you the option to build all items from scratch rather than just those
+				to make the items in your basket.</li>
+
+			<li>Each material will have different variations of icons to show if that item can be obtained through: Crafting, Gathering, Raids/Dungeons, Quests, Shops or Enemies.</li>
+
+			<li>You can input the value of the items from the market place and choose if you would like to use the HQ value or not. This helps your profits/costs.</li>
+
+			<li>Entered costs save to your local storage on your pc. Any saved cost should appear in any cart you make using the same items you've entered costs for, this helps build a pricing chart.</li>
+
+			<li>Each tier from 2 onwards will list the items those materials make as well as an individual breakdown for how many items are used per crafted result: <br><br> <img src="/img/tools/shoppingcart/tooltip2.png"><br><br></li>
+
+			<li>On the right side is the items you wish to make in your basket. You can click on an item to view details about it.</li>
+
+			<li>In the details for an item, it will list the materials used to make it, and how many items out of the total it takes to make.</li>
+
+			<li>In your basket, you can enter in the amount an item sells for, as well as the amount you crafted and it will work out the profit/loss for you.</li>
+
+		</ul>
+
+		<br><br><hr></br>
+
+		<div class="lime">If you have any issues or feature requests, click on the Feedback/Bugs button in the header!</div>
+
+
+	</div>
+
+</div>
+{% endblock %}

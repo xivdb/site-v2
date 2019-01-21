@@ -1,0 +1,3 @@
+#!/bin/bash
+sudo rm -rf twig/*
+sudo service php7.1-fpm restart

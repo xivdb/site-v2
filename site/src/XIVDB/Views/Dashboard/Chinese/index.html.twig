@@ -1,0 +1,48 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Game Data{% endset %}
+{% set page = 'gamedata' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Game Data' },
+	{ title: 'Chinese' }
+]) }}
+
+{% include 'Dashboard/Default/gamedata.html.twig' %}
+
+<div class="container">
+
+	<h2>Instructions</h2>
+
+	<hr>
+
+	<div class="row">
+		<div class="col-md-4">
+			<h4>Chinese Traditional</h4>
+			<ul>
+				<li>Switch language: <code>lang cht</code></li>
+				<li>Extract: <code>rawexd</code></li>
+				<li>Copy: <a href="/gamedata/chinese/cnt">Copy Chinese Traditional</a></li>
+			</ul>
+		</div>
+		<div class="col-md-4">
+			<h4>Chinese Simplified</h4>
+			<ul>
+				<li>Switch language: <code>lang chs</code></li>
+				<li>Extract: <code>rawexd</code></li>
+				<li>Copy: <a href="/gamedata/chinese/cns">Copy Chinese Simplified</a></li>
+			</ul>
+		</div>
+        <div class="col-md-4">
+			<h4>Korean</h4>
+			<ul>
+				<li>Switch language: <code>lang ko</code></li>
+				<li>Extract: <code>rawexd</code></li>
+				<li>Copy: <a href="/gamedata/chinese/ko">Copy Korean</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+</div>
+{% endblock %}

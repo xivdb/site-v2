@@ -1,0 +1,20 @@
+<div class="character-admin">
+	<h4 class="red">Admin</h4>
+	<hr>
+
+	<h4>Member Data</h4>
+	{% if member is defined and member is not empty %}
+	<table>
+		{% for col, value in member %}
+		<tr>
+			<td width="25%">{{ col|title }}</td>
+			<td>{{ value is iterable ? value|json_encode : value }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% else %}
+	<div class="alert alert-danger">
+		This character is not linked to any account.
+	</div>
+	{% endif %}
+</div>

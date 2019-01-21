@@ -1,0 +1,109 @@
+{% set bgcss = 'bg-account' %}
+{% extends 'Default/index_simplified.twig' %}
+{% set pagetitle %}{{ languages.custom[33] }}{% endset %}
+
+{% block body %}
+{% include 'User/base/header.twig' %}
+<div class="acc-heading">
+	<h1>{{ languages.custom[33] }}</h1>
+</div>
+<div class="acc-content">
+
+	{% include 'User/base/notices.twig' %}
+
+    {# Current main character #}
+	<div class="acc-title">{{ languages.custom[964] }}</div>
+	<div class="acc-group">
+		{% if user.hasMainCharacter %}
+            {{ AccountMacro.character(user, true) }}
+		{% else %}
+            <p class="red">{{ languages.custom[965] }}</p>
+        {% endif %}
+	</div>
+
+    {# list of verified characters plus add character section #}
+	<div class="acc-title">Verified Characters</div>
+	<div class="acc-group">
+        {% for character in user.characters %}
+            {{ AccountMacro.character(character) }}
+        {% endfor %}
+
+        {# Add character button #}
+        <button class="acc-char-add">
+            <i class="fa fa-plus" aria-hidden="true"></i>{{ languages.custom[674] }}
+        </button>
+
+        {# Add character form #}
+        <div class="acc-char-add-form">
+            <div class="acc-char-add-form-group">
+                <div class="acc-form-flex">
+                    <div>
+                        <em>{{ languages.custom[966] }}</em>
+                        <div class="form form-flex">
+                            <div>
+                                <input name="character-name" id="character-name" class="small" type="text" placeholder="{{ languages.custom[474] }}">
+                            </div>
+                            <div>
+                                <select name="character-server" id="character-server" class="small">
+                                {% set initial = false %}
+                                {% for server in filters.servers %}
+                                    {% if not initial or initial != server.name|first %}
+                                        {% if initial %}
+                                            </optgroup>
+                                        {% endif %}
+
+                                    {% set initial = server.name|first %}
+                                        <optgroup label="{{ server.name|first }}">
+                                    {% endif %}
+
+                                    <option value="{{ server.name|title }}">{{ server.name|title }}</option>
+                                {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <button type="button" class="blue small">{{ languages.custom[657] }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <em>{{ languages.custom[675] }}</em>
+                        <input type="text" class="acc-char-usercode" value="{{ user.characterCode }}">
+                    </div>
+                </div>
+                <div class="acc-ajax-waiting">
+                    <i class="fa fa-refresh fa-spin fa-2x"></i>
+                    <div>[Notice]</div>
+                </div>
+                <div class="acc-char-add-response">
+                    <div class="acc-title">{{ languages.custom[980] }}</div>
+                    <div class="acc-char-add-list">[list]</div>
+                </div>
+            </div>
+            <div class="acc-char-info">
+                <div class="panel">
+                    <div class="acc-title"><i class="fa fa-question-circle-o" aria-hidden="true"></i> {{ languages.custom[676] }}</div>
+                    <p>{{ languages.custom[677]|replace({
+                        '{usercode}': user.characterCode
+                    })|raw }}</p>
+                    <p>{{ languages.custom[678] }}. {{ languages.custom[679] }}</p>
+                </div>
+                <br>
+                <div class="panel">
+                    <div class="acc-title"><i class="fa fa-question-circle-o" aria-hidden="true"></i> {{ languages.custom[676] }}</div>
+                    <p><a href="https://na.finalfantasyxiv.com/lodestone/my/setting/profile/" target="_blank" class="pink">
+                        <i class="fa fa-external-link" aria-hidden="true"></i> {{ languages.custom[686] }}
+                    </a></p>
+                    <p>{{ languages.custom[687] }}</p>
+                    <ol class="acc-steps">
+                        <li>{{ languages.custom[688]|replace({ '{lodestone}': 'https://na.finalfantasyxiv.com/lodestone/' }) }}</li>
+                        <li>{{ languages.custom[689]|replace({ '{icon}': '<img src="/img/ui/lodestone/profile.png">' })|raw }}</li>
+                        <li>{{ languages.custom[690]|replace({ '{usercode}': user.characterCode })|raw }}</li>
+                    </ol>
+                    <p>{{ languages.custom[967] }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

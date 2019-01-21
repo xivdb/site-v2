@@ -1,0 +1,47 @@
+// clear fix
+@mixin cf() {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+        clear: both;
+    }
+}
+
+// center
+@mixin center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+$red: #ff3a36;
+$blue: #13a8ff;
+$green: #31ff0c;
+$yellow: #f7e649;
+$orange: #ff8d00;
+$purple: #ff4efa;
+$white: #fff;
+$gray: #aaa;
+$black: #000;
+$danger: #ff5252;
+$pink: #ff3e7f;
+$highlight: #ffc99a;
+$highlighter: #ffd664;
+$lime: #bfff43;
+$link: #2bceff;
+
+//
+// Game rarity colors
+//
+$rarity-common: #fff;
+$rarity-scares: #C4F58B;
+$rarity-rare: #78D4FF;
+$rarity-relic: #E55FFC;
+$rarity-aetherial: #FE82AC;
+
+@import "basic.scss";
+@import "theme.scss";

@@ -1,0 +1,40 @@
+// --------------------------------------------------
+// These are loops to create "grid"-like quick classes
+// --------------------------------------------------
+$max: 100;
+$step: 5;
+
+@for $i from 1 through ceil($max/$step) { $value: ($i - 1)*$step + 5; .w#{$value} { width: $value + 0% !important; } }
+@for $i from 1 through ceil($max/$step) { $value: ($i - 1)*$step + 5; .g#{$value} { height: $value + 0px !important; display: block; } }
+
+@for $i from 1 through ceil($max/$step) { $value: ($i - 1)*$step + 5; .b#{$value} { float: left !important; width: $value + 0% !important; } }
+
+.fs10 { font-size: 10px !important; }
+.fs11 { font-size: 11px !important; }
+.fs12 { font-size: 12px !important; }
+.fs13 { font-size: 13px !important; }
+.fs14 { font-size: 14px !important; }
+.fs15 { font-size: 15px !important; }
+.fs16 { font-size: 16px !important; }
+.fs18 { font-size: 18px !important; }
+.fs20 { font-size: 20px !important; }
+.fs24 { font-size: 24px !important; }
+
+.mb5 { margin-bottom: 5px !important; }
+.mb10 { margin-bottom: 10px !important; }
+.mb20 { margin-bottom: 20px !important; }
+
+.mt5 { margin-top: 5px !important; }
+.mt8 { margin-top: 8px !important; }
+.mt10 { margin-top: 10px !important; }
+.mt15 { margin-top: 15px !important; }
+.mt20 { margin-top: 20px !important; }
+.mt30 { margin-top: 30px !important; }
+
+.p5 { padding: 5px; }
+.p10 { padding: 10px; }
+.p15 { padding: 15px; }
+.p20 { padding: 20px; }
+.p30 { padding: 30px; }
+.p40 { padding: 40px; }
+.p50 { padding: 50px; }

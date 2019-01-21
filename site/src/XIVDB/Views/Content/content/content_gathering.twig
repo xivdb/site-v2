@@ -1,0 +1,24 @@
+{# item gathered #}
+{% if content.item %}
+    {{ Layout.block([
+        '<h4>'~ languages.custom[396] ~'</h4>',
+        Layout.item(content.item)
+    ]) }}
+{% endif %}
+
+{# some basic info #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[457], content.level),
+        Layout.col(languages.custom[864], content.level_view),
+        Layout.col(languages.custom[781], content.stars_html, 'yellow'),
+        Layout.col(languages.custom[146], content.type_name),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

@@ -1,0 +1,36 @@
+<div class="layout-block layout-block-sub layout-dev">
+    <div>
+        {{ languages.custom[828] }} {{ content.id }} [{{ content._cid }}]
+    </div>
+    {% if content.parsed_lodestone is defined %}
+    <div>
+        {% if content.parsed_lodestone == true %}
+            {{ languages.custom[1120] }} {{ content.parsed_lodestone_time|date('Y/m/d') }}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if content.updated_official is defined %}
+    <div>
+        <span data-tt="{{ languages.custom[1121] }}">
+            Extracted: {{ content.updated_official|date('Y-m-d') }}
+        </span>
+    </div>
+    {% endif %}
+</div>
+
+{% if content.lodestone_id is defined and content.lodestone_id is not empty %}
+<div class="layout-block layout-block-sub layout-dev">
+    <div>
+        <a href="{{ content.url_lodestone }}" target="_blank" data-tt="{{ languages.custom[1122] }}">
+            Lodestone ({{ content.lodestone_type }}) {{ content.lodestone_id }}
+        </a>
+    </div>
+</div>
+{% endif %}
+
+<div class="layout-block layout-block-sub layout-dev">
+    <div>
+        API: <a href="{{ content.url_api }}" target="_blank">{{ content.url_api }}</a>
+    </div>
+</div>

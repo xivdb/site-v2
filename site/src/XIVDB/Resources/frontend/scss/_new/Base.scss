@@ -1,0 +1,312 @@
+//
+// some base styles
+//
+
+* { box-sizing: border-box; }
+
+// I always want the body vertical scroll to show, this is because of
+// dynamic content (search) causing it to appear/disappear when typing
+// which is fuck annoying
+// shit yeah
+html {
+    background-color: $bgColor;
+    overflow-y: scroll;
+
+    &.maximized {
+        overflow: hidden;
+    }
+
+    // up to 20 normal backgrounds
+    @for $i from 1 through 20 {
+        &.bg#{$i} {
+            background-image: url(/img/backgrounds/#{$i}.png);
+            background-repeat: repeat-x;
+        }
+    }
+
+    // up to 20 repeated backgrounds
+    @for $i from 21 through 40 {
+        &.bg#{$i} {
+            background-image: url(/img/backgrounds/#{$i}.png);
+        }
+    }
+
+    // up to 20 jpg cover backgrounds
+    @for $i from 41 through 60 {
+        &.bg#{$i} {
+            background-image: url(/img/backgrounds/#{$i}.jpg);
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    }
+
+    &.lang-ja {
+        font-family: Arial !important;
+    }
+}
+
+html,
+body {
+    font-family: $font;
+    font-size: $fontSize;
+    font-weight: $fontWeight;
+    color: $fontColor;
+    text-shadow: $globalTextShadow;
+
+    position: relative;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    min-width: 300px;
+    margin: 0;
+
+    &.custom-bg {
+        background-position: top center;
+        background-size: cover;
+
+        .site {
+            background-color: #333;
+            box-shadow: 0 0 0 9px #333, 0 0 50px 20px rgba(0,0,0,0.8), 0 0 0 10px #000;
+        }
+    }
+}
+
+h1 { font-size: 36px; }
+h2 { font-size: 36px; }
+h3 { font-size: 30px; }
+h4 { font-size: 26px; }
+h5 { font-size: 22px; }
+h6 { font-size: 18px; }
+
+@include mq($until: desktop) {
+    h1 { font-size: 30px; }
+    h2 { font-size: 28px; }
+    h3 { font-size: 24px; }
+    h4 { font-size: 22px; }
+    h5 { font-size: 18px; }
+    h6 { font-size: 16px; }
+}
+
+
+h1 {
+    font-weight: 300;
+}
+h2, h3, h4, h5, h6 {
+    font-weight: 400;
+}
+
+hr {
+    display: block;
+    height: 2px;
+    background-color: #666;
+    border: none;
+    margin: 15px 0;
+
+    &.line {
+        line-height: 0;
+        display: block;
+        margin: 30px -30px;
+        height: 1px;
+        background-color: #000;
+        box-shadow: 0 1px 0 #555;
+    }
+}
+
+div p {
+    margin: 10px 0;
+
+    &:first-child { margin: 0 0 10px 0; }
+    &:last-child { margin: 0; }
+}
+
+ul {
+    margin: 0 0 0 24px;
+
+    li {
+        margin-bottom: 10px;
+        line-height: 16px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+ol {
+    margin: 0 0 20px 30px;
+}
+
+a, .a {
+    color: $link;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        color: lighten($link, 20%);
+        text-decoration: underline;
+    }
+}
+
+code {
+    text-align: left;
+    background-color: rgba(0,0,0,0.2);
+    padding: 1px 3px;
+    border-radius: 2px;
+    word-wrap: break-word;
+
+    &.block {
+        display: block;
+        padding: 5px;
+    }
+}
+
+pre {
+    display: block;
+    margin: 10px 0;
+    color: lighten($yellow, 30%);
+
+    code {
+        display: block;
+        padding: 10px;
+    }
+}
+
+header {
+    margin-bottom: 5px;
+
+    @include mq($until: desktop) {
+        margin-bottom: 10px;
+    }
+}
+
+//
+// Footer
+//
+footer {
+    background-color: #252525;
+    margin-top: 10px;
+    font-size: 12px;
+
+    .footer-container {
+        display: flex;
+        padding: 20px;
+        border-bottom: solid 1px #000;
+
+        @include mq($until: desktop) {
+            display: block;
+            padding: 10px;
+            text-align: center;
+        }
+
+        > div:first-of-type {
+            flex: 0 1 80%;
+
+            @include mq($until: desktop) {
+                width: 100%;
+                flex: none;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+
+                li {
+                    display: inline-block;
+                    padding: 0 10px;
+                    border-right: solid 1px #666;
+                    margin: 0;
+                    line-height: 4px;
+
+                    @include mq($until: desktop) {
+                        padding: 15px;
+                        border-right: none;
+                    }
+
+                    &:last-child {
+                        border-right: none;
+                    }
+                }
+            }
+
+            .copyright {
+                margin-top: 10px;
+                padding-left: 10px;
+                opacity: 0.5;
+            }
+        }
+
+        > div:last-of-type {
+            flex: 0 1 20%;
+            text-align: right;
+
+            @include mq($until: desktop) {
+                width: 100%;
+                flex: none;
+                text-align: center;
+            }
+
+            .zam-logo {
+                opacity: 0.6;
+                display: inline-block;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .footer-shop {
+        text-align: center;
+        padding:20px;
+
+        @include mq($until: desktop) {
+            display: none;
+        }
+    }
+}
+
+//
+// site container
+//
+.site {
+    margin: 0 auto;
+    width: $siteWidth;
+    position: relative;
+    padding: 15px 0 50px 0;
+
+    @include mq($until: desktop) {
+        padding: 0 10px 10px 10px;
+        width: 100%;
+    }
+}
+
+//
+// random shit
+//
+.line {
+    height: 2px;
+    background-color: #555;
+    box-shadow: 0 1px 5px #222;
+    display: block;
+}
+
+.loaderimg {
+    vertical-align: top;
+    width: 20px;
+    margin: -2px 5px -10px 0;
+}
+
+
+.vultr-link {
+    opacity: 0.5;
+
+    &:hover {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,53 @@
+<div class="filter-panel filter-panel-items" data-filter-type="items">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs">
+        <div class="filter-param-row">
+            {{ SearchFilter.level('EQUIP LEVEL', 'level_equip') }}
+            {{ SearchFilter.level('ITEM LEVEL', 'level_item') }}
+            {{ SearchFilter.select('KIND', 'item_ui_kind', [filters.kinds, 'id', 'name']) }}
+            {{ SearchFilter.select('CATEGORY', 'item_ui_category', [filters.kinds, 'id', 'name'], ['categories', 'id', 'name']) }}
+            {{ SearchFilter.select('COMPANY', 'item_series', [filters.grand_company, 'id', 'name']) }}
+            {{ SearchFilter.select('SOURCE', 'source', [filters.source.items, 'id', 'name']) }}
+            {{ SearchFilter.select('MATERIA', 'materia_slot_count', [filters.materia, 'id', 'name']) }}
+            {{ SearchFilter.rarity('RARITY', 'rarity', filters.rarity) }}
+        </div>
+    </div>
+
+    {# classjobs #}
+    <div class="filter-panel-tabs">
+        <div class="filter-special-classjobs">
+            {{ SearchFilter.classjobs(filters) }}
+        </div>
+    </div>
+
+    {# attributes #}
+    <div class="filter-panel-tabs">
+        <div class="filter-param-row filter-param-flexspecial">
+            <div class="filter-param-slot1">
+                {{ SearchFilter.attributes('ATTRIBUTES', 'attributes') }}
+            </div>
+            <div class="filter-param-slot2">
+                {{ SearchFilter.andor('ATTRIBUTES AND/OR', 'attributes_andor', {
+                    'and': '(AND) Group Attributes',
+                    'or': '(OR) Split Attributes',
+                }) }}
+            </div>
+            <div class="filter-param-slot2">
+                {{ SearchFilter.andor('CLASS/JOBS AND/OR', 'classjobs_andor', {
+                    'and': '(AND) Group Class/Jobs',
+                    'or': '(OR) Split Class/Jobs',
+                }) }}
+            </div>
+            <div class="filter-param-slot2">
+                {{ SearchFilter.checkbox('ROLE ONLY', 'classjobs_exclusive') }}
+            </div>
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.items, filters.patches) }}
+
+{% endspaceless %}
+</div>

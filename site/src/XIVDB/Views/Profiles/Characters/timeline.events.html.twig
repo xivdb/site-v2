@@ -1,0 +1,108 @@
+{% if event.timeline_id %}
+{# The actual event! #}
+<div class="tl-event-line-{{ event.timeline_id }}">
+	{# experience Points #}
+	{% if event.timeline_id == 'exp' %}
+		{% set role = data.classjobs[event.jobclass] %}
+		<div class="tl-event-line-label">
+			<img src="/img/loader/loading2.gif" data-src="{{ role.data.icon }}" height="18"> {{ role.data.name }}
+		</div>
+		<div class="tl-event-line-data">
+			+ <strong>{{ event.gained|number_format }}</strong> {{ languages.custom[1224]|lower }}
+		</div>
+		<div class="tl-event-line-fact">
+			{% set curve = ((event.gained / role.exp.total_max) * 100)|round(2) %}
+			<i class="fa fa-line-chart" aria-hidden="true"></i> {{ curve }}%
+			&nbsp;&nbsp;&nbsp;
+			{{ event.old|number_format }} <i class="fa fa-caret-right" aria-hidden="true"></i> {{ event.new|number_format }}
+		</div>
+
+	{# levels #}
+	{% elseif event.timeline_id == 'lvs' %}
+		{% set role = data.classjobs[event.jobclass] %}
+		<div class="tl-event-line-label">
+			<img src="/img/loader/loading2.gif" data-src="{{ role.data.icon }}" height="18"> {{ role.data.name }}
+		</div>
+		<div class="tl-event-line-data">
+			+ <strong>{{ event.gained|number_format }}</strong> {{ languages.custom[593]|lower }}
+			({{ event.old|number_format }} <i class="fa fa-caret-right" aria-hidden="true"></i> {{ event.new|number_format }})
+		</div>
+
+	{# achievement #}
+	{% elseif event.timeline_id == 'achievement' %}
+		<div class="tl-event-line-goal">
+			<div>
+				<img src="/img/loader/loading2.gif" data-src="{{ event.icon }}" height="32">
+			</div>
+			<div>
+				<div class="tl-event-line-label">
+					+{{ event.points }} {{ languages.custom[479]|lower }}
+				</div>
+				<div class="tl-event-line-data">
+					<a href="{{ event.url }}" data-xivdb-replace="1" target="_blank">{{ event.name }}</a>
+				</div>
+				<div class="tl-event-line-fact">
+					{{ event.help }}
+				</div>
+			</div>
+		</div>
+
+
+	{# tracking - Doesn't do FC at the moment #}
+	{% elseif (event.timeline_id == 'tracking') %}
+		<div class="tl-event-line-info">
+			{# City #}
+			{% if event.type == 'city' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[1246] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Clan #}
+			{% elseif event.type == 'clan' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[1247] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Gender #}
+			{% elseif event.type == 'gender' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[1248] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Grand company name #}
+			{% elseif event.type == 'grand_company_name' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[810] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Grand company rank #}
+			{% elseif event.type == 'grand_company_rank' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[1249] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Name #}
+			{% elseif event.type == 'name' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[474] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Nameday #}
+			{% elseif event.type == 'nameday' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[1250] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Race #}
+			{% elseif event.type == 'race' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[1094] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Server #}
+			{% elseif event.type == 'server' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[1251] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{# Server #}
+			{% elseif event.type == 'title' %}
+				<div class="tl-event-line-info-title">{{ languages.custom[314] }}</div>
+				{{ event.old_value }}<i class="fa fa-angle-right" aria-hidden="true"></i>{{ event.new_value }}
+
+			{% endif %}
+		</div>
+	{% endif %}
+</div>
+{% endif %}

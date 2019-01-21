@@ -1,0 +1,169 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}{{ name }} - Game Data{% endset %}
+{% set page = 'gamedata' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Game Data' },
+    { title: 'Import' },
+    { title: name }
+]) }}
+
+{% include 'Dashboard/Default/gamedata.html.twig' %}
+
+<div class="container-fluid">
+    <a href="/gamedata/import/{{ name }}/process" target="_blank" class="btn btn-success fr">Process Data</a>
+    <h2><a href="/gamedata">Game Data</a> - <a href="/gamedata/import">Import ({{ patch.name_en }}) </a> - {{ name }} - <code>{{ table }}</code></h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>{{ defines.CURRENT_PATCH }}</h4>
+            <ul>
+                <li><strong>CSV:</strong> <code>{{ filenames.csv }}</code></li>
+                <li><strong>JSON:</strong> <code>{{ filenames.json }}</code></li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h4>{{ defines.PREVIOUS_PATCH }}</h4>
+            <ul>
+                <li><strong>CSV:</strong> <code>{{ filenames.csv_prev }}</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            {# CSV Table #}
+            <table class="table table-border">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th width="10%">Offset</th>
+                        <th width="30%">Offset Name</th>
+                        <th width="30%">Value {{ defines.CURRENT_PATCH }}</th>
+                        <th width="30%">Value {{ defines.PREVIOUS_PATCH }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% set repeater_index = 0 %}
+                {% set repeater_count = 1 %}
+                {% for offset, value in current_patch_csv_entry %}
+
+                    {# prev patch value #}
+                    {% set value_prev = previous_patch_csv_entry[offset] is defined ? previous_patch_csv_entry[offset] : '~' %}
+
+                    {# Set row highlight #}
+                    {% set highlight = '' %}
+                    {% if current_patch_offsets[offset] is defined %}
+                        {% set highlight = 'highlight-default' %}
+                    {% elseif current_patch_set_offsets[offset] is defined %}
+                        {% set highlight = 'highlight-set' %}
+                    {% endif %}
+
+                    {# override highlight if values do not match #}
+                    {% if value_prev and value_prev != value %}
+                        {% set highlight = 'highlight-error' %}
+                    {% endif %}
+
+                    {# Set row label #}
+                    {% set label = null %}
+                    {% if current_patch_offsets[offset] is defined %}
+                        {% set label = current_patch_offsets[offset] %}
+                    {% elseif current_patch_set_offsets[offset] is defined %}
+                        {% set label = current_patch_set_offsets[offset] %}
+                    {% endif %}
+
+                    {# if repeat start #}
+                    {% if current_patch_repeater_offsets and offset == current_patch_repeater_offsets.start %}
+                    <tr>
+                        <td colspan="4" class="highlight-repeat">
+                            Repeat (Start) -
+                            {{ current_patch_repeater_offsets.start }} to
+                            {{ current_patch_repeater_offsets.finish }},
+                            every {{ current_patch_repeater_offsets.columns|length }} offsets
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="highlight-repeat-break">
+                            Set {{ repeater_count }}
+                        </td>
+                    </tr
+                    {% endif %}
+
+                    {# Set Label #}
+                    {% if current_patch_repeater_offsets
+                       and offset >= current_patch_repeater_offsets.start
+                       and offset <= current_patch_repeater_offsets.finish %}
+                        {% set label = '[' ~ repeater_count ~ '] ' ~ current_patch_repeater_offsets.columns[repeater_index] %}
+                    {% endif %}
+
+                    <tr class="{{ highlight }}">
+                        <td><strong>{{ offset == 0 ? 'ID' : offset }}</strong> (YAML: {{ (offset - 1) }})</td>
+                        <td>{{ (label ? '<code>'~ label ~'</code>' : '')|raw }}</td>
+                        <td>{{ value }}</td>
+                        <td>{{ value_prev }}</td>
+                    </tr>
+
+                    {% if current_patch_repeater_offsets
+                       and offset >= current_patch_repeater_offsets.start
+                       and offset <= current_patch_repeater_offsets.finish
+                       and loop.last == false %}
+                        {% set repeater_index = repeater_index + 1 %}
+                        {% if repeater_index == current_patch_repeater_offsets.columns|length %}
+                            {% set repeater_index = 0 %}
+                            {% set repeater_count = repeater_count + 1 %}
+                            <tr>
+                                <td colspan="4" class="highlight-repeat-break">
+                                    Set {{ repeater_count }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-4">
+            {# JSON Table #}
+            <div class="list-group">
+                {% for key, strings in current_patch_json_entry %}
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ key }}</h4>
+                    <p class="list-group-item-text">
+                        <table class="table">
+                            <tbody>
+                                {% for lang, line in strings %}
+                                <tr>
+                                {% if line is iterable %}
+                                    {% for lang, string in line %}
+                                    <td colspan="2" valign="top">[{{ lang }}] {{ string|nl2br|raw }}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% else %}
+                                    <tr>
+                                        <td width="10%">{{ lang }}</td>
+                                        <td>{{ line|nl2br|raw }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </p>
+                </div>
+                {% else %}
+                    <div class="alert alert-danger">
+                        <h4>This content type has no json entry</h4>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <fieldset class="form-group">
+        <label for="result_python">Columns SQL</label>
+        <textarea class="form-control sql-textarea" width="100%" rows="{{ sql|split("\n")|length }}">{{ sql }}</textarea>
+    </fieldset>
+
+</div>
+{% endblock %}

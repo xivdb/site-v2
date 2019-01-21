@@ -1,0 +1,88 @@
+<h2>
+	{{ stats.category }}
+	<small>{{ stats.kind }}</small>
+</h2>
+
+<br>
+
+{# Progress #}
+<div class="ac-block">
+	<h6>{{ languages.custom[1206] }}</h6>
+	<div class="ac-data">
+		<div>
+			<span class="ac-data-figure">{{ (stats.is_numbered) ? stats.obtained_count|number_format : stats.obtained|number_format }}</span>
+			<span class="ac-data-value">/ {{ (stats.is_numbered) ? stats.total_count|number_format : stats.total|number_format }}</span>
+			<span class="ac-data-percent">({{ (stats.is_numbered) ? stats.percent_count : stats.percent }}%)</span>
+		</div>
+		<div>
+			{% set togoMax = (stats.is_numbered) ? stats.total_count : stats.total %}
+            {% set togoCurrent = (stats.is_numbered) ? stats.obtained_count : stats.obtained %}
+			<span class="ac-data-togo">{{ togoMax - togoCurrent }} togo</span>
+		</div>
+	</div>
+	<div class="cp-bar"><div class="green" style="width:{{ (stats.is_numbered) ? stats.percent_count : stats.percent }}%;"></div></div>
+</div>
+
+{% if stats.percent != 100 %}
+{# Required in this category #}
+<div class="ac-all ac-all-required">
+	<h6>{{ languages.custom[1205] }}</h6>
+	<br>
+	{% set totalPoints = 0 %}
+	{% for achieve in achievelist %}
+		{% set obtained = achievements[achieve.id] is defined ? achievements[achieve.id] : false %}
+		{% if obtained == false %}
+		{% set totalPoints = totalPoints + achieve.points %}
+		<div class="ac-all-row{% if obtained %} ac-obtained{% endif %}">
+			<div>
+				<img src="/img/loader/loading2.gif" data-src="{{ achieve.icon }}" width="24">
+			</div>
+			<div>
+				+{{ achieve.points }}
+			</div>
+			<div>
+				<a href="{{ achieve.url }}" data-xivdb-replace="0">{{ achieve.name }}</a>
+			</div>
+		</div>
+		{% endif %}
+	{% endfor %}
+
+	<p>{{ languages.custom[1208] }} {{ totalPoints|number_format }}</p>
+</div>
+{% endif %}
+
+<hr>
+
+{# list #}
+<div class="ac-all">
+	<h6>{{ languages.custom[1207] }}</h6>
+	<br>
+    {% set totalPoints = 0 %}
+	{% for achieve in achievelist %}
+		{% set obtained = achievements[achieve.id] is defined ? achievements[achieve.id] : false %}
+		{% if obtained %}
+            {% set totalPoints = totalPoints + achieve.points %}
+		<div class="ac-all-row ac-obtained">
+			<div>
+				<img src="/img/loader/loading2.gif" data-src="{{ achieve.icon }}" width="24">
+			</div>
+			<div>
+				+{{ achieve.points }}
+			</div>
+			<div>
+				<a href="{{ achieve.url }}" data-xivdb-replace="1">{{ achieve.name }}</a>
+				{% if obtained %}
+					<div class="ac-all-obtained-date">
+						<i class="fa fa-check"></i>
+                        {% if obtained.obtained|first != '@' %}
+						Obtained: <time>{{ obtained.obtained|moment }}</time>
+						{% endif %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		{% endif %}
+	{% endfor %}
+
+    <p>{{ languages.custom[1208] }} {{ totalPoints|number_format }}</p>
+</div>

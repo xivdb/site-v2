@@ -1,0 +1,21 @@
+{# Tabs #}
+<div class="home-tabs">
+    <nav>
+        <button type="button" class="active" data-tab="devposts">Dev Posts</button>
+        <button type="button" data-tab="news">FFXIV News</button>
+        <button type="button" data-tab="comments">Comments</button>
+    </nav>
+
+    <div class="home-tabs-contents active" data-tab="devposts">
+        {% include 'Home/index_devposts.twig' %}
+    </div>
+
+    <div class="home-tabs-contents" data-tab="news">
+        {% include 'Home/index_news.twig' %}
+    </div>
+
+    <div class="home-tabs-contents" data-tab="comments">
+        {% include 'Home/index_comments.twig' %}
+    </div>
+</div>
+<script>AppHome.initTabs(); AppHome.rotateScreenshots()</script>

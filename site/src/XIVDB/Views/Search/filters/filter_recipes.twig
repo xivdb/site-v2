@@ -1,0 +1,28 @@
+<div class="filter-panel filter-panel-recipes" data-filter-type="recipes">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs">
+        <div class="filter-param-row">
+            {{ SearchFilter.level('SYNTH LEVEL', 'level') }}
+            {{ SearchFilter.level('CLASS LEVEL', 'level_view') }}
+            {{ SearchFilter.checkbox('Auto-Synth', 'can_quick_synth') }}
+            {{ SearchFilter.checkbox('Can HQ', 'can_hq') }}
+            {{ SearchFilter.select('DIFFICULTY', 'level_diff', [filters.stars, 'id', 'name']) }}
+            {{ SearchFilter.select('ELEMENT', 'recipe_element', [filters.recipes_elements, 'id', 'name']) }}
+
+            {{ SearchFilter.andor('CLASS/JOBS AND/OR', 'classjobs_andor', {
+                'and': '(AND) Group Class/Jobs',
+                'or': '(OR) Split Class/Jobs',
+            }) }}
+            <div class="filter-special-classjobs">
+                {{ SearchFilter.classjobs(filters, true) }}
+            </div>
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.recipes, filters.patches) }}
+
+{% endspaceless %}
+</div>

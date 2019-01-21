@@ -1,0 +1,13 @@
+{% if alerts.success is defined and alerts.success %}
+    <div class="alert alert-success" role="alert">
+        <h2><i class="fa fa-thumbs-o-up"></i> Success</h2>
+        {{ alerts.success }}
+    </div>
+{% endif %}
+
+{% if alerts.error is defined and alerts.error %}
+    <div class="alert alert-success" role="alert">
+        <h2><i class="fa fa-exclamation-circle"></i> Error</h2>
+        {{ alerts.error }}
+    </div>
+{% endif %}

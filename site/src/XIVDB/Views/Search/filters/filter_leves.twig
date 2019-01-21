@@ -1,0 +1,15 @@
+<div class="filter-panel filter-panel-leves" data-filter-type="leves">
+{% spaceless %}
+
+    <div class="filter-panel-tabs active" data-tab="general">
+        <div class="filter-param-row">
+            {{ SearchFilter.level('LEVEL', 'class_level') }}
+            {{ SearchFilter.select('ZONE', 'placename', [filters.placenames, 'id', 'name'], ['placenames', 'id', 'name']) }}
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.leves) }}
+
+{% endspaceless %}
+</div>

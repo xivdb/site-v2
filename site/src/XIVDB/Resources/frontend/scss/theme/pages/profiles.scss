@@ -1,0 +1,171 @@
+//
+// User profile styles
+//
+.user-profile
+{
+    padding: 0 !important;
+
+    h2 {
+        display: block;
+        font-size: 11px;
+        color: $highlight;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    &--top {
+        padding: 30px;
+        display: flex;
+        border-bottom: solid 1px #000;
+        box-shadow: 0 1px 0 #555;
+
+        // woo gradients
+        @include vertical-gradient(#494949, 0%, #353535, 100%);
+
+        > div {
+            flex: 0 1 50%;
+        }
+
+        > div:nth-of-type(1) {
+            display: flex;
+        }
+
+        > div:nth-of-type(2) {
+            text-align: right;
+        }
+    }
+
+    &--avatar {
+        flex: 0 1 80px;
+        text-align: right;
+
+        img {
+            vertical-align: bottom;
+            margin-top: 6px;
+            border-radius: 10px;
+            box-shadow: 0 1px 2px #000;
+        }
+    }
+
+    &--title {
+        flex: 0 1 80;
+        padding-left: 30px;
+    }
+
+    &--character {
+        display: flex;
+        margin-bottom: 10px;
+
+        > div:nth-of-type(1) {
+            flex: 0 1 95%;
+            padding-right: 20px;
+            padding-top: 3px;
+
+            a {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 12px;
+                opacity: 0.5;
+                display: inline-block;
+                margin-right: 10px;
+            }
+        }
+
+        > div:nth-of-type(2) {
+            flex: 0 1 5%;
+
+            img {
+                border-radius: 5px;
+                box-shadow: 0 1px 2px #000;
+            }
+        }
+    }
+
+    &--admin {
+        color: $red;
+    }
+
+    &--mod {
+        color: $green;
+    }
+
+    &--online {
+        font-size: 12px;
+        color: #aaa;
+    }
+
+    &--info {
+        padding: 30px;
+        display: flex;
+
+        > div:nth-of-type(1) {
+            flex: 0 1 60%;
+            padding-right: 20px;
+        }
+
+        > div:nth-of-type(2) {
+            flex: 0 1 450px;
+        }
+    }
+
+    &--comment {
+        border-radius: 2px;
+        margin-bottom: 5px;
+        background-color: #333;
+        padding: 20px;
+    }
+
+    &--text {
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    &--content {
+        margin-bottom: 10px;
+
+        i {
+            color: $yellow;
+        }
+    }
+
+    &--date {
+        font-size: 10px;
+        color: #777;
+        text-shadow: none;
+    }
+
+    &--screenshot {
+        display: block;
+        border-radius: 3px !important;
+        width: 100%;
+        height: 220px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 5px;
+        text-align: center;
+        background-color: #111;
+        background-image: url(/img/textures/bg6.png);
+        border: solid 1px #111;
+
+        img {
+            max-width: 120%;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            border-radius: 0 !important;
+        }
+
+        &-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: #111;
+            opacity: 0.9;
+            border-top-right-radius: 3px;
+            padding: 5px;
+            font-size: 12px;
+        }
+    }
+}

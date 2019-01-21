@@ -1,0 +1,179 @@
+{% if is_hidden %}
+<div class="panel red" align="center">
+    <h4>This character is private!</h4>
+</div>
+{% endif %}
+
+<div class="cp-data">
+	<div>
+        {# Active Role #}
+        <div class="cp-active-role">
+            <div>
+                <div class="cp-active-role-top">
+                    <h6>{{ languages.custom[1240] }}</h6>
+                    <img src="{{ data.active_class.role.icon }}" height="22">
+                    <span class="cp-active-role-level">{{ data.active_class.progress.level }}</span> {{ data.active_class.role.name }}
+                </div>
+                {% if data.active_class.progress.exp.at_cap %}
+                    <div class="cp-active-role-stats">
+                        <h6>{{ languages.custom[1241] }}!</h6>
+                        <span><em>{{ data.active_class.progress.exp.total_gained|number_format }}</em> / {{ data.active_class.progress.exp.total_max|number_format }}</span>
+                        <span><em>100</em>%</span>
+                        <div class="cp-bar"><div class="green" style="width:100%;"></div></div>
+                    </div>
+                {% else %}
+                    <div class="cp-active-role-stats">
+                        <h6>{{ languages.custom[1242] }}</h6>
+                        <span><em>{{ data.active_class.progress.exp.current|number_format }}</em> / {{ data.active_class.progress.exp.max|number_format }}</span>
+                        <span><em>{{ data.active_class.progress.exp.percent|round(1) }}</em>%</span>
+                        <div class="cp-bar"><div class="blue" style="width:{{ data.active_class.progress.exp.percent }}%;"></div></div>
+                    </div>
+                    <div class="cp-active-role-stats">
+                        <h6>{{ languages.custom[1243] }}</h6>
+                        <span><em>{{ data.active_class.progress.exp.total_gained|number_format }}</em> / {{ data.active_class.progress.exp.total_max|number_format }}</span>
+                        <span><em>{{ data.active_class.progress.exp.total_percent|round(1) }}</em>%</span>
+                        <div class="cp-bar"><div class="blue" style="width:{{ data.active_class.progress.exp.total_percent }}%;"></div></div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% include 'Profiles/Characters/timeline.mini.html.twig' %}
+	</div>
+
+	<div>
+		<div class="cp-active-role" style="padding:15px;margin-bottom:30px;">
+			{#<div data-tt="{{ languages.custom[1235] }}" class="cf">
+				<small class="faint">LAST ACTIVE</small>
+                <span style="float:right;">{{ (last_active > 0) ? last_active|moment : 'Long ago...' }}</span>
+			</div>#}
+			<div class="cf">
+				<small class="faint">LAST UPDATED</small>
+				<span style="float:right;">{{ (last_updated > 0) ?  last_updated|moment : 'Pending...'}}</span>
+			</div>
+            <div class="cf">
+                <small class="faint">UPDATE PRIORITY</small>
+                <span style="float:right;">{{ priority }}/5</span>
+            </div>
+            <div class="cf">
+                <small class="faint">UPDATE COUNT</small>
+                <span style="float:right;">{{ update_count|number_format }}</span>
+            </div>
+			<div data-tt="{{ languages.custom[1234] }}" class="cf">
+				<small class="faint">LODESTONE</small>
+				<span style="float:right;">
+					<a href="https://na.finalfantasyxiv.com/lodestone/character/{{ lodestone_id }}" target="_blank">{{ lodestone_id }}</a>
+				</span>
+			</div>
+
+            {% if member is defined and member is not empty %}
+				<div class="cf">
+					<small class="faint">MEMBER</small>
+					<span style="float:right;"><a href="{{ member.url }}">{{ member.username }}</a></span>
+				</div>
+				<div data-tt="{{ languages.custom[1233] }}" class="cf">
+					<small class="faint">LAST ONLINE</small>
+					<span style="float:right;">{{ member.lastonline > 10 ? member.lastonline|moment : '-' }}</span>
+				</div>
+            {% endif %}
+
+		</div>
+
+		{# Title #}
+		{% if data.title is not empty %}
+		<div class="cp-info-block">
+			<h6>Title</h6>
+			<div class="cp-row">
+				<div class="cp-row-one">
+					<div class="cp-row-key">{{ data.title }}</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
+		{# Level 60s #}
+		{% if data.title is not empty %}
+		<div class="cp-info-block">
+			<h6>Max Level Class/Jobs</h6>
+			<div class="cp-icons">
+				{% for role in data.classjobs %}
+					{% if role.level == defines.GAME_MAX_LEVEL %}
+						<img src="{{ role.data.icon }}" height="18" data-tt="{{ role.data.name }}">
+					{% endif %}
+				{% else %}
+					No classes at max level.
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+
+		{# Grand Company #}
+		{% if grand_companies is not empty %}
+		<div class="cp-info-block">
+			<h6>Grand Companies</h6>
+			{% for gc in grand_companies %}
+				<div class="cp-row">
+					<div>
+						<div class="cp-row-title"><em>#{{ loop.index }}</em> {{ gc.name }}</div>
+						<div class="cp-row-key">{{ gc.rank }}</div>
+					</div>
+					<div>
+						<img src="{{ gc.icon }}">
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+
+		{# City #}
+		<div class="cp-info-block">
+			<h6>City</h6>
+			<div class="cp-row">
+				<div>
+					<div class="cp-row-key">{{ data.city.name }}</div>
+				</div>
+				<div>
+					<img src="{{ data.city.icon }}" height="32">
+				</div>
+			</div>
+		</div>
+
+		{# Guardian #}
+		<div class="cp-info-block">
+			<h6>Guardian</h6>
+			<div class="cp-row">
+				<div>
+					<div class="cp-row-key">{{ data.guardian.name }}</div>
+				</div>
+				<div>
+					<img src="{{ data.guardian.icon }}" height="32">
+				</div>
+			</div>
+		</div>
+
+		{# Nameday #}
+		<div class="cp-info-block">
+			<h6>Nameday</h6>
+			<div class="cp-row">
+				<div class="cp-row-one">
+					<div class="cp-row-title">{{ data.nameday }}</div>
+				</div>
+			</div>
+		</div>
+
+		{# Race #}
+		<div class="cp-info-block cp-info-last">
+			<h6>Race</h6>
+			<div class="cp-row">
+				<div class="cp-row-one">
+					<div class="cp-row-title">
+						<i class="fa {{ data.gender == 'male' ? 'fa-mars' : 'fa-venus' }}" aria-hidden="true"></i>
+						{{ data.gender|title }}
+					</div>
+					<div class="cp-row-key">{{ data.race|title }}, {{ data.clan|title }}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

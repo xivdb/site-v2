@@ -1,0 +1,37 @@
+<div class="tool-cart-page-container">
+    <h3>{{ languages.custom[408] }}</h3>
+    <br>
+
+    <form method="post" action="/shopping-cart/update-quantity">
+        <div class="tool-cart-item-adjust form">
+            <table width="100%" class="form">
+                <thead>
+                    <tr>
+                        <th width="10%">{{ languages.custom[1060] }}</th>
+                        <th width="90%">{{ languages.custom[396] }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in cart.basket %}
+                    <tr>
+                        <td>
+                            <input type="text" name="items[{{ item.data.id }}]" class="small" value="{{ item.quantity }}">
+                        </td>
+                        <td>
+                            {{ item.data.name }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <br>
+
+        <div>
+            <input type="hidden" name="save_id" value="{{ saved ? saved.id : '' }}">
+            <button type="submit" class="blue small">{{ languages.custom[1059] }}</button>
+        </div>
+    </form>
+
+</div>

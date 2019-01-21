@@ -1,0 +1,41 @@
+<div class="filter-panel filter-panel-quests" data-filter-type="quests">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs">
+        <div class="filter-param-row">
+            {{ SearchFilter.level('LEVEL', 'class_level_1') }}
+            {{ SearchFilter.number('MIN GIL', 'gil_reward') }}
+            {{ SearchFilter.number('MIN EXP', 'exp_reward') }}
+            {{ SearchFilter.select('COMPANY', 'grand_company', [filters.grand_company, 'id', 'name']) }}
+            {{ SearchFilter.select('CATEGORY', 'journal_genre', [filters.genres, 'id', 'name'], ['genres', 'id', 'name']) }}
+            {{ SearchFilter.select('ZONE', 'placename', [filters.placenames, 'id', 'name'], ['placenames', 'id', 'name']) }}
+        </div>
+    </div>
+
+    <div class="filter-panel-tabs">
+        <div class="filter-param-row">
+            {{ SearchFilter.andor('CLASS/JOBS AND/OR', 'classjobs_andor', {
+                'and': '(AND) Group Class/Jobs',
+                'or': '(OR) Split Class/Jobs',
+            }) }}
+            {{ SearchFilter.checkbox('IS REPEATABLE', 'is_repeatable', 'Quest can be repeated') }}
+            {{ SearchFilter.checkbox('HOME REQUIRED', 'is_house_required', 'House is required for the Quest') }}
+            {{ SearchFilter.checkbox('ITEMS', 'item_reward_type', 'Quest rewards you with Items') }}
+            {{ SearchFilter.checkbox('TOKENS', 'tomestone_reward', 'Quest rewards you with Tomestones') }}
+            {{ SearchFilter.checkbox('EMOTES', 'emote_reward', 'Quest rewards you with emotes') }}
+        </div>
+    </div>
+
+    {# classjobs #}
+    <div class="filter-panel-tabs">
+        <div class="filter-special-classjobs">
+            {{ SearchFilter.classjobs(filters) }}
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.quests, filters.patches) }}
+
+{% endspaceless %}
+</div>

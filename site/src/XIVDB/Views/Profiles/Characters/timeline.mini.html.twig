@@ -1,0 +1,52 @@
+{% if timeline %}
+
+	{% set loopCount = 1 %}
+	{% for year, months in timeline %}
+		{% if loopCount %}
+			{% set isFirstYear = loop.first %}
+			{% for month, events in months %}
+                {% if loopCount %}
+					{% set isFirstMonth = loop.first %}
+					<div class="tl-page active" data-tl="{{ year }},{{ month }}">
+
+						<div class="tl-header">
+							<div><strong>{{ timeline_count[year ~ month] }}</strong> events</div>
+							<div>{{ month|monthname|title }} <em>{{ year }}</em></div>
+						</div>
+
+						<div class="tl-data">
+							{% for timestamp, list in events %}
+
+								{% if loopCount %}
+									{% set loopCount = loopCount + 1 %}
+
+									<div class="tl-data-block">
+										<div>
+											{{ timestamp|moment('l jS') }}
+											<span></span>
+										</div>
+										<div>
+										{% for event in list %}
+											{% if event.type != 'free_company' %}
+												{% include 'Profiles/Characters/timeline.events.html.twig' %}
+											{% else %}
+												<div>{{ name }} moved free company.</div>
+											{% endif %}
+										{% endfor %}
+										</div>
+									</div>
+								{% endif %}
+
+                                {% if loopCount > 9 %}
+                                    {% set loopCount = false %}
+                                {% endif %}
+
+							{% endfor %}
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+
+{% endif %}

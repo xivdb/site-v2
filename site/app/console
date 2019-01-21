@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+// setup
+set_time_limit(0);
+define('LANGUAGE', 'en');
+require_once __DIR__ .'/../app/defines.php';
+require_once FILE_COMPOSER;
+$config = require_once FILE_CONFIG;
+$app = require_once __DIR__.'/../bootstrap.php';
+
+// get console application
+$application = $app['console'];
+
+// add console commands
+$application->add(new \XIVDB\Command\UpdateHomepage);
+$application->add(new \XIVDB\Command\UpdateAchievementRanking);
+$application->add(new \XIVDB\Command\UpdateAchievementStats);
+$application->add(new \XIVDB\Command\RunSync);
+
+// run
+$application->run();

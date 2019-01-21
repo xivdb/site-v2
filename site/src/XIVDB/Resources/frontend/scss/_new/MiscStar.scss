@@ -1,0 +1,79 @@
+.star-member {
+    .fa-star-big {
+        vertical-align: bottom;
+        margin: 0 30px -5px 0;
+        font-size: 100px;
+        color: lighten($yellow, 15%);
+    }
+
+    .fa-star-small {
+        color: lighten($yellow, 15%);
+    }
+
+    .title {
+        font-size: 64px;
+        color: lighten($yellow, 15%);
+        padding-top: 10px;
+        font-weight: 300;
+    }
+}
+
+.star-info {
+    margin: 20px 100px;
+    padding: 30px;
+    border-radius: 3px;
+    background-color: rgba(0,0,0,0.1);
+    font-size: 16px;
+    line-height: 24px;
+
+    h5 {
+        color: $lime;
+    }
+}
+
+.star-costs {
+    font-size: 42px;
+    color: $yellow;
+
+    em {
+        font-size: 32px;
+    }
+
+    .fa-usd {
+        color: #888;
+    }
+}
+
+.star-choices {
+    @extend .cf;
+
+    border-radius: 3px;
+    margin: 20px 100px;
+    margin-top: 50px;
+    font-size: 16px;
+    line-height: 24px;
+
+    background-color: rgba(0,0,0,0.2);
+    padding: 30px;
+    border: solid 2px $yellow;
+}
+
+.star-action {
+    @extend .cf;
+    font-size: 42px;
+
+    .fa-usd {
+        color: #888;
+    }
+
+    .star-amount {
+        color: $blue;
+        display: inline-block;
+        margin-left: 10px;
+        width: 140px;
+        background-color: transparent;
+        border: none;
+        border-radius: 3px;
+        padding: 0px 6px;
+    }
+}

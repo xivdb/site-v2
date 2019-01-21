@@ -1,0 +1,30 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}Dev Tracker{% endset %}
+
+{% block body %}
+<div class="content-block">
+
+    <div class="page-pad-30">
+        {{ PageMacro.heading1('Dev Tracker', false, true) }}
+
+		{% for thread in devtracker %}
+		<div class="home-devpost" style="border: solid 1px #000;">
+		    <div>
+		        <img src="{{ thread.user.avatar }}">
+		        <span>{{ thread.user.name }}</span>
+		        <small>{{ thread.user.title }} <em>{{ thread.timestamp }}</em></small>
+		    </div>
+		    <div>{{ thread.post.message|raw }}</div>
+		    <a href="{{ thread.post.url }}" target="_blank" data-tt="Click to go to Dev Post">{{ thread.topic.name }}</a>
+		    <div>
+		        {{ thread.meta.replies|number_format }} posts
+		        &nbsp;-&nbsp;
+		        {{ thread.meta.views|number_format }} views
+		    </div>
+		</div>
+		{% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set page = 'cms' %}
+
+{% block body %}
+    <style>
+    .cms_comment {
+        border: solid 2px #1f78d8;
+        border-radius: 3px;
+        margin-bottom: 10px;
+        overflow: hidden;
+    }
+    .cms_comment_header {
+        padding: 10px;
+        background-color: #1f78d8;
+        color: #fff;
+    }
+    .cms_comment_header a {
+        color: #fff !important;
+    }
+    .cms_comment_header a:hover {
+        color: #fff !important;
+    }
+    .cms_comment_msg {
+        font-size: 12px;
+        padding: 10px;
+        padding-bottom: 0;
+    }
+    .cms_comment_actions {
+        padding: 10px;
+    }
+    .cms_comment_search {
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px #aaa;
+        border: solid 1px #333;
+    }
+    .cms_comment_search input {
+        width: 500px;
+    }
+    </style>
+	<div class="container-fluid">
+	    <h1>CMS</h1>
+
+        <div class="row">
+            <div class="col-md-7">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h3>Comments</h3>
+
+                        <form method="get" class="cms_comment_search">
+                            <div class="form-group">
+                                <label for="search">Search for a comment</label>
+                                <input type="search" name="search" id="search" class="form-control" value="{{ app.request.get('search') }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+
+                        {% for comment in comments %}
+                        <div class="cms_comment">
+                            <div class="cms_comment_header">
+                                <strong>#{{ comment.id }}</strong>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Posted by:</strong> {{ comment.member.username }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>time</strong> {{ comment.time }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Content:</strong> <a href="{{ comment.content.url_xivdb }}" target="_blank">{{ comment.content.name }}</a>
+                            </div>
+                            <div class="cms_comment_msg">
+                                {{ comment.text|raw }}
+                            </div>
+                            <div class="cms_comment_actions">
+                                <a href="/cms?deleteComment={{ comment.id }}" class="btn btn-sm btn-danger">Delete Comment</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="/cms?deleteAllComments={{ comment.member.id }}" class="btn btn-sm btn-danger">Delete All Users Comments</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-5">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h3>Screenshots</h3>
+
+                        <form method="get" class="cms_comment_search">
+                            <div class="form-group">
+                                <label for="search">Search a screenshot ID</label>
+                                <input type="search" name="id" id="id" class="form-control" value="{{ app.request.get('id') }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+
+                        {% for screenshot in screenshots %}
+                        <div class="cms_comment">
+                            <div class="cms_comment_header">
+                                <strong>#{{ screenshot.id }}</strong>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Posted by:</strong> {{ screenshot.member.username }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>time</strong> {{ screenshot.time }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Content:</strong> <a href="{{ screenshot.content.url_xivdb }}" target="_blank">{{ screenshot.content.name }}</a>
+                            </div>
+                            <div class="cms_comment_msg">
+                                <a href="{{ screenshot.file }}" target="_blank">
+                                    <img src="{{ screenshot.small }}">
+                                </a>
+                            </div>
+                            <div class="cms_comment_actions">
+                                <a href="/cms?deleteScreenshot={{ screenshot.id }}" class="btn btn-sm btn-danger">Delete Screenshot</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+	</div>
+{% endblock %}

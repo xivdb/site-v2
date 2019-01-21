@@ -1,0 +1,69 @@
+<div class="home-events-title">
+    <em class="yellow">{{ lodestone.events|length|number_format }}</em> {{ languages.custom[1173] }}
+</div>
+
+{% for event in lodestone.events %}
+<div class="home-post home-event">
+    <div>
+        <img src="{{ event.host.avatar }}" width="50px">
+    </div>
+    <div>
+        <div>
+            <div class="home-post-title">
+                <a href="{{ event.url }}" target="_blank">[{{ event.language }}] {{ event.name }}</a>
+            </div>
+            <div>
+                Host: {{ event.host.name }} - <i>{{ event.host.server }}</i>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table mb10" width="100%">
+    <tbody>
+    <tr>
+        <td width="20%">{{ languages.custom[405] }}</td>
+        <td width="80%">
+            <img src="{{ event.status_icon }}"><br>
+            {{ event.status }}{% if event.world %}, {{ event.world }}{% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ languages.custom[1172] }}</td>
+        <td><a href="{{ event.url }}" target="_blank">{{ languages.custom[1175] }}</a></td>
+    </tr>
+    <tr>
+        <td>{{ languages.custom[1171] }}</td>
+        <td>{{ event.from_timestamp|date('F j, Y, g:i a') }} <i>(UTC)</i></td>
+    </tr>
+    <tr>
+        <td>{{ languages.custom[1170] }}</td>
+        <td>{{ event.to_timestamp|date('F j, Y, g:i a') }} <i>(UTC)</i></td>
+    </tr>
+    <tr>
+        <td>{{ languages.custom[253] }}</td>
+        <td>{{ event.comments }}</td>
+    </tr>
+    <tr>
+        <td>Players</td>
+        <td>
+            {{ event.party.total }} {{ languages.custom[1169] }}<br>
+            <span><em style="color:#64b5f6;">{{ languages.custom[1167] }}:</em> {{ event.party.tanks ? event.party.tanks : 'ANY' }}</span> -
+            <span><em style="color:#9ccc65;">{{ languages.custom[1168] }}:</em> {{ event.party.healers ? event.party.healers : 'ANY' }}</span> -
+            <span><em style="color:#fb8c00;">{{ languages.custom[329] }}:</em> {{ event.party.dps ? event.party.dps : 'ANY' }}</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Tags</td>
+        <td>
+            {% for tag in event.tags %}
+                <em>{{ tag.name|upper }}</em>&nbsp;
+            {% endfor %}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% else %}
+<div class="home-event">
+    <p>{{ languages.custom[1174] }}</p>
+</div>
+{% endfor %}

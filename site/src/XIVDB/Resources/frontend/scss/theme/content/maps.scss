@@ -1,0 +1,25 @@
+//
+// Styles for embedded maps on content pages
+// namespace: cm
+//
+
+//
+// Map include
+//
+.xiv-cm-embed {
+    margin-bottom: 30px;
+
+    // tweak some map styles
+    .xivdb-map-embed {
+        border: solid 1px #000;
+        border-radius: 3px;
+        box-shadow: 0 0 4px #555;
+    }
+}
+
+// map points title
+.xiv-cm-points-title {
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,18 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set page = 'home' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Image Manipulation</h1>
+        <pre>{{ dump(img) }}</pre>
+
+        <hr>
+
+        <p>Starting next image...</p>
+        <script>
+            setTimeout(function() {
+                location.reload();
+            }, 200);
+        </script>
+    </div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% set version = defines.DEV ? "now"|date('U') : defines.VERSION  %}
+<!DOCTYPE html>
+<html class="tools-maps">
+    <head>
+        <script>
+            var APP = 'secure',
+                SITETITLE = '{{ languages.custom[732] }}',
+                LANGUAGE = '{{ defines.LANGUAGE }}',
+                API_URL = '{{ defines.API }}',
+                SID = "{{ user ? user.id : '' }}";
+        </script>
+
+
+        <title>{{ languages.custom[732] }}</title>
+        <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+
+        {# enable mobile #}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="j0xlPWc0c-_3XWqdWoxt4F257R43A7BMkTtkkfgmhaE" />
+        <script type="text/javascript">function isOnMobile() { var state = {{ devices.mobile and not nomobile ? 'true' : 'false' }}; state = state ? state : Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 720 ? true : false; return state; }</script>
+
+        {# so meta #}
+        <meta charset="utf-8">
+        <meta name="author" content="{{ defines.META_SITE }}">
+        <meta name="publisher" content="{{ languages.custom[732] }}">
+        <meta name="copyright" content="{{ languages.custom[732] }}">
+        <meta name="description" content="{{ languages.custom[732] }}">
+        <meta name="page-topic" content="{{ languages.custom[732] }}">
+        <meta name="page-type" content="{{ defines.META_TYPE }}">
+        <meta name="audience" content="{{ defines.META_AUDIENCE }}">
+        <meta name="robots" content="{{ defines.META_ROBOTS }}">
+
+        {# Google analytics #}
+        {% include 'Default/ga.twig' %}
+
+        {# Google Font #}
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+        {# my styles #}
+        <link href="/assets/frontend.min.css?v={{ version }}" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
+
+        {# Javascripts !#}
+        <script src="/assets/libs.min.js?v={{ "now"|date('U') }}" type="text/javascript"></script>
+        <script src="/assets/frontend.min.js?v={{ "now"|date('U') }}" type="text/javascript"></script>
+
+        {# Translations #}
+        <script type="text/javascript">
+            languages.set('custom', {{ languages.custom|json_encode|raw }});
+        </script>
+    </head>
+
+    <body>
+
+        <select class="map-tool-dropdown">
+            {% for region in list %}
+                <optgroup label="{{ region.name }}">
+                    {% for place in region.placenames %}
+                        <option value="{{ place.id }}">{{ place.name }}</option>
+                    {% endfor %}
+                </optgroup>
+            {% endfor %}
+        </select>
+
+        <a href="{{ urls.current }}/">
+            <img src="{{ defines.SECURE }}/img/logo/logo.png" height="24px" class="map-tool-logo">
+        </a>
+
+        {# Maps are embedded here #}
+        <div class="map-tool-container">
+            <div class="xivdb-map"></div>
+        </div>
+        <script>
+        var defaultId = $('.map-tool-dropdown option:selected').val();
+
+        function loadMap(id, name, index) {
+            if (name) {
+                name = name.replace(new RegExp(' ', 'g'), '+');
+                window.location.hash = (id +'/' + name + '/' + (index ? index : 0));
+            }
+
+            // load a map
+            XIVDBMaps
+                .setOption('height', false)
+                .setOption('width', false)
+                .setEvent('mapLayerUpdate', function(index) {
+                    window.location.hash = (id +'/' + name + '/' + index);
+                })
+                .embed('.xivdb-map', id, () => {
+                    if (index) {
+                        XIVDBMaps.moveToLayer(index);
+                    }
+
+                    XIVDBMaps.Markers.load();
+                });
+        }
+
+        //
+        // Load a map on dropdown select
+        //
+        $('.map-tool-dropdown').on('change', function() {
+            var id = $(this).val(),
+                name = $(this).find(':selected').text();
+
+            loadMap(id, name);
+        });
+
+        $(function() {
+            var hash = window.location.hash.replace('#', '')
+            if (hash) {
+                hash = hash.split('/');
+                var id = hash[0],
+                    name = hash[1].replace(new RegExp('/+/', 'g'), ' '),
+                    index = hash[2] ? parseInt(hash[2]) : 0;
+
+                loadMap(id, name, index);
+                $('.map-tool-dropdown').val(id);
+            } else {
+                loadMap(defaultId, 'Eorzea', 1);
+            }
+        });
+
+        </script>
+    </body>
+</html>

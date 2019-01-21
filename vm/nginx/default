@@ -1,0 +1,137 @@
+#
+# Web Client
+#
+server
+{
+    listen 80;
+    server_name v2.xivdb.local;
+    root /vagrant/site/web;
+    index _app.php;
+    sendfile off;
+    client_max_body_size 500m;
+
+    # Normal directory
+    location / {
+        try_files $uri $uri/ /_app.php$is_args$args;
+    }
+
+    # PHP Specifics
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+        fastcgi_read_timeout 600;
+    }
+}
+
+server
+{
+    listen 80;
+    server_name v2.xivsync.local;
+    root /vagrant/repos/XIVSync/web;
+    index app.php;
+    sendfile off;
+    client_max_body_size 500m;
+
+    # Normal directory
+    location / {
+        try_files $uri $uri/ /app.php$is_args$args;
+    }
+
+    # PHP Specifics
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+        fastcgi_read_timeout 600;
+    }
+}
+
+
+#
+# Web Client
+#
+server
+{
+    listen 80;
+    server_name v2.secure.xivdb.local;
+    root /vagrant/site/web;
+    index _secure.php;
+    sendfile off;
+    client_max_body_size 500m;
+
+    # Normal directory
+    location / {
+        try_files $uri $uri/ /_secure.php$is_args$args;
+    }
+
+    # PHP Specifics
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+        fastcgi_read_timeout 600;
+    }
+}
+
+#
+# Web Client
+#
+server
+{
+    listen 80;
+    server_name v2.dashboard.xivdb.local
+    root /vagrant/site/web;
+    index _dashboard.php;
+    sendfile off;
+    client_max_body_size 500m;
+
+    # Normal directory
+    location / {
+        try_files $uri $uri/ /_dashboard.php$is_args$args;
+    }
+
+    # PHP Specifics
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+        fastcgi_read_timeout 600;
+    }
+}
+
+#
+# Web Client
+#
+server
+{
+    listen 80;
+    server_name v2.xivdb.adminer;
+    root /vagrant/adminer;
+    index index.php;
+    sendfile off;
+    client_max_body_size 500m;
+
+    # Normal directory
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    # PHP Specifics
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS off;
+        fastcgi_read_timeout 600;
+    }
+}

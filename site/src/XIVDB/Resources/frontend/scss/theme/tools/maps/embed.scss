@@ -1,0 +1,93 @@
+//
+// XIVDB Map Embeds
+//
+.xivdb-map-embed {
+    background-color: #111;
+    background-image: url(/img/textures/bg_maps.png);
+    background-position: center center;
+    box-shadow: inset 0 0 30px rgba(100,100,100,0.5);
+
+    overflow: hidden;
+    position: relative;
+    cursor: move;
+    height: 100%;
+    width: 100%;
+
+    .xivdb-map-name {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 11;
+
+        background-color: #333;
+        padding: 5px 10px;
+        border-radius: 3px;
+        color: #fff;
+    }
+
+    .xivdb-map-selector {
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        z-index: 10;
+
+        select {
+            background-color: #333;
+            color: #fff;
+            padding: 5px 25px 5px 8px;
+            border: solid 1px #000;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            border-radius: 3px;
+            outline: none;
+
+            appearance: none;
+            background-image: url('https://secure.xivdb.com/img/ui/arrow_light.png');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: auto auto;
+        }
+    }
+
+    .xivdb-map-img {
+        @include center();
+    }
+
+    .xivdb-map-frame {
+        position: relative;
+        background-color:  rgba(40,40,40,0.3);
+
+        &:hover {
+            background-color:  rgba(80,80,80,0.8);
+        }
+
+        .xivdb-map-icons {
+            > img, > span {
+                display: inline-block;
+                position: absolute;
+                z-index: 5;
+                transition: 0.1s;
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.5);
+                }
+            }
+
+            > img {
+
+            }
+
+            > span {
+                display: inline-block;
+                background-color: rgb(14, 230, 81);
+                opacity: 0.7;
+                border-radius: 20px;
+                box-shadow: 0 0 3px 1px rgba(0,0,0,0.5);
+
+                &:hover {
+                    background-color: rgb(14, 230, 81);
+                }
+            }
+        }
+    }
+}

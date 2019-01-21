@@ -1,0 +1,35 @@
+{% set limit = devices.mobile and not nomobile ? 10 : 50 %}
+<div class="home-news-top">
+    <h1 class="highlight">Latest Lodestone News</h1>
+    <br>
+    <div class="home-news-banners">
+    {% for banner in lodestone.banners %}
+        <a href="{{ banner.url }}" target="_blank">
+            <img src="{{  banner.banner }}" width="500px">
+        </a>
+    {% endfor %}
+    </div>
+</div>
+
+<div class="home-news-bottom">
+{% for i, topic in lodestone.topics %}
+    {% if loop.index <= limit %}
+        <div class="home-news-bottom-container">
+            <div class="home-news-topic-img">
+                <img src="{{ topic.banner }}" width="500px">
+            </div>
+            <div class="home-news-post">
+                <div class="home-news-title highlight">{{ topic.title }}</div>
+                <div class="home-news-info">
+                    <a href="{{ topic.url }}" target="_blank">{{ languages.custom[1176] }}</a>
+                    - {{ topic.time|date('F j, Y, g:i a') }}
+                </div>
+                <div class="home-news-text">{{ topic.html|raw }}</div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+</div>
+
+
+

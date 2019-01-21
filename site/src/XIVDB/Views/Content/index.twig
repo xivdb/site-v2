@@ -1,0 +1,84 @@
+{% extends 'Default/index.twig' %}
+{% import 'Content/macros.twig' as Layout %}
+{% set adVertical1 = true %}
+
+{% set page = content._type %}
+{% set type = content._type %}
+
+{# template headers #}
+{% set template_main = 'Content/content/content_' ~ content._type ~ '.twig' %}
+{% set template_tabs = 'Content/content_tabs/tabs_' ~ content._type ~ '.twig' %}
+{% set template_flags = 'Content/content_flags/flags_' ~ content._type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content._type ~ '.twig' %}
+
+{# content name #}
+{% if content.name_male is defined %}
+    {% set name = content.name_male ~' '~ content.name_female %}
+{% else %}
+    {% set name = content.name %}
+{% endif %}
+
+{# site title and descriont #}
+{% set pagetitle %}{{ name }} ({{ type|title }}){% endset %}
+{% set pageicon %}{{ content.icon }}{% endset %}
+{% set pagedescription -%}{% spaceless %}
+{% if content.help is defined and content.help is not empty %}{{ content.help|striptags|replace({ '.': '. ' }) }}{% endif %}
+{% if content.kind_name is defined and content.kind_name is not empty %} - {{ content.kind_name|raw }} {% endif %}
+{% if content.category_name is defined and content.category_name is not empty %} - {{ content.category_name|raw }} {% endif %}
+{% if content.slot_name is defined and content.slot_name is not empty %} - {{ content.slot_name|title }} {% endif %}
+{% if content.info1 is defined and content.info1 is not empty %} - {{ content.info1|striptags }}, {% endif %}
+{% if content.info2 is defined and content.info2 is not empty %} - {{ content.info2|striptags }}{% endif %}
+{% endspaceless %}
+{%- endset %}
+
+{# body #}
+{% block body %}
+<div class="content-block content-block-faded nopad" data-type="{{ content._type }}" data-contentid="{{ content._cid }}" data-id="{{ content.id }}">
+
+    {# header: name, icon, categories #}
+    {% include 'Content/content/top.twig' %}
+
+    {# mobile menu open/close button #}
+    <div class="content-mobile-open">
+        <button type="button">
+            <i class="fa fa-bars content-mobile-menu-btn" aria-hidden="true"></i> {{ languages.custom[1150] }}
+            &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ totalComments }}
+            &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-picture-o" aria-hidden="true"></i> {{ totalScreenshots }}
+        </button>
+    </div>
+
+    <div class="content-area">
+        {% include template_tabs %}
+    </div>
+
+</div>
+
+{# initializes comments/screenshots #}
+<script>
+$(function() {
+    content.init();
+
+    // if missing info
+    if ($('.content-data-info').html().length == 0) {
+        $('.content-data-empty').show();
+    }
+
+    $('.additional-content-container').show();
+
+    $('.content-mobile-open button').on('click', function() {
+        $('.content-area .tab-nav').toggleClass('open');
+        $('.content-area .tab-section').toggleClass('open');
+
+        $('.content-mobile-open button .content-mobile-menu-btn').toggleClass('fa-bars fa-times');
+    });
+
+    $('html').on('click', '.tab-nav.open', function () {
+        if (isOnMobile()) {
+            $('.content-area .tab-nav').removeClass('open');
+            $('.content-area .tab-section').removeClass('open');
+            $('.content-mobile-open button .content-mobile-menu-btn').toggleClass('fa-bars fa-times');
+        }
+    });
+});
+</script>
+{% endblock %}

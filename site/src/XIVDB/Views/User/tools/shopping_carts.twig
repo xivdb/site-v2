@@ -1,0 +1,23 @@
+<div class="acc-title">{{ languages.custom[734] }}</div>
+{% if user.shoppingCarts %}
+	<table width="100%">
+		<thead>
+			<tr>
+				<th width="35%">{{ languages.custom[801] }}</th>
+				<th width="45%">{{ languages.custom[986] }}</th>
+				<th width="15%">{{ languages.custom[181] }}</th>
+			</tr>
+		</thead>
+		{% for cart in user.shoppingCarts %}
+		<tbody>
+			<tr>
+				<td><a href="{{ urls.current }}/shopping-cart/{{ cart.items }}">{{ cart.description }}</a></td>
+				<td>{{ cart.notes }}</td>
+				<td>{{ cart.updated|date('F j, Y') }}</td>
+			</tr>
+		</tbody>
+		{% endfor %}
+	</table>
+{% else %}
+	<p>{{ languages.custom[987] }}</p>
+{% endif %}

@@ -1,0 +1,25 @@
+<div class="acc-title">{{ languages.custom[1017] }}</div>
+{% if user.gearsets %}
+	<table width="100%">
+		<thead>
+			<tr>
+				<th width="40%">{{ languages.custom[474] }}</th>
+				<th width="45%">{{ languages.custom[315] }}</th>
+				<th width="15%">{{ languages.custom[181] }}</th>
+				<th width="25%">{{ languages.custom[330] }}</th>
+			</tr>
+		</thead>
+		{% for gs in user.gearsets %}
+		<tbody>
+			<tr>
+				<td>{{ gs.name }}</td>
+				<td>{{ gs.description }}</td>
+				<td>{{ gs.updated|date('F j, Y') }}</td>
+				<td><a href="/gearsets/delete/{{ gs.id }}" class="red">{{ languages.custom[330] }}</a></td>
+			</tr>
+		</tbody>
+		{% endfor %}
+	</table>
+{% else %}
+	<p>{{ languages.custom[987] }}</p>
+{% endif %}

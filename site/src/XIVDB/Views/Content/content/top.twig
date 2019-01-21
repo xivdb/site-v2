@@ -1,0 +1,39 @@
+<div class="content-header">
+    <div>
+        <div class="icon icon-{{ content._type }}">
+            <img src="{{ content.icon }}" class="icon-blur">
+            <img src="{{ content.icon }}">
+        </div>
+    </div>
+
+
+    <div>
+        {% if content.name_male is defined %}
+            <h1 class="fs16 mb8"><i class="fa fa-mars fa-h1-title fs18 sky"></i> &nbsp; {{ content.name_male }}</h1>
+            <h1 class="fs16 mb8"><i class="fa fa-venus fa-h1-title fs18 pink"></i> &nbsp; {{ content.name_female }}</h1>
+        {% else %}
+            <h1{% if content.color is defined %} class="rarity-{{ content.color }}"{% endif %}>{{ content.name }}</h1>
+        {% endif %}
+
+        <div class="categories">
+            <em class="faint">{{ content._type|upper }}</em>
+            {% if content._type == 'npc' and content.title is defined and content.title %}
+                &nbsp;-&nbsp;
+                {{ content.title }}
+            {% endif %}
+
+            {% include template_categories ignore missing %}
+        </div>
+    </div>
+
+    {# patch #}
+    {% if content.patch.number is defined %}
+    <div>
+        <div class="patch-title">{{ languages.custom[388]|upper }}</div>
+        <div class="patch-info">
+            <em>{{ content.patch.number }}</em>
+            <a href="{{ defines.URL }}/?search=patch+{{ content.patch.number }}" data-xivdb-ignore="1">{{ content.patch.name }}</a>
+        </div>
+    </div>
+    {% endif %}
+</div>

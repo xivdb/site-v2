@@ -1,0 +1,77 @@
+<div class="feedback-form form">
+    <button class="feedback-close blue" onclick="feedback.close();">
+        <i class="fa fa-times"></i> {{ languages.custom[662]|title }}
+    </button>
+
+    {% if user is defined and user %}
+    <button class="feedback-reset red" onclick="feedback.reset();">
+        <i class="fa fa-times"></i> {{ languages.custom[948] }}
+    </button>
+
+    <h3>
+        <i class="fa fa-pencil"></i> {{ languages.custom[726] }}
+    </h3>
+
+    <div class="feedback-submit-return"></div>
+
+    <div class="feedback-container">
+        <div class="feedback-layout">
+
+            <input id="feedback-title" class="fb-title" type="text" placeholder="Short subject (100 characters)" maxlength="100">
+            <textarea id="feedback-message" class="fb-message" placeholder="Details"></textarea>
+            <div class="fb-row">
+                <div>
+                    <label for="feedback-category">{{ languages.custom[146] }}</label>
+                    <select id="feedback-category" name="feedback-category" class="fb-category">
+                        {% for category in ['Feedback', 'Bug', 'Incorrect Data', 'Missing Data', 'Language', 'API related', 'Other'] %}
+                            <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label for="feedback-section">{{ languages.custom[316] }}</label>
+                    <select name="feedback-section" id="feedback-section" class="fb-section">
+                        {% for section in ['General', 'Layout', 'Content', 'Wardrobe', 'Maps', 'SkillTree', 'Searching', 'Filters', 'Profiles', 'Private Messaging', 'Home Page', 'API', 'Other'] %}
+                            <option value="{{ section }}">{{ section }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button class="green feedback-submit" onclick="feedback.post();">{{ languages.custom[910] }}</button>
+
+        </div>
+        <div class="fb-rules">
+            <p>
+                This form is for reporting <strong>bugs and feedback</strong> about the site. <a href="/feedback">You can view feedback here</a>.
+                Please keep your feedback related to the sites content, features and functionality. <strong>Keep your feedback within the tone of the
+                Feedback Rules.</strong>
+                {# If you need account or private support, please go to our <a href="/support">Support Section</a>. #}
+            </p>
+
+            <p>
+                Please be as detailed as you can with your report, also be aware the post will be made public. Along with your feedback, general information
+                about your browser will be sent (name, version, resolution).
+            </p>
+        </div>
+    </div>
+
+    {% else %}
+        <div class="panel">An account is required to submit feedback, please <a href="{{ defines.SECURE }}/login">login</a> or <a href="{{ defines.SECURE }}/register">register</a> :)</div>
+    {% endif %}
+
+</div>
+
+{% raw %}
+<script id="ui-feedback-ok" type="text/x-mustache-template">
+<div class="alert alert-success mt30">
+    <p>Success!</p>
+    <p class="fs14">
+        Your feedback has been submitted, thank you!
+        <a href="/feedback/view/{{id}}">Click here to view your post</a>
+        or click on <strong>close</strong> to continue.
+    </p>
+</div>
+</script>
+{% endraw %}

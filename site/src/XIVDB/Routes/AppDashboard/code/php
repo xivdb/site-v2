@@ -1,0 +1,4 @@
+'%s_ja' => $line['%s']['ja'],
+'%s_en' => ($line['%s']['en']),
+'%s_fr' => ($line['%s']['fr']),
+'%s_de' => ($line['%s']['de']),

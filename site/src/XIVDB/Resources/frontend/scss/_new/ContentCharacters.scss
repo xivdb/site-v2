@@ -1,0 +1,1493 @@
+.character-admin {
+	background-color: #555;
+	padding: 20px;
+}
+
+//
+// Title
+//
+.cp-content h6 {
+	font-size: 10px;
+	text-transform: uppercase;
+	text-shadow: none;
+	color: #aaa;
+	text-transform: uppercase;
+
+	&.h6value {
+		text-align: right;
+		margin-bottom: 5px;
+	}
+
+	&.spacer {
+		margin: 0 0 5px 0;
+	}
+}
+
+//
+// Character not found
+//
+.character-not-found {
+	text-align: center;
+	padding: 50px 0;
+
+	p {
+		font-size: 16px;
+		font-weight: 300;
+	}
+
+	i {
+		font-style: italic;
+	}
+}
+
+//
+// Profile: Core look and feel
+//
+.character-profile {
+	background-color: #333;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+	overflow: hidden;
+	border-radius: 2px;
+
+	//
+	// Profile header
+	//
+	.cp-header {
+		padding: 30px 20px 20px 226px;
+		background-color: #444;
+		@include vertical-gradient(#555, 0%, #444, 100%);
+		height: 80px;
+		position: relative;
+
+		@include mq($until: desktop) {
+			padding: 15px 90px 15px 15px;
+			height: auto;
+		}
+
+		h1 {
+			font-size: 30px;
+			line-height: 20px;
+
+			@include mq($until: desktop) {
+				font-size: 22px;
+				line-height: auto;
+			}
+
+			small {
+				font-size: 20px;
+				color: #aaa;
+				margin-left: 5px;
+
+				@include mq($until: desktop) {
+					font-size: 14px;
+					margin-left: 0;
+				}
+			}
+		}
+
+		h2 {
+			font-size: 14px;
+			color: $highlight;
+			line-height: 20px;
+			margin-top: 10px;
+		}
+	}
+
+	//
+	// Main content area
+	//
+	.cp-body {
+		display: flex;
+
+		> div:first-of-type {
+			flex: 0 1 20%;
+			padding: 20px 0 20px 20px;
+
+			@include mq($until: desktop) {
+				flex: none;
+				width: 100%;
+				margin-left: -100%;
+				transition: .2s;
+				padding: 0;
+
+				&.open {
+					margin-left: 0;
+				}
+			}
+		}
+
+		> div:last-of-type {
+			flex: 0 1 80%;
+			padding-left: 5px;
+
+			@include mq($until: desktop) {
+				min-width: 300px;
+				flex: 0 1 100%;
+				width: 100%;
+				padding-left: 0;
+			}
+		}
+	}
+
+	//
+	// Characters lovely portrait :D
+	//
+	.cp-portrait {
+		max-width: 100%;
+		height: 258px;
+		background-position: center -30px;
+		outline: #333 solid 5px;
+		background-color: #333;
+		background-size: 220%;
+		margin-top: -80px;
+	    position: relative;
+	    z-index: 50;
+
+		@include mq($until: desktop) {
+			display: none;
+		}
+	}
+
+	//
+	// Main navigation
+	//
+	.cp-nav {
+		margin-top: 5px;
+
+		> button {
+			display: block;
+			width: 100%;
+			height: 36px;
+			line-height: 36px;
+			text-align: left;
+			border: none;
+			color: #fff;
+			margin-bottom: 2px;
+			font-size: 13px;
+			outline: none;
+			background-color: transparent;
+			padding: 0 10px;
+
+			&.cp-nav-gm {
+				color: $red;
+				opacity: 0.5;
+			}
+
+			&:hover {
+				background-color: #222;
+				cursor: pointer;
+			}
+
+			&.active {
+				background-color: darken($blue, 10%);
+				color: #fff;
+			}
+
+			img {
+				vertical-align: top;
+				margin: 10px 10px 0 0;
+			}
+		}
+	}
+
+	//
+	// Content frame
+	//
+	.cp-content {
+		> div {
+			display: none;
+
+			&.active {
+				display: block;
+			}
+		}
+
+		hr {
+			opacity: 0.5;
+		}
+	}
+}
+
+//
+// Profile: CP Flex list, used on:
+// - Profile data: at the top.
+//
+.cp-keypoints {
+	display: flex;
+	padding: 10px 10px 10px 25px;
+	background-color: #222;
+
+	@include mq($until: desktop) {
+		padding: 10px;
+	}
+
+	> div {
+		flex: 1 1 auto;
+		font-size: 10px;
+		color: #aaa;
+		text-transform: uppercase;
+
+		&:hover {
+			color: #fff;
+		}
+
+		h6 {
+			font-size: 10px;
+			text-transform: uppercase;
+			text-shadow: none;
+			@include mq($until: desktop) {
+				opacity:0.6;
+			}
+
+		}
+	}
+}
+
+//
+// Profile: Progress bars
+//
+.cp-bar {
+	display: block;
+	width: 100%;
+	background-color: #222;
+	border-radius: 3px;
+	overflow: hidden;
+	line-height: 0;
+
+	> div {
+		display: inline-block;
+		height: 5px;
+		background-color: #aaa;
+		line-height: 0;
+		vertical-align: top;
+
+		&.red { background-color: $red; }
+		&.blue { background-color: $blue; }
+		&.green { background-color: $green; }
+		&.yellow { background-color: $yellow; }
+		&.orange { background-color: $orange; }
+		&.purple { background-color: $purple; }
+		&.pink { background-color: $pink; }
+		&.highlight { background-color: $highlight; }
+		&.lime { background-color: $lime; }
+	}
+}
+
+//
+// Profile: CP data boxes, used on:
+// - Profile data
+//
+.cp-data {
+	display: flex;
+	padding: 25px;
+
+	@include mq($until: desktop) {
+		padding: 10px;
+		display: block;
+	}
+
+	> div:first-of-type {
+		flex: 0 1 60%;
+		padding-right: 30px;
+
+		@include mq($until: desktop) {
+			flex: none;
+			padding-right: 0;
+		}
+	}
+
+	> div:last-of-type {
+		flex: 0 1 40%;
+		border-radius: 2px;
+
+		@include mq($until: desktop) {
+			flex: none;
+			margin-top: 10px;
+		}
+	}
+
+	// active role
+	.cp-active-role {
+		margin-bottom: 15px;
+		background-color: #222;
+		padding: 15px 15px 5px 15px;
+		border-radius: 3px;
+
+		> div {
+
+			.cp-active-role-level {
+				color: $yellow;
+			}
+
+			.cp-active-role-top {
+				font-size: 22px;
+				font-weight: 300;
+				margin-bottom: 15px;
+
+				img {
+					vertical-align: bottom;
+					margin: 0 2px 3px 0;
+				}
+			}
+
+			.cp-active-role-stats {
+				margin: 5px 0 15px 0;
+
+				em {
+					font-size: 22px;
+					font-weight: 300;
+				}
+
+				> span:last-of-type {
+					float: right;
+					opacity: 0.5;
+				}
+
+				.cp-bar {
+					margin-top: 5px;
+				}
+			}
+		}
+	}
+
+	// free company
+	.cp-fc {
+		display: flex;
+		min-height: 50px;
+		margin-bottom: 30px;
+
+		> div:first-of-type {
+			position: relative;
+			flex: 0 1 20%;
+
+			> img {
+				position: absolute;
+				left: 0; top: 0;
+				height: 46px;
+				border-radius: 5px;
+			}
+		}
+
+		> div:last-of-type {
+			flex: 0 1 80%;
+
+			.cp-fc-title {
+				font-size: 24px;
+				font-weight: 300;
+			}
+		}
+	}
+}
+
+//
+// Profile: Info blocks
+//
+.cp-info-block {
+	border-bottom: solid 1px #333;
+	padding: 20px;
+
+	&.cp-info-last {
+		border: none;
+	}
+
+	.cp-row {
+		display: flex;
+
+		> div {
+			.cp-row-title {
+				margin-top: 3px;
+
+				em {
+					opacity: 0.3;
+					font-size: 12px;
+				}
+			}
+
+			.cp-row-key {
+				font-size: 18px;
+				font-weight: 300;
+			}
+		}
+
+		> div:not(.cp-row-one):first-of-type {
+			flex: 0 1 80%;
+		}
+
+		> div:not(.cp-row-one):last-of-type {
+			flex: 0 1 20%;
+			text-align: right;
+		}
+	}
+
+	.cp-icons {
+		margin-top: 5px;
+
+		img {
+			margin: 3px;
+		}
+	}
+}
+
+//
+// Profile: Achievements
+//
+.cp-recent-achieves
+.cp-recent-events,
+.cp-recent-timeline {
+	margin-top: 10px;
+}
+
+.cp-achieve-row,
+.cp-event-row, {
+	display: flex;
+	margin-bottom: 5px;
+	border: solid 1px #444;
+	box-shadow: 0 0 1px #111;
+	padding: 10px;
+	border-radius: 3px;
+
+	> div:first-of-type {
+		flex: 0 1 15%;
+	}
+
+	> div:last-of-type {
+		flex: 0 1 85%;
+	}
+
+	img {
+		border-radius: 3px;
+		box-shadow: 0 1px 2px #000;
+	}
+
+	a {
+		display: block;
+		margin-top: 5px;
+	}
+
+	.cp-achieve-top,
+	.cp-event-top {
+		font-weight: 300;
+
+		.cp-achieve-points,
+		.cp-event-points {
+			color: $yellow;
+			font-size: 14px;
+			display: inline-block;
+			width: 100px;
+		}
+
+		.cp-achieve-points {
+			color: $lime;
+		}
+
+		.cp-achieve-date,
+		.cp-event-date {
+			font-size: 10px;
+			display: inline-block;
+			opacity: 0.4;
+			float: right;
+		}
+	}
+
+	.cp-achieve-info,
+	.cp-event-info {
+		opacity: 0.6;
+		font-size: 11px;
+	}
+}
+
+.cp-event-row img {
+	box-shadow: none;
+}
+
+//
+// Classes: Layout
+// Gearsets: Layout
+//
+.character-classes,
+.character-gearsets,
+.character-timeline,
+.character-achievements {
+	display: flex;
+
+	@include mq($until: desktop) {
+		display: block;
+	}
+
+	> div:first-of-type {
+		flex: 0 1 65%;
+		padding: 25px 5px 25px 25px;
+		min-width: 450px;
+
+		@include mq($until: desktop) {
+			min-width: auto;
+			padding: 10px;
+		}
+	}
+
+	> div:last-of-type {
+		flex: 0 1 35%;
+		padding: 25px;
+
+		@include mq($until: desktop) {
+			min-width: auto;
+			padding: 10px;
+		}
+	}
+}
+
+.character-minions,
+.character-mounts {
+	padding: 25px;
+}
+
+//
+// Classes: class list
+// Gearsets: gear list
+//
+.cc-list,
+.gs-list,
+.ac-list {
+	border-radius: 2px;
+    background-color: #444;
+	overflow: hidden;
+	margin-bottom: 10px;
+
+	button {
+		background-color: transparent;
+		line-height: 30px;
+		height: 30px;
+		padding: 0 10px;
+		text-align: left;
+		color: #eee;
+		border: none;
+		width: 100%;
+		display: block;
+		outline: none;
+		position: relative;
+
+		img {
+			vertical-align: top;
+			margin: 8px 5px 0 0;
+		}
+
+		span {
+			display: inline-block;
+			width: 30px;
+			text-align: center;
+			color: #fff;
+
+			&.cc-cap,
+			&.gs-cap,
+			&.ac-cap {
+				color: $lime;
+			}
+
+			&.cc-non,
+			&.gs-non,
+			&.ac-non {
+				opacity: 0.5;
+			}
+		}
+
+		&:hover {
+			background-color: #222;
+		}
+
+		&.active {
+			color: #fff;
+			background-color: darken($blue, 10%);
+
+			span.cc-cap,
+			span.gs-cap,
+			span.ac-cap {
+				color: #fff;
+			}
+		}
+	}
+}
+
+.ac-list button span {
+	width: 50%;
+}
+
+//
+// Classes: Pages
+// Gearsets: Pages
+//
+.cc-page,
+.gs-page,
+.tl-page,
+.ac-page {
+	display: none;
+
+	&.active {
+		display: block;
+	}
+
+	h2 {
+		font-weight: 300;
+		height: 38px;
+		line-height: 32px;
+		margin-bottom: 22px;
+
+		img {
+			vertical-align: top;
+		}
+
+		small {
+			display: block;
+			font-size: 14px;
+			padding-bottom: 20px;
+			padding-top: 5px;
+
+			em {
+				color: $highlight;
+			}
+
+			span {
+				color: $yellow;
+			}
+		}
+
+		em {
+			font-size: 24px;
+			opacity: 0.6;
+		}
+
+		span {
+			color: $highlight;
+		}
+	}
+}
+
+//
+// Classes: Summary
+//
+.cc-block,
+.ac-block {
+	margin-bottom: 20px;
+	border: solid 1px #444;
+	box-shadow: 0 0 1px #111;
+	padding: 15px;
+	border-radius: 3px;
+
+	h6 {
+		margin: -15px -15px 15px -15px;
+		padding: 10px 15px;
+		background-color: #444;
+
+		&.h6sub {
+			margin-top: 15px;
+		}
+	}
+
+	.cc-block-sub,
+	.ac-block-sub {
+		h5 {
+			font-size: 14px;
+			font-weight: 700;
+		}
+
+		&.cc-block-sub-margin,
+		&.ac-block-sub-margin {
+			margin-bottom: 20px;
+		}
+
+		.cp-achieve-row {
+			background-color: #444;
+		}
+	}
+
+	.cc-title,
+	.ac-title {
+		font-size: 16px;
+		font-weight: 300;
+		margin-bottom: 5px;
+		color: $highlight;
+	}
+
+	.cc-data,
+	.ac-data {
+		display: flex;
+		margin-bottom: 5px;
+		text-transform: uppercase;
+
+		> div:first-of-type {
+			flex: 0 1 70%;
+		}
+
+		> div:last-of-type {
+			flex: 0 1 30%;
+			text-align: right;
+		}
+
+		.cc-data-figure,
+		.ac-data-figure {
+			font-size: 20px;
+			font-weight: 500;
+			color: lighten($yellow, 10%);
+		}
+
+		.ac-data-figure {
+			color: lighten($green, 10%);
+		}
+
+		.cc-data-value,
+		.cc-data-percent,
+		.ac-data-value,
+		.ac-data-percent {
+			font-size: 14px;
+			font-weight: 300;
+			display: inline-block;
+			margin-left: 5px;
+		}
+
+		.cc-data-percent,
+		.ac-data-percent {
+			opacity: 0.6;
+		}
+
+		.cc-data-togo,
+		.ac-data-togo {
+			font-size: 11px;
+			display: block;
+			padding-top: 10px;
+		}
+
+		.ac-small {
+			margin-top: 5px;
+			font-size: 10px;
+		}
+	}
+}
+
+.cc-role-list {
+	margin-bottom: 20px;
+
+	.cc-role {
+		display: flex;
+		margin-bottom: 8px;
+		height: 30px;
+		line-height: 30px;
+		opacity: 0.6;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		> div:nth-of-type(1) {
+			flex: 0 1 10%;
+		}
+
+		> div:nth-of-type(2) {
+			flex: 0 1 10%;
+		}
+
+		> div:nth-of-type(3) {
+			flex: 0 1 30%;
+		}
+
+		> div:nth-of-type(4) {
+			flex: 0 1 50%;
+		}
+
+		.cc-role-exp {
+			margin: 5px 0;
+			font-size: 11px;
+			line-height: 12px;
+
+			em {
+				opacity: 0.7;
+			}
+		}
+
+		.cc-role-level {
+			font-size: 14px;
+		}
+
+		.cc-role-name {
+			font-size: 13px;
+
+		}
+
+		&.cc-role-cap {
+			opacity: 1;
+
+			.cc-role-level,
+			.cc-role-name {
+				color: $lime;
+			}
+		}
+	}
+}
+
+.cc-best {
+	margin-bottom: 20px;
+
+	> span {
+		opacity: 0.4;
+		font-size: 11px;
+		display: block;
+		margin-left: 32px;
+	}
+
+	> h5 {
+		margin-bottom: 5px;
+		font-size: 18px;
+
+		i.fa {
+			color: $yellow;
+			display: inline-block;
+		}
+
+		span {
+			display: inline-block;
+			width: 32px;
+		}
+	}
+
+	> div {
+		font-size: 13px;
+		padding-left: 32px;
+
+		em {
+			color: $yellow;
+		}
+
+		span {
+			color: $lime;
+		}
+	}
+
+	&:hover {
+		> span {
+			opacity: 1;
+		}
+	}
+}
+
+//
+// Classes/Gearsets graph
+//
+.cc-graph,
+.gs-graph,
+.tl-graph {
+	margin: 15px 0;
+
+	h5 {
+		font-size: 18px;
+		font-weight: 300;
+		margin-bottom: 15px;
+		text-align: center;
+	}
+}
+
+.gs-graph-data {
+	display: block;
+	margin-bottom: 10px;
+	border: solid 1px #444;
+	box-shadow: 0 0 1px #111;
+	padding: 10px;
+	border-radius: 3px;
+
+	> div:first-of-type {
+		text-align: center;
+		margin-bottom: 15px;
+
+		.chart {
+			text-align: center;
+		}
+	}
+}
+
+.cc-timeline-table {
+	em {
+		color: $yellow;
+	}
+}
+
+.cc-speed {
+	margin-bottom: 20px;
+	margin-top: 10px;
+}
+
+.cc-note {
+	font-size: 10px;
+	opacity: 0.4;
+	margin-top: 10px;
+	display: block;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.cc-prediction-title {
+	font-size: 20px;
+	font-weight: 300;
+}
+
+.cc-prediction-info {
+	font-size: 11px;
+	margin-top: 10px;
+
+	em {
+		color: $highlight;
+	}
+
+	span {
+		color: $blue;
+	}
+
+	time {
+		color: $green;
+	}
+}
+
+.cc-portrait {
+	padding: 20px;
+	text-align: center;
+	background-color: #444;
+	border-top: solid 2px #222;
+	position: relative;
+
+	@include mq($until: desktop) {
+		padding: 5px;
+	}
+
+	img.portrait {
+		border-radius: 3px;
+		border: solid 1px #000;
+		box-shadow: 0 0 5px #666;
+
+		@include mq($until: desktop) {
+			max-width: 100%;
+		}
+	}
+}
+
+//
+// Gearsets
+//
+.gs-info {
+	font-size: 10px;
+	color: #aaa;
+	margin-bottom: 20px;
+}
+
+.gs-items {
+	margin-bottom: 20px;
+	border: 1px solid #444;
+	border-radius: 3px;
+	box-shadow: 0 0 1px #111;
+
+	> div {
+		@include cf();
+		border-bottom: solid 1px #444;
+		overflow: hidden;
+		padding: 10px;
+
+		img {
+			float: left;
+			border-radius: 5px;
+    		box-shadow: 0 1px 1px #000;
+			margin: -1px;
+			width: 42px;
+			height: 42px;
+
+			@include mq($until: desktop) {
+				width: 32px;
+				height: 32px;
+			}
+		}
+
+		> div {
+			float: right;
+			width: 400px;
+
+			@include mq($until: desktop) {
+				width: calc(100% - 100px);
+				float: left;
+				padding-left: 10px;
+			}
+
+			.gs-item-slot {
+				font-size: 11px;
+				text-transform: uppercase;
+				color: #888;
+				margin-bottom: 2px;
+
+				@include mq($until: desktop) {
+					font-size: 9px;
+				}
+			}
+
+			.gs-item-level {
+				display: inline-block;
+				margin-right: 5px;
+				color: $yellow;
+			}
+		}
+
+	}
+}
+
+.gs-note {
+	font-size: 10px;
+	opacity: 0.5;
+	padding: 15px;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+//
+// Timeline
+//
+.tl-list {
+	margin-bottom: 20px;
+
+	.tl-list-title span {
+		font-size: 11px;
+		font-weight: 300;
+		color: #ccc;
+		padding: 3px 0;
+		background-color: #222;
+		border-radius: 3px;
+		text-align: center;
+		width: 40px;
+		display: inline-block;
+	}
+
+	// months
+	.tl-list-months {
+		border-left: solid 2px #222;
+		margin-left: 20px;
+		padding: 5px 0;
+
+		> button {
+			display: block;
+			background-color: transparent;
+			text-align: left;
+			padding: 0 20px;
+			line-height: 26px;
+			font-size: 12px;
+			color: #ccc;
+			border: none;
+			width: 100%;
+			position: relative;
+			text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+			border-radius: 0 3px 3px 0;
+			outline: none;
+
+			em {
+				font-weight: 500;
+				display: inline-block;
+				width: 40px;
+				color: $highlight;
+			}
+
+			.tl-list-dot {
+				position: absolute;
+				left: -4px; top: 10px;
+				display: inline-block;
+				width: 6px;
+				height: 6px;
+				background-color: #222;
+				box-shadow: 0 0 0 3px #333;
+				border-radius: 50%;
+			}
+
+			&:hover {
+				background-color: #222;
+				color: #fff;
+
+				em {
+					color: #fff;
+				}
+
+				.tl-list-dot {
+					background-color: #222;
+				}
+			}
+		}
+	}
+
+	&:hover .tl-list-title span {
+		color: #fff;
+		background-color: #111;
+
+		.tl-list-months {
+			border-left: solid 2px #111;
+		}
+	}
+
+	&.active {
+		.tl-list-title span {
+			background-color: darken($blue, 10%);
+			color: #fff;
+		}
+
+		.tl-list-months {
+			border-left: solid 2px darken($blue, 10%);
+		}
+
+		.tl-list-months > button.active {
+			background-color: darken($blue, 10%);
+			color: #fff;
+
+			em {
+				color: #fff;
+			}
+
+			.tl-list-dot {
+				background-color: darken($blue, 10%);
+				box-shadow: 0 0 0 3px darken($blue, 10%);
+			}
+		}
+	}
+}
+
+.tl-header {
+	height: 50px;
+	line-height: 50px;
+	background-color: #222;
+	font-size: 24px;
+	border-radius: 3px;
+	display: flex;
+
+	> div:first-of-type {
+		flex: 0 1 50%;
+		padding-left: 20px;
+		font-weight: 300;
+		color: lighten($blue, 10%);
+	}
+
+	> div:last-of-type {
+		flex: 0 1 50%;
+		padding-right: 20px;
+		color: #ccc;
+		text-align: right;
+		font-size: 16px;
+
+		em {
+			color: #888;
+		}
+	}
+}
+
+.tl-data {
+	border-left: solid 2px #222;
+	padding: 30px 0;
+	margin: 0 0 0 20px;
+
+	.tl-data-block {
+		display: flex;
+		margin: 0 0 20px 0;
+
+		> div:first-of-type {
+			flex: 0 1 25%;
+			padding: 5px 0 0 10px;
+			margin: 10px 0 0 0;
+			border-top: dashed 2px #222;
+			font-size: 10px;
+			text-transform: uppercase;
+			color: $highlight;
+			position: relative;
+
+			span {
+				position: absolute;
+				top: -6px; left: -6px;
+				width: 10px; height: 10px;
+				border-radius: 50%;
+				background-color: #222;
+				box-shadow: 0 0 0 3px #333;
+			}
+		}
+
+		> div:last-of-type {
+			flex: 0 1 75%;
+			background-color: #222;
+			border-radius: 3px;
+			overflow: hidden;
+
+			> div {
+				padding: 10px;
+				border-bottom: solid 1px #333;
+
+				&:last-of-type {
+					border-bottom: none;
+				}
+
+				.tl-event-line-label {
+					font-size: 12px;
+					line-height: 20px;
+					height: 20px;
+					text-transform: uppercase;
+					font-weight: 700;
+					letter-spacing: 1px;
+
+					img {
+						vertical-align: top;
+						margin: 0 5px 0 0;
+					}
+				}
+
+				.tl-event-line-data {
+					font-size: 16px;
+					font-weight: 300;
+				}
+
+				.tl-event-line-fact {
+					font-size: 11px;
+					color: #888;
+				}
+
+				.tl-event-line-info {
+					font-size: 12px;
+					color: #ddd;
+
+					i.fa {
+						display: inline-block;
+						width: 20px;
+						text-align: center;
+						font-size: 12px;
+						color: #aaa;
+					}
+
+					.tl-event-line-info-title {
+						font-size: 10px;
+						text-transform: uppercase;
+						color: $highlight;
+					}
+				}
+
+				.tl-event-line-goal {
+					display: flex;
+
+					> div:first-of-type {
+						flex: 0 1 10%;
+
+						> img {
+							border-radius: 3px;
+							box-shadow: 0 1px 2px #000;
+						}
+					}
+
+					> div:last-of-type {
+						flex: 0 1 90%;
+						padding-left: 15px;
+					}
+				}
+
+				&.tl-event-line-exp {
+					.tl-event-line-data {
+						color: $yellow;
+					}
+				}
+
+				&.tl-event-line-lvs {
+					.tl-event-line-data {
+						color: $orange;
+					}
+				}
+
+				&.tl-event-line-achievement {
+					.tl-event-line-data a {
+						color: $lime;
+					}
+				}
+
+				&.tl-event-line-tracking {
+				}
+			}
+		}
+	}
+
+	> div:last-of-type {
+		margin-bottom: 0;
+	}
+}
+
+//
+// Achievements
+//
+.achievements-private {
+	margin: 20px;
+	padding: 40px;
+	background-color: #222;
+	border-radius: 3px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 300;
+
+	.pink {
+		font-size: 24px;
+		margin-bottom: 20px;
+	}
+
+	img {
+		margin-bottom: 20px;
+	}
+}
+
+.ac-list-title {
+	font-size: 10px;
+	text-transform: uppercase;
+	padding: 0 0 3px 0;
+	color: $highlight;
+}
+
+.ac-list-group {
+	button {
+		border-bottom: solid 1px #333;
+		color: #fff;
+
+		&:last-of-type {
+			border: none;
+		}
+	}
+
+	.progress {
+		position: absolute;
+		top: 0; left: 0; bottom: 0;
+		width: 34%;
+		background-color: rgba(200,200,200,0.2);
+		pointer-events: none;
+	}
+
+	button.active > .progress {
+		background-color: rgba(20,20,20,0.3);
+	}
+}
+
+.ac-summary {
+	display: flex;
+
+	> div {
+		flex: 0 1 50%;
+	}
+
+	> div:first-of-type {
+		padding-right: 20px;
+	}
+
+	> div:last-of-type {
+		padding-left: 20px;
+	}
+}
+
+.ac-all {
+	.ac-all-row {
+		display: flex;
+		padding: 0;
+		opacity: 0.3;
+		margin-bottom: 10px;
+
+		> div:nth-of-type(1) {
+			flex: 0 1 10%;
+
+			img {
+				border-radius: 3px;
+				box-shadow: 0 1px 2px #000;
+				filter: grayscale(100%);
+			}
+		}
+
+		> div:nth-last-of-type(2) {
+			flex: 0 1 10%;
+			color: $lime;
+			font-weight: 500;
+			font-size: 15px;
+		}
+
+		> div:nth-of-type(3) {
+			flex: 0 1 80%;
+			font-size: 13px;
+
+			.ac-all-obtained-date {
+				font-size: 11px;
+				margin-top: 5px;
+				color: #aaa;
+
+				time {
+					color: $highlight;
+				}
+			}
+		}
+
+		&:hover {
+			opacity: 1;
+		}
+
+		&.ac-obtained {
+			opacity: 1;
+
+			img {
+				filter: grayscale(0%) !important;
+			}
+		}
+	}
+}
+
+.ac-all-required .ac-all-row {
+	opacity: 1;
+}
+
+//
+// Minions and mounts
+//
+.mm-list {
+	@include cf();
+	margin-top: 10px;
+
+	.mm-list-entry {
+        float: left;
+		width: 33%;
+		display: flex;
+		line-height: 40px;
+		height: 40px;
+		opacity: 0.3;
+
+        @include mq($until: desktop) {
+            width: 100%;
+            float: none;
+        }
+
+		&:hover, &.obtained {
+			opacity: 1;
+		}
+
+		img {
+			vertical-align: top;
+    		margin-top: 8px;
+		}
+
+		> div:first-of-type {
+			flex: 0 1 10%;
+
+			img {
+				border-radius: 3px;
+				box-shadow: 0 1px 2px #000;
+				filter: grayscale(100%);
+			}
+		}
+
+		> div:last-of-type {
+			flex: 0 1 90%;
+			padding-left: 10px;
+		}
+
+		&.obtained > div:first-of-type img {
+			filter: grayscale(0%) !important;
+		}
+	}
+}
+
+.cp-manual-update {
+	position: absolute;
+	top: 10px; right: 10px;
+
+}

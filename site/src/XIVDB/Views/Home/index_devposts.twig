@@ -1,0 +1,39 @@
+{% set limit = devices.mobile and not nomobile ? 10 : 50 %}
+
+{% for post in devtracker %}
+    {% if loop.index <= limit %}
+    <div class="home-post home-devpost">
+        <div>
+            <img src="{{ post.thread.user.avatar }}" width="62" height="62">
+            <br><br>
+            <div style="text-align:center;color:#aaa;font-size:12px;">
+                #{{ post.id }}
+                <br><br>
+                <strong>POSTS</strong><br>
+                <span style="font-size:16px;">{{ post.thread.post_count }}</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                <div class="home-post-title home-post-dev">
+                    <span>
+                        {{ post.thread.user.username }}
+                    </span>
+                    <span class="home-post-info">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {{ post.thread.user.title }} - {{ post.thread.time|moment }}
+                    </span>
+                </div>
+            </div>
+            <div class="home-post-text">
+                {{ post.thread.message|raw }}
+                <hr>
+                <a href="{{ post.thread.url }}" target="_blank" data-tt="Click to go to Dev Post">{{ post.thread.title }}</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}
+{% if devices.mobile and not nomobile %}
+    <a href="/devtracker" class="home-more-dev">{{ languages.custom[1190] }}</a>
+{% endif %}

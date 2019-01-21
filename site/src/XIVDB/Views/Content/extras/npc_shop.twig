@@ -1,0 +1,11 @@
+{% for shop in content.shops %}
+    {% if shop.name is defined %}
+        <a href="{{ shop.url }}" title="{{ shop.name }}" class="fs18"  data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ shop.name }}</a>
+    {% else %}
+        <span class="fs18">{{ language.custom[408] }}</span>
+    {% endif %}
+
+    {# list shops #}
+    {{ Layout.tableItemShop(id ~ shop.id, shop.items) }}
+    <br>
+{% endfor %}

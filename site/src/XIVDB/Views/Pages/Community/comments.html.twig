@@ -1,0 +1,57 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}{{ languages.custom[253] }}{% endset %}
+
+{% block body %}
+<div class="content-block nopad page-content page-flexbox">
+
+	<div class="page-pad-30 page-70">
+
+		{{ PageMacro.heading1(languages.custom[253], languages.custom[929]|replace({ '{value}': total|number_format })) }}
+
+		{% for comment in recent %}
+			<div class="page-comment">
+				<div class="page-comment-top">
+
+					<img src="{{ comment.member.character_avatar ? comment.member.character_avatar : comment.member.avatar ? comment.member.avatar : '/img/ui/noavatar_light.png' }}" height="52">
+
+					<div>
+						<div>
+							{% if comment.member.character_name is not empty %}
+								<span class="page-comment-name">
+									{{ comment.member.character_name|title }}
+									<em>({{ comment.member.character_server|title }})</em>
+								</span>
+							{% else %}
+								<span class="page-comment-name">{{ comment.member.username|title }}</span>
+							{% endif %}
+							<time>{{ comment.time }}</time>
+						</div>
+						<div>
+							{% if comment.content.name is defined %}
+							    <a href="{{ comment.content.url }}">{{ comment.content.name }}</a>
+                            {% endif %}
+						</div>
+
+					</div>
+				</div>
+				<div class="page-comment-text">
+					{{ comment.text|raw }}
+				</div>
+			</div>
+		{% endfor %}
+
+	</div>
+	<div class="page-pad-30 page-30 page-seperate">
+
+		{{ PageMacro.heading2(languages.custom[926]) }}
+
+		{% for content in top %}
+		<div class="page-top-row">
+			<a href="{{ content.data.url }}" data-xivdb-replace="1">{{ content.data.name }}</a>
+			{{ content.total }} {{ languages.custom[253] }}
+		</div>
+		{% endfor %}
+	</div>
+
+</div>
+{% endblock %}

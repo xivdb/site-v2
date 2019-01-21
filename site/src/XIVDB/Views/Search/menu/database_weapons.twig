@@ -1,0 +1,16 @@
+<div class="subdropdown-container">
+    <div id="sub-weapons" class="dropdown-slot active">
+        {{ mm.column([
+            mm.list(menu.database.equipment.weapons.menu.classes),
+        ]) }}
+
+        {{ mm.column([
+            mm.list(menu.database.equipment.weapons.menu.jobs),
+        ]) }}
+
+        {{ mm.column([
+            mm.list(menu.database.equipment.weapons.menu.other_jobs),
+            mm.list(menu.database.equipment.shields, languages.custom[435]),
+        ]) }}
+    </div>
+</div>

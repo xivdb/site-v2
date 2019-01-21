@@ -1,0 +1,44 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    {% if content.icon_issuer %}
+        <div class="xivdb-cb" style="background-image:url({{ content.icon_issuer }});"></div>
+    {% endif %}
+
+    {# help text #}
+    {{ Layout.datahelp(content.help) }}
+
+    <div class="xivdb-lcz">
+        {{ content.leve_client.name }}
+    </div>
+
+    {# other info #}
+    {{ Layout.dataline(languages.custom[457], content.class_level, 'xivdb-yellow') }}
+    {{ Layout.dataline(languages.custom[384], content.classjob_category.name) }}
+
+    {% if content.placename.name is defined %}
+        {{ Layout.dataline(languages.custom[1126], content.placename.name )}}
+    {% endif %}
+
+    {% if content.position.x is defined %}
+        {% set html %}
+            <span class="xivdb-light">X</span> {{ content.position.x|round(0, 'floor') }}
+            &nbsp;&nbsp;/&nbsp;&nbsp;
+            <span class="xivdb-light">Y</span> {{ content.position.y|round(0, 'floor')  }}
+        {% endset %}
+        {{ Layout.dataline('Position', html)}}
+    {% endif %}
+
+    {{ Layout.dataline(languages.custom[1132], content.gil_reward|number_format) }}
+    {{ Layout.dataline(languages.custom[1133], content.exp_reward|number_format) }}
+    {{ Layout.dataline(languages.custom[1135], content.leve_assignment_type.name) }}
+
+{% endspaceless %}
+{% endblock %}

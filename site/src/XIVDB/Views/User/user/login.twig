@@ -1,0 +1,34 @@
+{% set bgcss = 'bg-login' %}
+{% extends 'Default/index_simplified.twig' %}
+
+{% block body %}
+    <style>
+        .site-standalone .frame {
+            width: 50%;
+            margin-bottom: 50px;
+        }
+    </style>
+    <div class="frame">
+        <form method="post" class="center">
+            {% include 'User/base/notices.twig' %}
+            <div class="input-group">
+                <label>{{ languages.custom[704] }}</label>
+                <input type="text" id="login" name="login" class="w100" maxlength="32">
+            </div>
+            <div class="input-group">
+                <label>{{ languages.custom[709] }}</label>
+                <input type="password" id="password" name="password" class="w100" maxlength="128">
+            </div>
+            <button type="submit" class="blue w100">{{ languages.custom[263] }}</button>
+            <input type="hidden" name="_token" value="{{ _token }}">
+
+            <br><br><br>
+            <div class="input-group">
+                <p>At this time, the site is not taking on any new registrations or users.</p>
+            </div>
+
+        </form>
+
+
+    </div>
+{% endblock %}

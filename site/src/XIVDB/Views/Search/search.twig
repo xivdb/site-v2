@@ -1,0 +1,59 @@
+<div class="search-content">
+    <div class="search-header search-header-flex">
+        {# search result category buttons #}
+        <div class="search-results-nav"></div>
+
+        {# search filter box #}
+        <div class="filter-box">
+            <div class="filter-box-header">
+                {# Filter toggle button #}
+                <button class="filter-toggle" data-category="items">
+                    <em class="hideonmobile">{{ languages.custom[719] }}:</em> <strong>ITEMS</strong>
+                </button>
+
+                <span class="filter-notice">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Search filters enabled
+                </span>
+
+                <div class="filter-view">
+                    <span class="search-numbers">-</span>
+                    {% if not devices.mobile %}
+                        <button id="toggleSearchOptions"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# Search Interaction #}
+        <div class="search-interaction" id="searchInteraction">
+            {# Filters for each content #}
+            {% import 'Search/filters/macros.twig' as SearchFilter %}
+            {% set filterCategories = [
+                'items','quests','actions','achievements','recipes','instances','fates',
+                'leves','places','gathering','npcs','enemies','emotes','status','titles',
+                'minions','mounts','weather','characters'
+            ] %}
+            {% for category in filterCategories %}
+                {% include 'Search/filters/filter_'~ category ~'.twig' %}
+            {% endfor %}
+
+            {# Options #}
+            {% include 'Search/options.twig' %}
+
+            {# Include Tools #}
+            {% include 'Tools/ShoppingCart/search.html.twig' %}
+            {% include 'Tools/Wardrobe/search.html.twig' %}
+        </div>
+    </div>
+
+    {# earch results section #}
+    <section class="search-results grid"></section>
+    <section class="search-paging"></section>
+
+    {# no resutlts #}
+    <div class="search-no-results cf">
+        <div class="no-results-title"><strong>{{ languages.custom[721] }}</strong>, kupo!</div>
+        <p>{{ languages.custom[722] }}</p>
+        <div class="pink">{{ languages.custom[723] }}</div>
+    </div>
+</div>

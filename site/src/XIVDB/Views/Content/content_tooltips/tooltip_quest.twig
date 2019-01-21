@@ -1,0 +1,50 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    {% if content.header %}
+        <div class="xivdb-cb" style="background-image:url({{ content.header }});"></div>
+    {% endif %}
+
+    {% if content.classjob_category_1.name is defined %}
+        {{ Layout.dataline(languages.custom[384], content.classjob_category_1.name, 'xivdb-sky') }}
+    {% endif %}
+
+    {% if content.classjob_category_2.name is defined %}
+        {{ Layout.dataline(languages.custom[1065], content.classjob_category_2.name, 'xivdb-sky') }}
+    {% endif %}
+
+    {{ Layout.dataline(languages.custom[580], content.genre_name) }}
+    {{ Layout.dataline(languages.custom[316], content.category_name) }}
+
+    {% if content.npc_start.name is defined %}
+        {% set html %}
+            <em class="xivdb-yellow">{{ content.npc_start.name }}</em>
+            {% if content.npc_start.placename.name is defined %}
+                - {{ content.npc_start.placename.name }}
+            {% endif %}
+        {% endset %}
+        {{ Layout.dataline(languages.custom[628], html) }}
+    {% endif %}
+
+    {% if content.npc_end.name is defined %}
+        {% set html %}
+            <em class="xivdb-yellow">{{ content.npc_end.name }}</em>
+            {% if content.npc_end.placename.name is defined %}
+                - {{ content.npc_end.placename.name }}
+            {% endif %}
+        {% endset %}
+        {{ Layout.dataline(languages.custom[1131], html) }}
+    {% endif %}
+
+    {{ Layout.dataline(languages.custom[1132], content.gil_reward|number_format) }}
+    {{ Layout.dataline(languages.custom[1133], content.exp_reward|number_format) }}
+
+{% endspaceless %}
+{% endblock %}

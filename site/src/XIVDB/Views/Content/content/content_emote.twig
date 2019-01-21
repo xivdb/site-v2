@@ -1,0 +1,41 @@
+{# help text #}
+{% if content.text_command.help_html is defined and content.text_command.help_html is not empty %}
+    {{ Layout.block('<div class="lc-help">'~ content.text_command.help_html|raw ~'</div>') }}
+{% endif %}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+{# Commands #}
+{% set data = [] %}
+{% if content.text_command %}
+    {% if content.text_command.command1 %}
+        {% set data = data|merge([ Layout.col(languages.custom[237], content.text_command.command1) ]) %}
+    {% endif %}
+    {% if content.text_command.command2 %}
+        {% set data = data|merge([ Layout.col(languages.custom[860] ~ ' 1', content.text_command.command2) ]) %}
+    {% endif %}
+    {% if content.text_command.command3 %}
+        {% set data = data|merge([ Layout.col(languages.custom[860] ~ ' 2', content.text_command.command3) ]) %}
+    {% endif %}
+    {% if content.text_command.command4 %}
+        {% set data = data|merge([ Layout.col(languages.custom[860] ~ ' 3', content.text_command.command4) ]) %}
+    {% endif %}
+{% else %}
+    {% set data = data|merge([ Layout.col(languages.custom[237], content.command) ]) %}
+{% endif %}
+
+{% if data|length > 0 %}
+    {{ Layout.row(data) }}
+{% endif %}
+
+{# Category #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[316], content.emote_category),
+    ])
+}}

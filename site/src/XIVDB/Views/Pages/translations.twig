@@ -1,0 +1,53 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}{{ languages.custom[442] }}{% endset %}
+
+{% block body %}
+<div class="content-block pad30">
+
+    <div class="page-pad-30">
+        {{ PageMacro.heading1(languages.custom[442], false, true) }}
+        <p>{{ languages.custom[931] }}</p>
+        <br>
+        <h4 class="mb20 highlight">Supported Languages</h4>
+        <div class="pl20">
+            <div class="cf">
+                <div class="b10"><img src="/img/flags/english.png" height="24"></div>
+                <div class="b90 fs20">English</div>
+            </div>
+            <br>
+            <div class="cf">
+                <div class="b10"><img src="/img/flags/french.png" height="24"></div>
+                <div class="b45 fs20">French</div>
+                <div class="b45 fs20">Français</div>
+            </div>
+            <br>
+            <div class="cf">
+                <div class="b10"><img src="/img/flags/german.png" height="24"></div>
+                <div class="b45 fs20">German</div>
+                <div class="b45 fs20">Deutsch</div>
+            </div>
+            <br>
+            <div class="cf">
+                <div class="b10"><img src="/img/flags/japanese.png" height="24"></div>
+                <div class="b45 fs20">Japanese</div>
+                <div class="b45 fs20">日本語</div>
+            </div>
+            <br>
+            <div class="cf">
+                <div class="b10"><img src="/img/flags/chinese.png" height="24"></div>
+                <div class="b45 fs20">Chinese Simplified (Soon)</div>
+                <div class="b45 fs20">中国</div>
+            </div>
+        </div>
+        <br>
+        <div class="panel">
+            <strong class="highlight">Help Translate</strong>
+            <p>We are always looking for translators to help make this site better for your language. The translations provided include
+                just the site text information and not the game data (as this is taken from the files).</p>
+
+            <p>If you are interested in translating some lines, please email <a href="mailto:kupo@xivdb.com">kupo@xivdb.com</a>.</p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

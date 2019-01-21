@@ -1,0 +1,35 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}As Code Blocks- Translations{% endset %}
+{% set page = 'translations' %}
+{% set exteded = true %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Translations', url: '/translations' },
+    { title: 'Backups' }
+]) }}
+
+<div class="container-fluid">
+
+    <h1>Backups</h1>
+
+    <table class="translation-table" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+            <tr>
+                <th width="50%">Filename</th>
+                <th width="25%">Created</th>
+                <th width="25%">Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in backups %}
+                <tr>
+                    <td>{{ file.filename }}</td>
+                    <td>{{ file.created }}</td>
+                    <td>{{ file.filesize }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

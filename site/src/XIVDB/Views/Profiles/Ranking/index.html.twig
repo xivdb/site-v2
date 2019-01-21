@@ -1,0 +1,78 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}{{ server ? "%s: %s"|format(languages.custom[788], server) : 'Global Ranking' }}{% endset %}
+
+{% block body %}
+<div class="content-block nopad page-content page-flexbox">
+
+	<div class="page-pad-30 page-80">
+
+		{{ PageMacro.heading1(server ? "%s: <strong>%s</strong>"|format(languages.custom[788], server) : languages.custom[1200]) }}
+
+        <div class="achievements-ranks-times">
+            {{ languages.custom[1201] }} <strong class="yellow">{{ countdown }}</strong>
+            &nbsp;&nbsp;-&nbsp;&nbsp;
+            <time class="faint">{{ languages.custom[1202] }}, {{ resettime }} (UTC)</time>
+        </div>
+
+        <div class="achievements-rank-list">
+            {% for character in ranking %}
+            {% set column1 = server ? 'rank_server' : 'rank_global' %}
+            {% set column2 = server ? 'rank_server_previous' : 'rank_global_previous' %}
+            {% set isMe = (user and user.lodestone_id and character.lodestone_id == user.lodestone_id) ? true : false %}
+            <div class="achievements-rank-list--row achievements-rank-list--rank-{{ character[column1] }} achievements-rank-list--is-viewer-{{ isMe ? 'yes' : 'no' }}">
+                <div class="achievements-rank-list--rank-number">
+                    {{ character[column1] }}
+                </div>
+                <div class="achievements-rank-list--status">
+                    {% if character[column1] in [1,2,3] %}
+                    <img src="/img/ui/rank_{{ character[column1] }}.png">
+                    {% else %}
+                        {% if character[column1] == character[column2] %}
+                            {# Characters rank has not changed#}
+                            <i class="fa fa-minus faint" aria-hidden="true"></i>
+
+                        {% elseif character[column1] > character[column2] %}
+                            {# Characters rank has moved down #}
+                            <i class="fa fa-arrow-down red" aria-hidden="true"></i>
+                            <span class="red">-{{ character[column1] - character[column2] }}</span>
+                        {% else %}
+                            {# Characters rank has moved up #}
+                            <i class="fa fa-arrow-up green" aria-hidden="true"></i>
+                            <span class="green">+{{ character[column2] - character[column1] }}</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="achievements-rank-list--avatar">
+                    <img src="{{ character.avatar }}">
+                </div>
+                <div class="achievements-rank-list--rank-name">
+                    <a href="{{ character.url }}">{{ character.name }}</a>
+                    <small>{{ character.server }}</small>
+                </div>
+                <div class="achievements-rank-list--rank-points">
+                    {{ character.rank_points|number_format }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="panel mt30 fs12">
+            <strong class="highlight">{{ languages.custom[1203] }}</strong>
+            {{ languages.custom[1204] }}
+        </div>
+
+    </div>
+
+    <div class="page-pad-30 page-20 page-seperate">
+    	{{ PageMacro.heading2('Servers') }}
+
+        <a href="/character/ranking" class="page-servers-links yellow">- Global</a>
+        {% for svr in filters.servers %}
+        <a href="/character/ranking/{{ svr.name }}" class="page-servers-links{{ svr.name == server ? ' page-servers-active' : '' }}">{{ svr.name }}</a>
+        {% endfor %}
+    </div>
+
+
+
+</div>
+{% endblock %}

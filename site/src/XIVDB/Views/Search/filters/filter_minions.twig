@@ -1,0 +1,10 @@
+<div class="filter-panel filter-panel-minions" data-filter-type="minions">
+{% spaceless %}
+
+    {{ SearchFilter.empty('Minions') }}
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.minions) }}
+
+{% endspaceless %}
+</div>

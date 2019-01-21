@@ -1,0 +1,39 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Dev Tasks{% endset %}
+{% set page = 'devtasks' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Dev Tasks' }
+]) }}
+
+<div class="container">
+
+	<h1>{{ tasks|length }} Dev Tasks</h1>
+    <a href="/devtasks/task" class="btn btn-success">Add Task</a>
+
+    <br><br>
+
+    <table width="100%" class="table table-sm task-list">
+        <thead class="table-inverse">
+            <tr>
+                <th width="5%">Priority</th>
+                <th width="5%">Status</th>
+                <th width="65%">Title</th>
+                <th width="25%">Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr class="{{ task.completed ? 'complete' : 'todo' }}">
+                <td>{{ task.priority }}</td>
+                <td>{{ task.completed ? '<i class="fa fa-check" aria-hidden="true"></i>' : '<i class="fa fa-times" aria-hidden="true"></i>' }}</td>
+                <td><a href="/devtasks/view/{{ task.id }}">{{ task.title }}</a></td>
+                <td>{{ task.updated|date('F j, Y, g:i a') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

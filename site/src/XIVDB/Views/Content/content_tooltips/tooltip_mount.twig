@@ -1,0 +1,14 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    {# help text #}
+    {{ Layout.datahelp(content.info1 ~ content.info2) }}
+{% endspaceless %}
+{% endblock %}

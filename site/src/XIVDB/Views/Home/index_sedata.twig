@@ -1,0 +1,33 @@
+
+{# Maintenance #}
+<div class="home-se">
+    <h3><img src="/img/ui/ls_maintenance.png" height="24">{{ languages.custom[1177] }}</h3>
+    {% for i, post in lodestone.maintenance if i < limit %}
+        <a href="{{ post.url }}" target="_blank">
+            {{ post.title }}
+            <small>{{ post.time|date('F j, Y')|upper }} (PST)</small>
+        </a>
+    {% endfor %}
+</div>
+
+{# Game Notices #}
+<div class="home-se">
+    <h3><img src="/img/ui/ls_news.png" height="24">{{ languages.custom[1178] }}</h3>
+    {% for i, post in lodestone.notices if i < limit %}
+        <a href="{{ post.url }}" target="_blank">
+            {{ post.title }}
+            <small>{{ post.time|date('F j, Y')|upper }} (PST)</small>
+        </a>
+    {% endfor %}
+</div>
+
+{# Game Status #}
+<div class="home-se">
+    <h3><img src="/img/ui/ls_update.png" height="24">{{ languages.custom[1179] }}</h3>
+    {% for i, post in lodestone.status if i < limit %}
+        <a href="{{ post.url }}" target="_blank">
+            {{ post.title }}
+            <small>{{ post.time|date('F j, Y')|upper }} (PST)</small>
+        </a>
+    {% endfor %}
+</div>

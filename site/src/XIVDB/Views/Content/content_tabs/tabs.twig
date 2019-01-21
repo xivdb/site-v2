@@ -1,0 +1,75 @@
+{#
+    Custom tabs which are on all content pages.
+    When this is included, an array is passed
+    that contains:
+
+        id
+        data
+        template
+
+#}
+
+{# Tabs #}
+<div class="tab-nav">
+    <span data-tab="details" class="active"><i class="fa fa-home" aria-hidden="true"></i>{{ languages.custom[1051] }}</span>
+
+    {# All content will have Comments and Screenshots #}
+    <span data-tab="comments" class="{{ (totalComments == 0 ? 'nodata' : '') }}"><em class="yellow">{{ totalComments }}</em>{{ languages.custom[253] }}</span>
+    <span data-tab="screenshots" class="{{ (totalScreenshots == 0 ? 'nodata' : '') }}"><em class="yellow">{{ totalScreenshots }}</em>{{ languages.custom[620] }}</span>
+    <span data-tab="seealso" class="{{ (linkedComments|length == 0 ? 'nodata' : '') }}"><em class="yellow">{{ linkedComments|length }}</em>{{ languages.custom[838] }}</span>
+
+    <hr>
+
+    {# custom tabs #}
+    {% for tab in tabs %}
+        {# Set what is what #}
+        {% set name = tab[0] %}
+        {% set data = tab[1] %}
+        {% set template = tab[2] %}
+        {% set count = data|length %}
+        {% set nocount = tab[4] is defined ? true : false %}
+        {% set id = tab[5] is defined ? tab[5] : name|md5 %}
+
+        {# custom count #}
+        {% if tab[3] is defined %}
+            {% set count = tab[3] %}
+        {% endif %}
+
+        {# loop through tabs #}
+        <span data-tab="{{ id }}" class="{{ nocount ? '' : (count == 0 ? 'nodata' : '') }}">
+            <em class="{{ (not nocount and count > 0) ? 'yellow' : '' }}">{{ nocount ? '-' : count }}</em>{{ name }}
+        </span>
+    {% endfor %}
+</div>
+
+<div class="tab-section">
+    {# Main content #}
+    {% include 'Content/blocks/details.twig' %}
+
+    {# All content will have Comments and Screenshots #}
+    {% include 'Content/blocks/comments.twig' %}
+    {% include 'Content/blocks/screenshots.twig' %}
+    {% include 'Content/blocks/seealso.twig' %}
+
+    {# custom tabs #}
+    {% for tab in tabs %}
+        {# Set what is what #}
+        {% set name = tab[0] %}
+        {% set data = tab[1] %}
+        {% set template = tab[2] %}
+        {% set id = tab[5] is defined ? tab[5] : name|md5 %}
+
+        {# loop through tabs #}
+        <div class="tab-block" id="tab-block-{{ id }}">
+        {% if data or id == 'recipestree' %}
+            {% include template %}
+        {% else %}
+            <div class="panel no-tab-data">
+                <img src="/img/logo/moogle.png">
+                <h3>{{ languages.custom[1123] }}</h3>
+                <p>No <em class="highlight">{{ name|title }}</em> data for <em class="highlight">{{ content.name }}</em> kupo!</p>
+            </div>
+        {% endif %}
+        </div>
+    {% endfor %}
+</div>

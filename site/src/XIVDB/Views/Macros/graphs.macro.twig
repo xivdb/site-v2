@@ -1,0 +1,128 @@
+{# Line Graphs #}
+{% macro line(data, size, color) -%}
+	{% set id = random(999) %}
+	{% set colorSets = [
+		[ 'blue', 	'14, 219, 255', 	'0, 120, 171' ],
+		[ 'yellow', '226, 236, 42', 	'150, 135, 0' ],
+		[ 'red',	'224, 59, 22', 		'138, 22, 2' ],
+	] %}
+	<div class="chart">
+		<canvas id="graph{{ id }}" width="{{ size[0] }}" height="{{ size[1] }}"></canvas>
+		<script>
+		var data = {
+		    labels: [ '{{ data|keys|join("','")|raw }}' ],
+		    datasets: [
+		        {
+		            fill: true,
+		            lineTension: 0,
+		            backgroundColor: "rgba({{ colorSets[ color ? color : 0 ][1] }}, 0.1)",
+		            borderColor: "rgba({{ colorSets[ color ? color : 0 ][1] }}, 1)",
+		            borderCapStyle: 'butt',
+		            borderDash: [],
+		            borderDashOffset: 0.0,
+		            borderJoinStyle: 'miter',
+					borderWidth: 2,
+
+		            pointBorderColor: "rgba({{ colorSets[ color ? color : 0 ][2] }}, 1)",
+		            pointBackgroundColor: "#fff",
+		            pointBorderWidth: 1,
+		            pointHoverRadius: 3,
+		            pointHoverBackgroundColor: "rgba({{ colorSets[ color ? color : 0 ][2] }}, 1)",
+		            pointHoverBorderColor: "rgba({{ colorSets[ color ? color : 0 ][2] }}, 1)",
+		            pointHoverBorderWidth: 1,
+		            pointRadius: 2,
+		            pointHitRadius: 10,
+
+		            data: [ {{ data|join(',')|raw}} ],
+		            spanGaps: false,
+		        }
+		    ]
+		};
+
+		var ctx{{ id }} = $("#graph{{ id }}");
+		new Chart(ctx{{ id }}, {
+		    type: 'line',
+		    data: data,
+		    options: {
+				legend: {
+		            display: false,
+	        	},
+				scales: {
+			        yAxes: [{
+						ticks: {
+							beginAtZero: true,
+							callback: function(value, index, values) {
+								return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+							}
+						}
+					}]
+				},
+				tooltips: {
+			        callbacks: {
+			            label: function (tooltipItem, data) {
+							return Number(tooltipItem.yLabel).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						}
+		            }
+		        }
+			}
+		});
+		</script>
+	</div>
+{%- endmacro %}
+
+{# Radar Graph #}
+{% macro barHorizontal(data, size, color) -%}
+{% set id = random(999) %}
+{% set colorSets = [
+	[ 'blue', 	'14, 219, 255', 	'0, 120, 171' ],
+	[ 'yellow', '255, 237, 4', 		'229, 240, 111' ],
+	[ 'red',	'224, 59, 22', 		'138, 22, 2' ],
+] %}
+<div class="chart">
+	<canvas id="graph{{ id }}" width="{{ size[0] }}" height="{{ size[1] }}"></canvas>
+	<script>
+	var data = {
+	    labels: [ '{{ data|keys|join("','")|raw }}' ],
+	    datasets: [
+	        {
+				fill: true,
+				backgroundColor: "rgba({{ colorSets[ color ? color : 0 ][1] }}, 0.8)",
+	            borderColor: "rgba({{ colorSets[ color ? color : 0 ][1] }}, 0)",
+	            pointBackgroundColor: "rgba({{ colorSets[ color ? color : 0 ][2] }}, 1)",
+	            pointBorderColor: "#fff",
+	            pointHoverBackgroundColor: "#fff",
+	            pointHoverBorderColor: "rgba({{ colorSets[ color ? color : 0 ][2] }}, 1)",
+				pointBorderWidth: 1,
+	            data: [ {{ data|join(',')|raw}} ],
+	        }
+	    ]
+	};
+
+	var ctx{{ id }} = $("#graph{{ id }}");
+	new Chart(ctx{{ id }}, {
+	    type: 'horizontalBar',
+	    data: data,
+	    options: {
+			animation: false,
+			legend: {
+	            display: false,
+        	},
+			tooltips: {
+		        callbacks: {
+		            label: function (tooltipItem, data) {
+						return Number(tooltipItem.xLabel).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					}
+	            }
+	        },
+			scales: {
+	            xAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+		}
+	});
+	</script>
+</div>
+{%- endmacro %}

@@ -1,0 +1,275 @@
+<div class="left">
+       {# check if logged in #}
+       {% if not user %}
+           <a href="{{ defines.SECURE }}/login" class="button small blue">{{ languages.custom[755] }}</a>
+           <div class="cart-session-warning">
+               <i class="fa fa-exclamation-circle"></i> {{ languages.custom[756] }}
+           </div>
+       {% endif %}
+
+	<div class="tool-cart-window tool-cart-window-all details active">
+		{% if cart.materialRequiredQuantity %}
+			{# for each material tier #}
+			{% for tier, categories in cart.materialRequiredQuantity %}
+			<div class="list-block">
+
+				{# Heading #}
+				<div class="list-tier">
+					<button class="fa fa-minus tool-toggle-window" data-tt="{{ languages.custom[751] }}" type="button" data-open="1"></button>
+					{{ languages.custom[743]|replace({ '{nth}' : tier })|upper }}
+				</div>
+
+				{# Tiers #}
+				<div class="list-data">
+					{% for category, itemlist in categories %}
+						<div class="list-header list-header-{{ category }}">
+							{{ itemlist|sum }} {{ languages.custom[category]|upper }}
+							<div class="labels">
+								<em>HQ</em>
+								<em>NQ</em>
+							</div>
+						</div>
+
+						{# items required #}
+						<table class="list-items table-clean" cellpadding="0" cellspacing="0" border="0" width="100%">
+							{% for id, quantity in itemlist %}
+							{% set material = cart.items[id] %}
+
+							<tr class="list-entity" data-id="{{ id }}">
+								<td width="6%">
+									<a href="{{ material.url }}" class="icon" style="background-image: url({{ material.icon }})" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0" target="_blank">&nbsp;</a>
+								</td>
+								<td width="6%">
+									<input type="number" class="quantity mini" data-var="entityQuantity" value="{{ quantity }}" data-tt="{{ languages.custom[747] }}">
+								</td>
+								<td width="35%" class="cellspace">
+									<span class="name" data-tt="{% spaceless %}
+										{{ languages.custom[773] }}
+										{% set usedToMake = cart.materialDistribution[tier][id] %}
+										{% for id, qty in usedToMake %}
+											{% set makes = cart.items[id] %}
+											<div class='highlight'>- {{ makes.name }}</div>
+										{% endfor %}
+										{% endspaceless %}">
+										{{ material.name }}
+									</span>
+								</td>
+								<td width="25%">
+									<span class="where">
+										{% if material.connect_instance %}<img src="/img/libra/treasure_icon_gold.png" height="20" data-tt="{{ languages.custom[757]|escape }}">{% endif %}
+										{% if material.connect_quest_reward %}<img src="/img/game/061000/061431.png" height="20" data-tt="{{ languages.custom[758]|escape }}">{% endif %}
+										{% if material.connect_enemy_drop %}<img src="/img/ui/enemy.png" height="20" data-tt="{{ languages.custom[759]|escape }}">{% endif %}
+										{% if material.connect_craftable %}<img src="/img/ui/tools.png" height="20" data-tt="{{ languages.custom[760]|escape }}">{% endif %}
+										{% if material.connect_shop %}<img src="/img/libra/quest_icon_gil.png" height="20" data-tt="{{ languages.custom[761]|escape }}">{% endif %}
+										{% if material.connect_gathering %}<img src="/img/ui/gathering.png" height="20" data-tt="{{ languages.custom[762]|escape }}">{% endif %}
+										{% if material.connect_achievement %}<img src="/img/ui/badge.png" height="20" data-tt="{{ languages.custom[763]|escape }}">{% endif %}
+									</span>
+								</td>
+								<td width="5%">
+									{% if id < 100 %}
+										&nbsp;
+									{% else %}
+										<button class="hqbtn" type="button" data-tt="{{ languages.custom[748] }}"><img src="/img/ui/hq.png"></button>
+									{% endif %}
+								</td>
+								<td width="8%">
+									{% if id < 100 %}
+										&nbsp;
+									{% else %}
+										<input type="number" class="costhq inactive" data-var="entityCost" value="0" data-tt="{{ languages.custom[745] }}">
+									{% endif %}
+								</td>
+								<td width="8%">
+									<input type="number" class="cost" data-var="entityCost" value="0" data-tt="{{ languages.custom[746] }}">
+								</td>
+							</tr>
+							{% endfor %}
+						</table>
+					{% endfor %}
+
+					{# What you craft #}
+					{% if cart.materialTierCreation[tier] is defined and cart.materialTierCreation[tier] %}
+					{% set makes = cart.materialTierCreation[tier] %}
+						<div class="list-header list-header-makes">{{ makes|sum }} {{ languages.custom[753]|upper }}</div>
+						<p class="list-help">{{ languages.custom[754] }}</p>
+						<div class="list-created">
+							{% for id, quantity in makes %}
+							{% set item = cart.items[id] %}
+							<div class="list-created-row">
+								<a href="{{ item.url }}" class="icon" target="_blank" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">
+									<img src="{{ item.icon }}" height="30">
+								</a>
+								<span>
+									<strong class="sky">{{ quantity }}</strong>
+									&nbsp; {{ item.name }}
+								</span>
+							</div>
+							{% endfor %}
+						</div>
+					{% endif %}
+				</div>
+
+				{# Hidden notice #}
+				<div class="list-notice">({{ languages.custom[789] }})</div>
+
+			</div>
+			{% endfor %}
+		{% else %}
+		<div class="panel red">
+			{{ languages.custom[790] }}
+		</div>
+		{% endif %}
+	</div>
+
+	{% for item in cart.basket %}
+	<div class="tool-cart-window tool-cart-window-{{ item.data.id }}">
+		<div class="list-block">
+
+			{# Item title #}
+			<div class="list-top">
+				<a href="{{ item.data.url }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0" target="_blank">
+					<img src="{{ item.data.icon }}" height="32">
+				</a>
+				<span><strong>{{ item.quantity }}</strong>&nbsp; {{ item.data.name }}</span>
+				<em>{{ item.data.category_name }} - {{ item.data.kind_name }}</em>
+			</div>
+
+			{% if item.data.craftable[0] is defined %}
+				{% set itemSynth = item.data.craftable[0] %}
+				{% set itemSynthTree = itemSynth.tree %}
+
+				<div class="list-class">
+					<img src="{{ defines.SECURE }}/img/classes/set2/{{ itemSynth.classjob.icon }}.png" height="48">
+					<div class="info">
+						<div>{{ itemSynth.classjob.name }}</div>
+						<em>{{ languages.custom[457] }}:</em> {{ itemSynth.level_view }}
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<em>{{ languages.custom[781] }}:</em>&nbsp;<span class="yellow">{{ itemSynth.stars_html|raw }}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<em>{{ languages.custom[782] }}:</em>&nbsp;{{ itemSynth.can_quick_synth ? '<em class="green">✔</em>' : '<em class="red">✖</em>' }}
+
+						<a href="{{ itemSynth.url }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0" target="_blank">
+							<i class="fa fa-external-link"></i> {{ languages.custom[642] }}
+						</a>
+					</div>
+				</div>
+
+				<div class="line"></div>
+
+				<div class="list-header">{{ languages.custom[349]|upper }}</div>
+
+				<table class="list-items table-clean" cellpadding="0" cellspacing="0" border="0" width="100%">
+				{% for material in itemSynthTree %}
+					{% set totalQuantity = cart.stats.itemUsage[material.id] %}
+					<tr class="list-entity" data-id="{{ material.id }}">
+						<td width="6%">
+							<a href="{{ material.url }}" class="icon" style="background-image: url({{ material.icon }})" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0" target="_blank">&nbsp;</a>
+						</td>
+						<td width="10%">
+							<span class="quantity2" data-tt="{{
+								languages.custom[780]|replace({
+									'{quantity}': material.quantity,
+									'{total}': totalQuantity,
+									'{itemname}': material.name
+								})
+							}}">
+								{{ material.quantity }} / {{ totalQuantity }}
+							</span>
+						</td>
+						<td width="37%" class="cellspace">
+							<span class="name">
+								{{ material.name }}
+							</span>
+						</td>
+						<td width="35%">
+							<span class="where">
+								{% if material.connect_instance %}<img src="/img/libra/treasure_icon_gold.png" height="20" data-tt="{{ languages.custom[757]|escape }}">{% endif %}
+								{% if material.connect_quest_reward %}<img src="/img/game/061000/061431.png" height="20" data-tt="{{ languages.custom[758]|escape }}">{% endif %}
+								{% if material.connect_enemy_drop %}<img src="/img/ui/enemy.png" height="20" data-tt="{{ languages.custom[759]|escape }}">{% endif %}
+								{% if material.connect_craftable %}<img src="/img/ui/tools.png" height="20" data-tt="{{ languages.custom[760]|escape }}">{% endif %}
+								{% if material.connect_shop %}<img src="/img/libra/quest_icon_gil.png" height="20" data-tt="{{ languages.custom[761]|escape }}">{% endif %}
+								{% if material.connect_gathering %}<img src="/img/ui/gathering.png" height="20" data-tt="{{ languages.custom[762]|escape }}">{% endif %}
+								{% if material.connect_achievement %}<img src="/img/ui/badge.png" height="20" data-tt="{{ languages.custom[763]|escape }}">{% endif %}
+							</span>
+						</td>
+						<td width="6%">
+							<button class="find" type="button" data-id="{{ material.id }}" data-tt="{{ languages.custom[777] }}"><img src="/img/game/060000/060556.png" height="20"></button>
+						</td>
+						<td width="6%">
+							<button class="toggle" type="button" data-id="{{ material.id }}" data-tt="{{ languages.custom[776] }}"><i class="fa fa-circle-o"></i></button>
+						</td>
+					</tr>
+				{% endfor %}
+				</table>
+
+				<div class="line"></div>
+
+				{# Placeholder message before naything selected #}
+				<div class="tool-cart-placeholder">
+					{{ languages.custom[779]|replace({ '{icon}':'<img src="/img/game/060000/060556.png" height="20">' })|raw  }}
+				</div>
+
+				{# Loading details! #}
+				<div class="tool-cart-loader">
+					<img src="/img/loader/loading2.gif">
+					<div>{{ languages.custom[783] }}</div>
+				</div>
+
+				{# Show details #}
+				<div class="cart-material-details off"></div>
+			{% else %}
+				<div class="panel red">{{ languages.custom[791] }}</div>
+			{% endif %}
+		</div>
+	</div>
+	{% endfor %}
+
+</div>
+
+{# BASKET ITEMS #}
+<div class="right tool-basket">
+	<button class="active" data-view="all">{{ languages.custom[740] }}</button>
+	<hr>
+
+	{# items in basket #}
+	<div class="help">{{ languages.custom[749] }}</div>
+	{% for item in cart.basket %}
+		<div class="item" data-id="{{ item.data.id }}">
+			<button data-view="{{ item.data.id }}"><em>{{ item.quantity }}</em> {{ item.data.name }}</button>
+			<div class="details">
+				<div class="heading">
+					<em>NQ</em>
+					<em>HQ</em>
+				</div>
+				<div class="row">
+					<em>{{ languages.custom[764]|upper }}</em>
+					<input type="number" class="final_sale" value="0" data-tt="{{ languages.custom[770] }}">
+					<input type="number" class="final_sale_hq" value="0" data-tt="{{ languages.custom[769] }}">
+				</div>
+				<div class="row">
+					<em>{{ languages.custom[765]|upper }}</em>
+					<input type="number" class="final_quantity" value="0" data-tt="{{ languages.custom[772] }}">
+					<input type="number" class="final_quantity_hq" value="0" data-tt="{{ languages.custom[771] }}">
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+	<hr>
+
+	{# profit/loss #}
+	<div class="help">{{ languages.custom[766] }}</div>
+	<div class="tool-profit">
+		<div class="row final-cost">
+			<span>{{ languages.custom[767]|upper }}</span>
+			<em>0</em>
+			<img src="/img/game/061000/061575.png" height="24">
+		</div>
+		<div class="row final-profit">
+			<span>{{ languages.custom[768]|upper }}</span>
+			<em>0</em>
+			<img src="/img/game/061000/061575.png" height="24">
+		</div>
+	</div>
+
+</div>

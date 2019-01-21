@@ -1,0 +1,33 @@
+<div class="character-mounts">
+	{# Progress #}
+	<div class="ac-block">
+		{% set percent = ((mountsObtained / mountsTotal) * 100)|round(2) %}
+		{% set togo = mountsTotal - mountsObtained %}
+		<h6>Progress to completion</h6>
+		<div class="ac-data">
+			<div>
+				<span class="ac-data-figure">{{ mountsObtained|number_format }}</span>
+				<span class="ac-data-value">/ {{ mountsTotal|number_format }}</span>
+				<span class="ac-data-percent">({{ percent }}%)</span>
+			</div>
+			<div>
+				<span class="ac-data-togo">{{ togo|number_format }} togo</span>
+			</div>
+		</div>
+		<div class="cp-bar"><div class="blue" style="width:{{ percent }}%;"></div></div>
+	</div>
+
+	<h6>Mounts</h6>
+	<div class="mm-list">
+	{% for mount in all_mounts %}
+		<div class="mm-list-entry{% if data.mounts[mount.id] is defined %} obtained{% endif %}">
+			<div>
+				<img src="/img/loader/loading2.gif" data-src="{{ mount.icon }}" height="24">
+			</div>
+			<div>
+				<a href="{{ mount.url }}" data-xivdb-replace="1">{{ mount.name }}</a>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+</div>

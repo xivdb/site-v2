@@ -1,0 +1,20 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Dev Tasks{% endset %}
+{% set page = 'devtasks' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Dev Tasks' },
+    { title: 'Edit' }
+]) }}
+
+<div class="container">
+
+	<h1>{{ task.title }}</h1>
+    Priority: <strong>{{ task.priority }}</strong> - <a href="/devtasks/task?edit={{ task.id }}">Edit</a>
+    <hr>
+
+    {{ task.text|raw }}
+
+</div>
+{% endblock %}

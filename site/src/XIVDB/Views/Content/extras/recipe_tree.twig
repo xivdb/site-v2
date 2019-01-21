@@ -1,0 +1,89 @@
+{% macro tree(craft, level) %}
+{% set level = level + 1 %}
+{# ---------------------------------------------------------- #}
+<div class="lc-ct-top">
+    <em>{{ craft.level_view }}</em>
+    <span>{{ craft.classjob.name }}</span>
+    {% if craft.stars_html %}
+        <em class="lc-ct-stars">{{ craft.stars_html|raw }}</em>
+    {% endif %}
+</div>
+
+{% if craft.tree is defined and craft.tree is not empty %}
+<div class="tree-synth">
+    {% for item in craft.tree %}
+        <div class="cf tree-synth-row">
+            <img src="{{ item.icon }}" class="tree-item-icon">
+
+            <span class="tree-quantity">
+                <em class="faint">x</em>
+                <em class="yellow">{{ item.quantity }}</em>
+            </span>
+
+            <a href="{{ item.url }}" title="{{ item.name }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">{{ item.name }}</a>
+
+            <span class="tree-item-cat">
+                {{ item.category_name }}&nbsp;&bull;&nbsp;{{ item.kind_name }}
+                {% if item.synths is defined and level < 6 %}
+                    <em class="extend" data-extended="0">
+                        <i class="fa fa-plus-circle"></i> <span>{{ languages.custom[907] }}</span>
+                    </em>
+                {% endif %}
+            </span>
+
+            {# Sub synth #}
+            {% if item.synths is defined and level < 6 %}
+            <div class="tree-subsynth">
+            {% for recipe in item.synths %}
+                 {{ _self.tree(recipe, level) }}
+            {% endfor %}
+            </div>
+            {% endif %}
+            {# ---- #}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+{# ---------------------------------------------------------- #}
+{% endmacro %}
+
+<div class="recipe-tree">
+    <div class="lc-ct-expand">
+        <button>{{ languages.custom[906] }}</button>
+    </div>
+    {{ _self.tree(content, 0) }}
+</div>
+
+<script>
+$('.site').on('click', '.lc-ct-expand button', function() {
+    $('.extend[data-extended=0]').trigger('click');
+});
+
+// toggle recipe tree
+$('.site').on('click', '.tree-item-cat .extend', function() {
+    var isOpen = parseInt($(this).attr('data-extended')),
+        text = isOpen ? 'Open Synth Tree' : 'Close Synth Tree',
+        $fa = $(this).find('.fa').eq(0),
+        $st = $(this).parents('.tree-synth-row').eq(0).find('.tree-subsynth').eq(0);
+
+    // set data extended
+    $(this).attr('data-extended', isOpen ? '0' : '1');
+
+    // set text
+    $(this).find('span').text(text);
+
+    // if open or not
+    if (isOpen)
+    {
+        // close
+        $fa.removeClass('fa-minus-circle').addClass('fa-plus-circle');
+        $st.hide();
+    }
+    else
+    {
+        // open
+        $fa.removeClass('fa-plus-circle').addClass('fa-minus-circle');
+        $st.show();
+    }
+});
+</script>

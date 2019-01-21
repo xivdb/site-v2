@@ -1,0 +1,23 @@
+<div class="tool-cart-page-container">
+    <table width="100%" class="form">
+        <thead>
+            <tr>
+                <th width="70%">{{ languages.custom[315] }}</th>
+                <th width="25%">{{ languages.custom[1061] }}</th>
+                <th width="5%">{{ languages.custom[1030] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ll in loadlist %}
+            <tr>
+                <td>
+                    <strong class="highlight">{{ ll.description }}</strong><br>
+                    {{ ll.notes }}
+                </td>
+                <td>{{ ll.updated|date('F j, Y, g:i a') }}</td>
+                <td><a href="/shopping-cart/{{ ll.items }}" class="button blue mini">{{ languages.custom[1030] }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

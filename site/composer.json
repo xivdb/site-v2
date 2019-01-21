@@ -1,0 +1,27 @@
+{
+    "require": {
+        "silex/silex": "~1.2",
+        "twig/twig": "^1.23.1",
+        "leafo/scssphp": "0.0.12",
+        "fightbulc/moment": "^1.11",
+        "erusev/parsedown": "^1.6",
+        "viion/xivpads-lodestoneapi": "^1.0",
+        "paypal/rest-api-sdk-php": "*",
+        "knplabs/console-service-provider": "^1.0",
+        "google/apiclient": "^1.1",
+        "wildbit/postmark-php": "^2.1",
+        "symfony/yaml": "^3.0",
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "phpunit/phpunit": "^5.4",
+        "ramsey/uuid": "^3.5",
+        "symfony/security-csrf": "^3.2",
+        "symfony/form": "^3.2",
+        "intervention/image": "^2.3"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "XIVDB": "src/"
+        }
+    }
+}

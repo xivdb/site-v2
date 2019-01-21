@@ -1,0 +1,34 @@
+{# help text #}
+{% if content.help is not empty %}
+    {{ Layout.block([
+        '<div class="lc-help">'~ content.help|nl2pa|raw ~'</div>'
+    ]) }}
+{% endif %}
+
+{# info #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[457], content.class_level, 'yellow'),
+        Layout.col(languages.custom[122], content.class_level_max),
+        Layout.col(languages.custom[862], content.event_item ? Layout.eventitem(content.event_item) : '-'),
+    ])
+}}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+{# Map #}
+{% if content.map %}
+    {% set html = ['<h4>'~ languages.custom[641] ~'</h4>'] %}
+    {% set html = html|merge([ Layout.placename(content.map.placename, content.map.x, content.map.z) ]) %}
+    {{ Layout.block(html) }}
+{% endif %}
+
+{# Objectives #}
+{% if content.objective_0 %}
+    {{ Layout.fateobjectives(content) }}
+{% endif %}

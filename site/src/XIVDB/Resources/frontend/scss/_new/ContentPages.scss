@@ -1,0 +1,91 @@
+//
+// About page
+//
+.about-top {
+    text-align: center;
+	padding: 40px 0 20px 0;
+
+	.about-site-logo {
+		opacity: 0.9;
+	}
+}
+
+.about-container {
+	margin: 0 50px 50px 50px;
+	padding: 30px;
+	background-color: rgba(0,0,0,0.3);
+	border-radius: 3px;
+	font-size: 16px;
+
+	hr {
+		margin: 30px -30px;
+		background-color: #555;
+	}
+
+	h3 {
+		font-size: 20px;
+		color: $purple;
+		margin: 0 0 10px 0;
+	}
+
+	.about-me-1 {
+	    font-size: 13px;
+	    color: #aaa;
+	    margin-top: 10px;
+	    margin-bottom: 5px;
+	}
+
+	.about-me-2 {
+	    font-size: 18px;
+	    margin-bottom: 5px;
+	}
+
+	.about-me-3 {
+	    font-size: 12px;
+	}
+
+	.about-star-member {
+	    float: left;
+	    width: 33%;
+	    margin: 4px 0;
+	}
+	.about-me-4 {
+	    font-size: 13px;
+	}
+
+	.qa {
+	    margin-bottom: 20px;
+	    border-bottom: dashed 1px #555;
+	    padding-bottom: 20px;
+	}
+
+	.qa p:first-of-type {
+	    font-size: 18px;
+	}
+
+	.qa p:last-of-type {
+	    font-size: 13px;
+	}
+}
+
+//
+// Support
+//
+.support-container {
+    padding: 30px;
+
+    h1 {
+        text-align: center;
+    }
+
+    .support-info {
+        background-color: rgba(0,0,0,0.3);
+        padding: 30px;
+        margin-top: 30px;
+        border-radius: 3px;
+
+        h2 {
+            font-size: 20px;
+        }
+    }
+}

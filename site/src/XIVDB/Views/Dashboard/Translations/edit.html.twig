@@ -1,0 +1,86 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Translations{% endset %}
+{% set page = 'translations' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Translations', url: '/translations' },
+    { title: 'Edit' }
+]) }}
+
+<div class="container">
+    <h1>Edit {{ translation.id }}</h1>
+
+    <form method="post">
+        <div class="form-group row">
+            <label for="text_en" class="col-sm-2 form-control-label">English</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="text_en" name="text_en" value="{{ translation.text_en }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="text_fr" class="col-sm-2 form-control-label">French</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="text_fr" name="text_fr" value="{{ translation.text_fr }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="text_de" class="col-sm-2 form-control-label">German</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="text_de" name="text_de" value="{{ translation.text_de }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="text_ja" class="col-sm-2 form-control-label">Japanese</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="text_ja" name="text_ja" value="{{ translation.text_ja }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="text_cns" class="col-sm-2 form-control-label">Chinese</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="text_cns" name="text_cns" value="{{ translation.text_cns }}">
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="form-group row">
+            <label for="define" class="col-sm-2 form-control-label">Define</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="define" name="define" value="{{ translation.define }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="notes" class="col-sm-2 form-control-label">Notes</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="notes" name="notes" value="{{ translation.notes }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="category" class="col-sm-2 form-control-label">Category</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="category" name="category" value="{{ translation.category }}">
+            </div>
+            <div class="col-sm-5">
+                <select class="c-select translation-select">
+                {% for row in categories %}
+                    <option value="{{ row.category }}" {% if row.category == translation.category %}selected{% endif %}>{{ row.category }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-success">Save</button>
+
+    </form>
+</div>
+<script>
+$('.translation-select').on('change', function() {
+    var value = $(this).val();
+    $('#category').val(value);
+})
+</script>
+{% endblock %}

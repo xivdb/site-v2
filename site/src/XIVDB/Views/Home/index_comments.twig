@@ -1,0 +1,29 @@
+{% set limit = devices.mobile and not nomobile ? 25 : 50 %}
+
+{% for post in comments if post.content is not empty %}
+    {% if loop.index <= limit %}
+        <div class="home-post">
+            <div>
+                <img src="{{ post.member.character_avatar is not empty ? post.member.character_avatar : (post.member.avatar is not empty ? post.member.avatar : '/img/ui/noavatar_light.png') }}" width="50px" height="50px">
+            </div>
+            <div>
+                <div>
+                    <div class="home-post-title">
+                        <a href="{{ post.member.character_url }}">
+                            {{ post.member.character_name is not empty ? post.member.character_name|title : post.member.username|title }}
+                        </a>
+                    </div>
+
+                    <div class="home-post-info">
+                        <a href="{{ post.content.url }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0">({{ post.content.url_type|upper }}) {{ post.content.name }}</a>
+                        -
+                        {{ post.time }}
+                    </div>
+                </div>
+
+                <div class="home-post-text">{{ post.text|raw }}</div>
+            </div>
+
+        </div>
+    {% endif %}
+{% endfor %}

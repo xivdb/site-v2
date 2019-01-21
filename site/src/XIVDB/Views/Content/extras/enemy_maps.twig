@@ -1,0 +1,61 @@
+<div class="xivdb-map xiv-cm-embed"></div>
+<script>
+$(function() {
+    // loadmap via placename id
+    XIVDBMaps
+        .setOption('width', 820)
+        .embed('.xivdb-map', {{ content.map_data.maps[0].placename_id }}, function() {
+        // loading map icons
+        {% for point in content.map_data.points %}
+        XIVDBMaps.Markers.add({
+            id: '{{ point.hash }}',
+            map: '{{ point.map_id }}',
+            icon: '{{ point.icon.image }}',
+            size: {{ point.icon.size }},
+            x: {{ point.app_position.ingame.x }},
+            y: {{ point.app_position.ingame.y }},
+            focus: {{ loop.first ? 'true' : 'false' }},
+            tooltip: "{{ point.tooltip }}",
+        });
+        {% endfor %}
+    });
+});
+</script>
+
+<div class="xiv-cm-points-title">
+    {{ content.map_data.points|length|number_format }} {{ languages.custom[1147] }}
+</div>
+
+<table class="enemy_maps">
+    <thead>
+        <th>#</th>
+        <th>{{ languages.custom[1054] }}</th>
+        <th>{{ languages.custom[457] }}</th>
+        <th>{{ languages.custom[1096] }}</th>
+        <th>{{ languages.custom[1053] }}</th>
+        <th>{{ languages.custom[866] }}</th>
+        <th>{{ languages.custom[1126] }}</th>
+    </thead>
+    <tbody>
+    {% for point in content.map_data.points %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ '<em class="highlight">X</em>: %s &nbsp;-&nbsp; <em class="highlight">Y</em>: %s'|format(
+                    point.app_position.ingame.x, point.app_position.ingame.y
+            )|raw }}</td>
+        <td>{{ point.app_data.level }}</td>
+        <td>
+            <small>
+                <em class="faint">HP</em> {{ point.app_data.hp|number_format }}<br>
+                <em class="faint">MP</em> {{ point.app_data.mp|number_format }}
+            </small>
+        </td>
+        <td><a href="/placename/{{ point.placename_id }}" data-xivdb-ignore="1">{{ point.placename_name }}</a></td>
+        <td>{{ point.region_name }}</td>
+        <td>{{ point.zone_name }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script> $(function() { $('.enemy_maps').tablesorter({ widthFixed: true, widgets: ['zebra'] }); });</script>

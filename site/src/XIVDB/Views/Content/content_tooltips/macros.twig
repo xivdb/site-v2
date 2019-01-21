@@ -1,0 +1,60 @@
+{#
+// --------------------------------------------
+// Data header
+// --------------------------------------------
+#}
+{% macro header(content, categories) %}
+<div class="xivdb-ch">
+    <div><div><img src="{{ content.icon }}"></div></div>
+    <div>
+        <div class="{{ content.color ? 'xivdb-rarity-' ~ content.color : '' }}">{{ content.name_male is defined ? content.name_male : content.name }}</div>
+        <div>{{ content.url_type|title }}{%- include categories ignore missing -%}</div>
+    </div>
+</div>
+{% endmacro %}
+
+{#
+// --------------------------------------------
+// Data line, single line of data on a content page
+// --------------------------------------------
+#}
+{% macro dataline(title, html, color) %}
+<div class="xivdb-cdl">
+    <div>{{ title }}</div>
+    <div class="{{ color ? color : '' }}">
+        {{ html ? html|raw : '-' }}
+    </div>
+</div>
+{% endmacro %}
+
+{#
+// --------------------------------------------
+// Data line, single line of data on a content page
+// --------------------------------------------
+#}
+{% macro datahelp(html) %}
+{% if html %}
+    <p class="xivdb-chi">{{ (html|raw) }}</p>
+{% endif %}
+{% endmacro %}
+
+
+{#
+// --------------------------------------------
+// event item
+// --------------------------------------------
+#}
+{% macro eventitem(content) %}
+{% if content.name is defined and content.name is not empty %}
+<div class="xivdb-cdl">
+    <div class="xivdb-cdl-left">Event Item</div>
+    <div class="xivdb-cdl-right">
+        <img src="{{ content.icon }}" class="simple-icon circle">
+        <span class="xivdb-rarity-{{ content.color }}">{{ content.name }}</span>
+        {% if content.help %}
+            <em class="xivdb-faint">{{ content.help }}</em>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endmacro %}

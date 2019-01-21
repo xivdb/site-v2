@@ -1,0 +1,87 @@
+{# help text #}
+{% if content.info1 is not empty %}
+    {{ Layout.block([
+        '<div class="lc-help">'~ content.info1|nl2pa|raw ~'</div><br>',
+		'<div class="lc-help lc-help-highlight">'~ content.info2|raw ~'</div>'
+    ]) }}
+{% endif %}
+
+{# summon #}
+{% if content.summon %}
+	<div class="layout-panel layout-row">
+		<div>
+			<img src="{{ content.icon2 }}">
+		</div>
+		<div>
+			<h4>Summon</h4>
+			<div class="lc-help">{{ content.summon|nl2pa|raw }}</div>
+		</div>
+	</div>
+{% endif %}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+{# some basic info #}
+{{
+    Layout.row([
+        Layout.col(languages.custom[1092], content.cost),
+        Layout.col(languages.custom[1093], content.behavior ? content.behavior : null),
+		Layout.col(languages.custom[1094], content.minion_race ? content.minion_race : null),
+
+    ])
+}}
+
+{% if content.action %}
+<div class="lc-ct">
+	<h6>{{ languages.custom[1095] }}</h6>
+</div>
+<div class="layout-block lc-minion-skill">
+
+	<div class="lc-msb1">
+		<div>
+			<h4>{{ languages.custom[851] }}</h4>
+			{{ content.action }}</div>
+		<div>
+			<h4>{{ languages.custom[479] }}</h4>
+			{{ content.cost }}
+		</div>
+		<div>
+			<h4>{{ languages.custom[854] }}</h4>
+			{{ content.minion_skill_type }}
+		</div>
+	</div>
+
+	<div class="lc-msb2">
+		{{ content.help|nl2pa|raw }}
+	</div>
+
+	<div class="lc-msb3">
+		<h3>{{ languages.custom[1096] }}</h3>
+		<div>
+			<div><h4>{{ languages.custom[1097] }}</h4>{{ content.hp|number_format }}</div>
+			<div><h4>{{ languages.custom[1098] }}</h4>{{ content.skill_cost }}</div>
+			<div><h4>{{ languages.custom[1099] }}</h4>{{ content.attack }}</div>
+			<div><h4>{{ languages.custom[1100] }}</h4>{{ content.defense }}</div>
+			<div><h4>{{ languages.custom[1101] }}</h4>{{ content.speed_html|raw }}</div>
+		</div>
+	</div>
+
+	<div class="lc-msb3">
+		<h3>Strengths</h3>
+		<div>
+			<div><h4>{{ languages.custom[1102] }}</h4> {{ content.has_area_attack ? '<em class="green">✔</em>'|raw :
+				'<em class="red">✖</em>'|raw }} {{ content.has_area_attack ? languages.custom[1106] : languages.custom[1107] }}</div>
+			<div><h4>{{ languages.custom[1103] }}s</h4> {{ content.strength_gate ? '<em class="green">✔</em>'|raw : '<em class="red">✖</em>'|raw }}</div>
+			<div><h4>{{ languages.custom[1104] }}</h4> {{ content.strength_eye ? '<em class="green">✔</em>'|raw : '<em class="red">✖</em>'|raw }}</div>
+			<div><h4>{{ languages.custom[432] }}</h4> {{ content.strength_shield ? '<em class="green">✔</em>'|raw : '<em class="red">✖</em>'|raw }}</div>
+			<div><h4>{{ languages.custom[1105] }}</h4> {{ content.strength_arcana ? '<em class="green">✔</em>'|raw : '<em class="red">✖</em>'|raw }}</div>
+		</div>
+	</div>
+
+</div>
+{% endif %}

@@ -1,0 +1,50 @@
+.map-page {
+    footer {
+        display: none;
+    }
+
+    .xivdb-map-embed {
+        height: 500px;
+    }
+}
+
+.map-content {
+    background-color: #444;
+}
+
+.maps-toolbar {
+    padding: 15px;
+    background-color: rgba(0,0,0,0.2);
+    border-bottom: solid 1px #111;
+    display: flex;
+
+    > div {
+        flex: 0 1 50%;
+
+        h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: $highlight;
+            margin-bottom: 10px;
+        }
+
+        &:last-of-type {
+            text-align: right;
+            line-height: 35px;
+            height: 35px;
+
+            > span:not(:first-of-type) {
+                margin-left: 30px;
+            }
+        }
+
+        > select {
+            background-color: #333;
+            padding: 6px;
+            border: solid 1px #333;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+}

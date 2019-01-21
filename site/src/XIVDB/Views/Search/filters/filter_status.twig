@@ -1,0 +1,10 @@
+<div class="filter-panel filter-panel-status" data-filter-type="status">
+{% spaceless %}
+
+    {{ SearchFilter.empty('Statuses') }}
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.status) }}
+
+{% endspaceless %}
+</div>

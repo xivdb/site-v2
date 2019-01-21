@@ -1,0 +1,59 @@
+{# banner #}
+{% if content.banner is not empty and content.banner %}
+    {{ Layout.bannerContent(content.banner) }}
+{% endif %}
+
+{# help text #}
+{% if content.help is not empty %}
+    {{ Layout.block('<div class="lc-help">'~ content.help ~'</div>') }}
+{% endif %}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}
+
+{# This is very special to leves #}
+<div class="lc-leve">
+    <div class="lc-leve-card">
+        <img src="{{ content.leve_vfx.icon }}">
+        <img src="{{ content.leve_vfx_frame.icon }}">
+        <img src="{{ content.icon_city_state }}">
+    </div>
+    <div>
+        {# Client #}
+        {{
+            Layout.row([
+                Layout.col(languages.custom[563], content.leve_client.name),
+            ])
+        }}
+
+        {# Assignment #}
+        {{
+            Layout.row([
+                Layout.col(languages.custom[902], Layout.leveAssignment(content.assignment_type_name, content.assignment_type_icon)),
+            ])
+        }}
+
+        {# some basic info #}
+        {{
+            Layout.row([
+                Layout.col(languages.custom[457], content.class_level, 'yellow'),
+                Layout.col(languages.custom[384], content.classjob_category),
+                Layout.col(languages.custom[530], Layout.gil(content.gil_reward)),
+                Layout.col(languages.custom[136], Layout.exp(content.exp_reward)),
+            ])
+        }}
+
+        {# Zone #}
+        {% if content.placename %}
+        {{
+            Layout.row([
+                Layout.col(languages.custom[641], Layout.placename(content.placename)),
+            ])
+        }}
+        {% endif %}
+    </div>
+</div>

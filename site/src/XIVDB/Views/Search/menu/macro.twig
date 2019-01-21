@@ -1,0 +1,105 @@
+{#
+    Print a menu, requires title and file to include
+#}
+{% macro dropdown(title, twigfile, menu) %}
+{% import 'Search/menu/macro.twig' as mm %}
+<span>
+    <div>{{ title }}</div>
+    {% include twigfile %}
+</span>
+{% endmacro %}
+
+{#
+    Print a column for the menu,
+    takes an html array
+    then an optional css for the
+    column
+#}
+{% macro column(htmlarray, css) %}
+<div class="{{ css|default('dropdown-column') }}">
+    {% for html in htmlarray %}
+        {{ html|raw }}
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{#
+    Print a row for the menu,
+    takes an html array
+    then an optional css for the
+    row
+#}
+{% macro row(htmlarray, css) %}
+<div class="{{ css|default('dropdown-row') }}">
+    {% for html in htmlarray %}
+        {{ html|raw }}
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{#
+    Print the list of content.
+    Normally used within column.
+#}
+{% macro list(content, title) %}
+<h4>{{ title|default(content.title) }}</h4>
+<ul>
+    {% if content.menu is defined %}
+        {% for data in content.menu %}
+            <li><a href="{{ data.url|default('#') }}"><span><img src="{{ data.icon|default('/img/ui/default.png') }}"{% if data.round is defined %} class="round"{% endif %}></span>{{ data.title|title|raw }}</a></li>
+        {% endfor %}
+    {% else %}
+        {% set data = content %}
+        <li><a href="{{ data.url|default('#') }}"><span><img src="{{ data.icon|default('/img/ui/default.png') }}"{% if data.round is defined %} class="round"{% endif %}></span>{{ data.title|title|raw }}</a></li>
+    {% endif %}
+</ul>
+{% endmacro %}
+
+{#
+    Print a block of content in short spans.
+    Normally used within row.
+#}
+{% macro block(content, title) %}
+<h4>{{ title|default(content.title) }}</h4>
+<ul>
+    {% if content.menu is defined %}
+        {% for data in content.menu %}
+            <li><a href="{{ data.url|default('#') }}">{{ data.title|title|raw }}</a></li>
+        {% endfor %}
+    {% else %}
+        {% set data = content %}
+        <li><a href="{{ data.url|default('#') }}">{{ data.title|title|raw }}</a></li>
+    {% endif %}
+</ul>
+{% endmacro %}
+
+
+{#
+    Print the subdropdown menu
+    will activate the first entry
+    in the array.
+#}
+{% macro nav(array) %}
+    <nav class="subdropdown-menu">
+    {% for i, data in array %}
+        {% set title = data[0].title|default(data[0]) %}
+        {% set submenu = data[1] %}
+        <span data-submenu="{{ submenu }}"{% if i == 0 %} class="active"{% endif %}>{{ title|title|raw }}</span>
+    {% endfor %}
+    </nav>
+{% endmacro %}
+
+{#
+    Print a link for the tiny dropdown
+#}
+{% macro title(title) %}
+<div class="menu-title">{{ title }}</div>
+{% endmacro %}
+
+{% macro tinylink(title, url, disabled) %}
+<a href="{{ url }}" {% if disabled %}class="disabled" data-tt="This section has not yet been implemented, check back soon!"{% endif %}>{{ title|raw }}</a>
+{% endmacro %}
+
+{% macro tinyaction(title, action) %}
+<button data-action="{{ action }}"><i class="fa fa-level-down" aria-hidden="true"></i> &nbsp; {{ title }}</button>
+{% endmacro %}

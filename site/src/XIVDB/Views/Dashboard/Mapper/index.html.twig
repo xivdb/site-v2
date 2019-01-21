@@ -1,0 +1,130 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% import 'Content/macros.twig' as Layout %}
+{% set page = 'home' %}
+
+{% block body %}
+<div class="dashboard-title">
+	<h1><img src="/img/ui/aether.png" height="42" style="margin:-10px 0 0 0;"> Mapper</h1>
+</div>
+
+<script src="/assets/libs.min.js"></script>
+<script src="/assets/frontend.min.js"></script>
+
+<div class="container-fluid">
+	<div class="mapper-window">
+		<div>
+            <p>Import JSON file</p>
+            <form method="post" enctype="multipart/form-data">
+               <input type="file" name="jsonfile" class="form-control">
+               <br>
+               <button type="submit" class="btn btn-success btn-block">Upload</button>
+            </form>
+
+            <br><br>
+
+			<p>Map list (A-Z)</p>
+			{% for place in maplist %}
+				<a href="/mapper?map={{ place.id }}" style="{{ totals[place.id] is defined and totals[place.id] > 0 ? '' : 'opacity:0.3;' }}" class="btn {% if app.request.get('map') == place.id %}btn-primary{% elseif place.username %}btn-success{% else %}btn-link{% endif %} btn-sm btn-mapper">
+					{{ place.name }}
+                    <br>
+                    {{ totals[place.id] is defined ? totals[place.id]|number_format : 0 }} Markers
+                    {% if place.username %}
+                    - {{ place.username }} ({{ place.charactername }})
+                    {% endif %}
+				</a>
+			{% endfor %}
+		</div>
+		<div>
+			{% if map %}
+				<h2>{{ map.name }} - {{ totals[map.id] is defined ? totals[map.id]|number_format : 0 }} Points</h2>
+				<p>If you are mapping out a map, please click Claim so that others can focus on a different map!</p>
+                <p>All markers for all layers will load on the map at once, this will be fixed, so don't delete markers for other layers :)</p>
+				<div class="alert alert-default">
+					<a href="/mapper?map={{ map.id }}&action=claim" class="btn btn-success">Claim!</a>
+					{% if claimed %}
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<strong>{{ claimed.username }} ({{ claimed.charactername }})</strong> is currently working on this map since: {{ claimed.updated|date('F j, Y, g:i a') }} UTC
+					{% endif %}
+				</div>
+
+				<br>
+
+
+				{# Maps are embedded here #}
+				<div class="map-tool-container">
+					<div class="xivdb-map"></div>
+				</div>
+				<script>
+				// load a map
+				XIVDBMaps
+					.setOption('height', '500px')
+					.setOption('width', '1000px')
+					.setEvent('markerOnClick', function(marker) {
+					    console.log(marker)
+						$('.mapper-marker-table tr.active').removeClass('active');
+						$('tr[data-hash="' + marker.id + '"]').addClass('active').focus();
+
+						$('html,body').animate({
+                           scrollTop: $('tr[data-hash="' + marker.id + '"]').offset().top - 200
+                        });
+					})
+					.embed('.xivdb-map', {{ map.id }}, () => {
+						XIVDBMaps.Markers.load();
+					});
+				</script>
+
+				<br>
+
+				<table class="table mapper-marker-table">
+					<thead>
+						<th>Hash</th>
+						<th>Added</th>
+						<th>Type</th>
+						<th>Name</th>
+						<th>ID</th>
+						<th>Position (in-game)</th>
+						<th>Actions</th>
+					</thead>
+					<tbody>
+						{% for point in points %}
+						<tr data-hash="{{ point.hash }}">
+							<td>{{ point.hash }}</td>
+							<td>{{ point.added|date('F j, Y') }}</td>
+							<td>{{ point.content_type }}</td>
+							<td>{{ point.name }}</td>
+							<td>{{ point.id }}</td>
+							<td>{{ point.position.ingame.x|round(1) }} / {{ point.position.ingame.y|round(1) }}</td>
+							<td><button type="button" class="btn btn-danger btn-sm btn-delete-marker" id="{{ point.hash }}">Delete</button></td>
+						</tr>
+			            {% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+<script>
+$(function() {
+    $('.btn-delete-marker').on('click', function() {
+        var $button = $(this),
+            hash = $button.attr('id');
+
+        $(this).prop('disabled', true).text('...');
+
+        $.ajax({
+            url: '/mapper/delete-marker',
+            data: {
+                hash: hash,
+            },
+            cache: false,
+            success: function() {
+                $button.parents('tr').css({ 'opacity': '0.2' });
+                $button.parent('td').html('DELETED');
+            },
+        });
+    });
+});
+</script>
+
+{% endblock %}

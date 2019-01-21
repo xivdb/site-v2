@@ -1,0 +1,43 @@
+<div class="tab-block" id="tab-block-seealso">
+{% if linkedComments is defined %}
+    {% for i, comment in linkedComments %}
+    <div class="content-seealso-comment">
+        <div class="content-seealso-bywho cf">
+            <span class="fr">
+                {% if comment.character_name is empty %}
+                    {{ comment.username|title }}
+                {% else %}
+                    <em class="sky">{{ comment.character_name }}</em>
+                    ({{ comment.username|title }})
+                {% endif %}
+                &nbsp;&nbsp;-&nbsp;&nbsp;
+                <em class="highlight">{{ comment.time }}</em>
+            </span>
+            <div class="content-seealso-title">
+                {% if comment.content.url is defined %}
+                    <a href="{{ comment.content.url }}" data-xivdb-seturlname="0" data-xivdb-seturlcolor="0" data-xivdb-seturlicon="0" class="yellow">
+                        {{ comment.content.name_male is defined ? comment.content.name_male : comment.content.name }}
+                        ({{ comment.content.url_type|title }})
+                    </a>
+                {% else %}
+                Archived
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="content-seealso-text">
+            {{ comment.text|raw }}
+        </div>
+    </div>
+    {% else %}
+        <div class="panel no-tab-data">
+            <img src="/img/logo/moogle.png">
+            <h3>{{ languages.custom[1087] }}</h3>
+            <p>{{ languages.custom[1088] }}</p>
+            <p>{{ languages.custom[1089] }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>{{ languages.custom[1090] }}</p>
+{% endif %}
+</div>

@@ -1,0 +1,38 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    {% if content.npc.name is defined %}
+        {{ Layout.dataline(languages.custom[1125], content.npc.name, 'sky') }}
+
+        {% if content.npc.placename.name is defined %}
+            {{ Layout.dataline(languages.custom[1126], content.npc.placename.name) }}
+
+            {% if content.npc.position.x is defined %}
+                {% set html %}
+                    <span class="xivdb-light">X</span> {{ content.npc.position.x }} &nbsp;&nbsp;/&nbsp;&nbsp; <span class="xivdb-light">Y</span> {{ content.npc.position.y }}
+                {% endset %}
+                {{ Layout.dataline(languages.custom[1054], html)}}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% if content.beast_tribe_name is not empty %}
+        {% set html %}
+            {{ content.beast_tribe_name }}<br>
+            <span class="xivdb-light">{{ languages.custom[478] }}</span>
+            &nbsp;<span class="xivdb-yellow">{{ content.beast_reputation_rank }}</span> - {{ content.beast_tribe_reputation_value }}
+        {% endset %}
+        {{ Layout.dataline(languages.custom[1127], html) }}
+    {% endif %}
+
+    {{ Layout.dataline(languages.custom[408], content.items|length) }}
+
+{% endspaceless %}
+{% endblock %}

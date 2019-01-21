@@ -1,0 +1,138 @@
+<style>
+.temp-migrate {
+    padding: 30px;
+}
+.temp-migrate-row {
+    float: left;
+    width: 430px;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 5px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+.temp-migrate-row button {
+    border: none;
+    background-color: #333;
+    box-shadow: 0 1px 3px #000;
+    color: #fff;
+    padding: 8px;
+    border-radius: 3px;
+    margin: 5px;
+    outline:none;
+}
+.temp-migrate-row button.active {
+    background-color: darkgreen;
+    box-shadow: 0 1px 3px 3px #000;
+}
+.temp-box {
+    text-align: center;
+    border: solid 2px #000;
+    padding: 15px;
+    border-radius: 3px;
+}
+#migrate-now {
+    border: solid 2px yellow;
+    color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px #000;
+    margin-top: 15px;
+    font-size: 16px;
+    text-align: center;
+    padding: 8px 15px;
+    background-color: #222;
+}
+.temp-notice {
+    background-color: #111;
+    padding: 10px 15px;
+}
+</style>
+
+<div class="temp-migrate">
+    <h4>Migrate your Shopping Cart over to FFXIV Team Craft</h4>
+
+    <p class="temp-notice">The shopping cart tool on XIVDB is being dropped in version 3
+        (<a href="https://xivdb.com/devblog?id=26">click here for more information</a>)
+        in favor of community tools such as FFXIV Team Craft. This page will help you
+        migrate your current XIVDB list over to FFXIV Team Craft!</p>
+
+    <br>
+
+    <h5>Recipes to migrate</h5>
+
+    <p>Some items can be crafted by different classes, select the recipes you would
+        like to migrate. If you select multiple classes for the same item it will
+        multiply the quantity for the chosen item by the number of classes selected.
+    (eg: x5 Bronze Ingot: You select Armorer AND Blacksmith recipes, it will migrate as x10 Bronze Ingots (5 each class)</p>
+
+    <div class="cf">
+    {% for item in cart.basket %}
+        {% set quantity = item.quantity %}
+        {% set item = item.data %}
+        <div class="temp-migrate-row">
+            <h5 class="highlight">x{{ quantity }} {{ item.name }}</h5>
+            {% if item.craftable is defined and item.craftable %}
+                <p>Found: {{ item.craftable|length }} recipes</p>
+                {% for recipe in item.craftable %}
+                <button data-migrate-item="{{ item.id }},{{ recipe.id }},{{ quantity }}">
+                    Add: {{ recipe.level_view }} {{ recipe.class_name|title }}
+                </button>
+                {% endfor %}
+            {% else %}
+            <p>This item is not craftable and cannot be migrated.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+
+    <br>
+
+     <div class="temp-box">
+        <p>Migrate selected items</p>
+        <button type="button" id="migrate-now">Migrate Now!</button>
+    </div>
+
+</div>
+
+<script>
+var list = [],
+    res = null;
+$('button[data-migrate-item]').on('click', function(event) {
+    var $element = $(event.target),
+        isEnabled = $element.hasClass('active');
+
+    if (isEnabled) {
+        $element.removeClass('active');
+    } else {
+        $element.addClass('active');
+    }
+
+    // reset list
+    list = [];
+
+    $('button[data-migrate-item].active').each(function(i, element) {
+        var data = $(element).attr('data-migrate-item');
+        list.push(data);
+    });
+
+    res = window.btoa(list.join(';'));
+});
+
+$('#migrate-now').on('click', function(event) {
+    event.preventDefault();
+
+    if (list.length < 1) {
+        return;
+    }
+
+    var url = 'https://ffxivteamcraft.com/cart-import/' +  res;
+    console.log(url);
+
+    var win = window.open(url, '_blank');
+    win.focus();
+
+
+
+    $('.temp-box').html('<p>Thank you, a page to FFXIV Team Craft should have opened in your browser. If you need to migrate again just refresh this page.</p>');
+});
+</script>

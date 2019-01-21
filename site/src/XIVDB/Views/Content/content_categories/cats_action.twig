@@ -1,0 +1,6 @@
+{% spaceless %}
+&nbsp;-&nbsp;
+{{ content.classjob.name is defined ? content.classjob.name : languages.custom[852] }}
+&nbsp;-&nbsp;
+{{ content.type_name is not empty ? content.type_name : languages.custom[853] }}
+{% endspaceless %}

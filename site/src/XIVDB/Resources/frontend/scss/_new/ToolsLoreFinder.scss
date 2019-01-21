@@ -1,0 +1,146 @@
+.tool-lorefinder {
+
+	.lf-header {
+		padding: 20px;
+		border-bottom: solid 1px #000;
+		background-color: #444;
+
+		.lf-title {
+			font-size: 32px;
+			text-align: left;
+			font-weight: 300;
+			margin-bottom: 10px;
+		}
+
+		.lf-search {
+			display: flex;
+
+			input {
+				flex: 0 1 80%;
+			}
+
+			button {
+				flex: 0 1 20%;
+				margin-left: 20px;
+			}
+		}
+	}
+
+	.lf-results {
+		display: flex;
+		padding: 20px;
+
+		.lf-tabs {
+			flex: 0 1 25%;
+
+			button {
+				display: block;
+				width: 100%;
+				background-color: #333;
+				margin-bottom: 5px;
+				padding: 8px 12px;
+				color: #fff;
+				border: none;
+				font-size: 13px;
+				text-align: left;
+				outline: none;
+
+				strong {
+					display: block;
+					font-size: 16px;
+					color: $yellow;
+				}
+
+				&:hover {
+					background-color: #111;
+				}
+
+				&.active {
+					background-color: darken($blue, 10%);
+					color: #fff;
+
+					strong {
+						color: #fff;
+					}
+				}
+			}
+
+			.lf-helptext {
+				font-size: 12px;
+				display: block;
+				margin-top: 10px;
+			}
+		}
+
+		.lf-display {
+			flex: 0 1 75%;
+			background-color: #222;
+			margin-left: 20px;
+			padding: 20px;
+			border-radius: 3px;
+
+			.lf-content {
+				display: none;
+
+				&.active {
+					display: block;
+				}
+
+				h2 {
+					font-size: 28px;
+					font-weight: 300;
+					margin-bottom: 20px;
+				}
+
+				.lf-block {
+					margin: 0 -20px 0 -20px;
+    				padding: 15px 0 15px 20px;
+					border-bottom: solid 1px #000;
+
+					.lf-block-text {
+						opacity: 0.5;
+					}
+
+					&:hover, &:focus {
+						> .lf-block-text {
+							opacity: 1;
+						}
+					}
+
+					&.active {
+						background-color: #000;
+
+						> .lf-block-text {
+							opacity: 1;
+						}
+					}
+				}
+
+				.lf-highlight {
+					color: $yellow;
+					background-color: transparentize($yellow, 0.9);
+					text-decoration: underline;
+				}
+
+				.lf-block-info {
+					margin-top: 10px;
+					font-size: 11px;
+					font-family: Tahoma;
+					color: #aaa;
+				}
+			}
+		}
+	}
+
+	.lf-info {
+		display: flex;
+
+		> div:first-of-type {
+			flex: 0 1 20%;
+		}
+
+		> div:last-of-type {
+			flex: 0 1 80%;
+		}
+	}
+}

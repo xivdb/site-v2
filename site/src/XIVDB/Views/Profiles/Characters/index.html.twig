@@ -1,0 +1,74 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}{{ name }} ({{ server }}){% endset %}
+{% set pagedescription %}Character profile for: {{ name }}{% endset %}
+{% set pageicon %}{{ avatar }}{% endset %}
+
+{% block body %}
+<div class="character-profile" data-id="{{ lodestone_id }}">
+
+	<div class="cp-header">
+		<h1>{{ name }} <small>{{ server }}</small></h1>
+		<div class="form cp-manual-update">
+			<button class="green small" id="manualUpdateCharacter">Update</button>
+		</div>
+	</div>
+
+	<div class="content-mobile-open">
+		<button type="button">
+			<i class="fa fa-bars content-mobile-menu-btn" aria-hidden="true"></i> MENU
+		</button>
+	</div>
+
+	<div class="cp-body">
+		<div>
+			<div class="cp-portrait" style="background-image:url({{ portrait }});"></div>
+			<div class="cp-nav">
+				<button data-id="profile" class="active"><img src="/img/ui/heavy_dot_blue.png" width="16">{{ languages.custom[669] }}</button>
+				<button data-id="classes"><img src="/img/ui/swords.png" width="16">{{ languages.custom[384] }}</button>
+				<button data-id="gearsets"><img src="/img/ui/gear/11.png" width="16">{{ languages.custom[1017] }}</button>
+				<button data-id="timeline"><img src="/img/ui/journal.png" width="16">{{ languages.custom[1045] }}</button>
+				<button data-id="achievements"><img src="/img/ui/badge.png" width="16">{{ languages.custom[397] }}</button>
+				<button data-id="minions"><img src="/img/ui/minions.png" width="16">{{ languages.custom[446] }}</button>
+				<button data-id="mounts"><img src="/img/ui/mounts.png" width="16">{{ languages.custom[199] }}</button>
+				<button data-id="portrait"><img src="/img/ui/me.png" width="16">{{ languages.custom[1047] }}</button>
+
+				{% if user and user.admin %}
+				<button data-id="admin" class="cp-nav-gm"><img src="/img/ui/gm.png" width="16">Admin</button>
+				{% endif %}
+
+			</div>
+		</div>
+		<div>
+			<div class="cp-content">
+				<div data-id="profile" class="active">{% include 'Profiles/Characters/profile.html.twig' %}</div>
+				<div data-id="classes">{% include 'Profiles/Characters/classes.html.twig' %}</div>
+				<div data-id="gearsets">{% include 'Profiles/Characters/gearsets.html.twig' %}</div>
+				<div data-id="timeline">{% include 'Profiles/Characters/timeline.html.twig' %}</div>
+				<div data-id="achievements">{% include 'Profiles/Characters/achievements.html.twig' %}</div>
+				<div data-id="minions">{% include 'Profiles/Characters/minions.html.twig' %}</div>
+				<div data-id="mounts">{% include 'Profiles/Characters/mounts.html.twig' %}</div>
+				<div data-id="portrait">{% include 'Profiles/Characters/portrait.html.twig' %}</div>
+
+				{% if user and user.admin %}
+				<div data-id="admin">{% include 'Profiles/Characters/admin.html.twig' %}</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(function() {
+	$('.content-mobile-open button').on('click', function () {
+		$('.cp-body > div').toggleClass('open');
+		$('.content-mobile-open button .content-mobile-menu-btn').toggleClass('fa-bars fa-times');
+	});
+
+	$('html').on('click', '.cp-body div.open button', function () {
+		if (isOnMobile()) {
+			$('.cp-body > div').removeClass('open');
+			$('.content-mobile-open button .content-mobile-menu-btn').toggleClass('fa-bars fa-times');
+		}
+	});
+});
+</script>
+{% endblock %}

@@ -1,0 +1,10 @@
+<div class="filter-panel filter-panel-weather" data-filter-type="weather">
+{% spaceless %}
+
+    {{ SearchFilter.empty('Weather') }}
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.weather) }}
+
+{% endspaceless %}
+</div>

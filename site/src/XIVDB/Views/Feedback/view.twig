@@ -1,0 +1,187 @@
+{% extends 'Default/index.twig' %}
+{% set type = 'feedback' %}
+{% set pagetitle %}{{ feedback.title }} - {{ languages.custom[726] }}{% endset %}
+
+{% block body %}
+<div class="content-block cf">
+{% if feedback.deleted and (user is not defined or user is empty or user.admin == 0) %}
+    <div class="panel p50 cf">
+        <div class="b35 tar pr50">
+            <img src="/img/ui/morb.png">
+        </div>
+        <div class="b65">
+            <p class="red fs16">This feedback report has been deleted</p>
+            <p>It was deleted for one of the following reasons:</p>
+            <ul>
+                <li>The issue has been fixed, Thank you!! :)</li>
+                <li>The issue is a duplicate of another issue!</li>
+                <li>The issue was against the Feedback Rules.</li>
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <div class="cf">
+        <a href="/feedback" class="fr"><i class="fa fa-caret-left"></i> &nbsp; {{ languages.custom[1153] }}</a>
+        <h1 class="feedback-title">{{ feedback.title }}</h1>
+        <br>
+
+        {% if feedback.folder %}
+            <div class="feedback-tag">
+                {{ languages.custom[1158] }} <em class="highlight">{{ feedback.folder }}</em>
+            </div>
+        {% endif %}
+
+        <div class="layout-row feedback-message">
+            <div>
+                <h4>{{ languages.custom[1159] }}</h4>
+                {{ feedback.message|raw }}
+                {% if data_misc %}
+                <pre>{{ data_misc|nl2br|raw }}</pre>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="layout-row">
+            <div>
+                <h4>{{ languages.custom[1160] }}</h4>
+                <p>{{ feedback.category }}</p>
+            </div>
+            <div>
+                <h4>{{ languages.custom[1156] }}</h4>
+                <p>{{ feedback.section }}</p>
+            </div>
+            <div>
+                <h4>{{ languages.custom[1161] }}</h4>
+                <p>
+                {{ feedback.data.browser is defined ? feedback.data.browser : 'Unknown Browser' }}
+                    {% if feedback.data.res_width is defined %}
+                        <em>({{ feedback.data.res_width }} x {{ feedback.data.res_height }})</em>
+                    {% endif %}
+                </p>
+            </div>
+            {% if feedback.data.adb is defined and user and user.admin %}
+                <div>
+                    <h4>AdBlock</h4>
+                    <p>{{ feedback.data.adb ? 'Yes' : 'No' }}</p>
+                </div>
+            {% endif %}
+            <div>
+                <p>{{ languages.custom[181] }} <em class="lime">{{ feedback.updated|date("M j, g:i a") }}</em></p>
+                <p>{{ languages.custom[1157] }} <em class="highlight">{{ feedback.added|date("M j, g:i a") }}</em></p>
+            </div>
+        </div>
+
+        {% if user and user.admin %}
+        <div class="layout-row">
+            <div>
+                <h4>User</h4>
+                <p>{{ feedback.user.username }}</p>
+            </div>
+            <div>
+                <h4>Joined</h4>
+                <p>{{ feedback.user.added|date(defines.DATE_FULL) }}</p>
+            </div>
+            {% if feedback.user.lodestone_id %}
+                <div>
+                    <h4>Character</h4>
+                    <p>{{ feedback.user.character_name }}</p>
+                </div>
+                <div>
+                    <h4>Server</h4>
+                    <p>{{ feedback.user.character_server }}</p>
+                </div>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+        <div class="layout-row">
+            <div>
+                <h4>{{ languages.custom[1162] }}</h4>
+                <p><a href="{{ feedback.url }}" target="_blank">{{ feedback.url }}</a></p>
+            </div>
+        </div>
+
+        {% if user is not empty and user.admin %}
+        <div class="panel mt5 cf form">
+            <a href="/feedback/delete/{{ feedback.id }}" class="red fr">Delete Feedback</a>
+            <form method="post" action="/feedback/folder/{{ feedback.id }}">
+                <input type="text" placename="folder" name="folder" id="folder" class="small">
+                &nbsp;&nbsp;
+                <button type="submit" class="blue small">Set Folder</button>
+            </form>
+            <br>
+            <div>
+            {% for folder in folders %}
+                <em class="a" onclick="$('#folder').val('{{ folder.name }}');">[{{ folder.name|title }}]</em>&nbsp;
+            {% endfor %}
+            </div>
+
+        </div>
+
+        {% endif %}
+    </div>
+
+    {# reply form #}
+    {% if user %}
+        <br><br>
+        <form class="cf">
+            <div class="b85">
+                <textarea placeholder="Post a message to this feedback report" class="w100 feedback-reply-textarea"></textarea>
+                <div class="tar">
+                    <a class="fs10" href="https://en.wikipedia.org/wiki/Markdown" target="_blank">Markdown Enabled</a>
+                </div>
+            </div>
+            <div class="b15 tar">
+                <button class="green feedback-reply-button" type="button" onclick="feedback.reply();">{{ languages.custom[1163] }}</button>
+            </div>
+        </form>
+        <br>
+    {% else %}
+        <div class="panel tac">{{ languages.custom[1166] }}</div>
+    {% endif %}
+
+    <div class="gap20"></div>
+
+    {# responses #}
+    {% if feedback.responses %}
+        {% for response in feedback.responses %}
+            <div class="feedback-response {% if response.user.admin is defined and response.user.admin %}feedback-admin{% elseif response.user.moderator is defined and response.user.moderator %}feedback-moderator{% endif %}">
+                <div class="response-top">
+                    {% if response.user %}
+                        <a href="{{ response.user.url }}" class="response-username">
+                            {% if response.user.character_avatar is not empty %}
+                                {{ response.user.character_name|title }}
+                                <em class="faint">({{ response.user.username|title }})</em>
+                            {% else %}
+                                {{ response.user.username|title }}
+                            {% endif %}
+                        </a>
+                    {% else %}
+                        <span>Kupo! (Unknown Member)</span>
+                    {% endif %}
+                    <span class="response-time">
+                        {{ response.added|date('F j, Y, g:i a') }}
+                        {% if response.user %}
+                            {% if response.user.admin %}
+                                &bull; <em class="red">{{ languages.custom[666] }}</em>
+                            {% elseif response.user.moderator %}
+                                &bull; <em class="green">{{ languages.custom[1164] }}</em>
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="response-message">
+                    {{ response.message|raw }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="feedback-no-response">{{ languages.custom[1165] }}</div>
+    {% endif %}
+{% endif %}
+
+</div>
+<script>$(function() { feedback.viewing = {{ feedback.id }}; });</script>
+{% endblock %}

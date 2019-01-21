@@ -1,0 +1,43 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    {# help text #}
+    {{ Layout.datahelp(content.info1 ~' '~ content.info2) }}
+
+    {# other info #}
+    {{ Layout.dataline(languages.custom[1092], content.cost) }}
+    {{ Layout.dataline(languages.custom[1093], content.behavior.name) }}
+
+    {% if content.action %}
+        <div class="xivdb-msk">
+            <div>
+                <div>
+                    {{ content.action }}
+                </div>
+                <div>
+                    {{ content.skill_cost }} Points
+                </div>
+            </div>
+            <div>
+                {{ content.help|raw }}
+            </div>
+        </div>
+
+        {{ Layout.dataline(languages.custom[1092], content.cost) }}
+        {{ Layout.dataline(languages.custom[1097], content.hp|number_format) }}
+        {{ Layout.dataline(languages.custom[1098], content.skill_cost) }}
+        {{ Layout.dataline(languages.custom[1099], content.attack) }}
+        {{ Layout.dataline(languages.custom[1100], content.defense) }}
+        {{ Layout.dataline(languages.custom[1134], content.speed_html|raw) }}
+
+    {% endif %}
+
+{% endspaceless %}
+{% endblock %}

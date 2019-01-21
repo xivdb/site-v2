@@ -1,0 +1,191 @@
+//
+// Generic default heading
+//
+.page-heading-1 {
+	margin-bottom: 30px;
+
+	h1 {
+		font-size: 42px;
+		font-weight: 300;
+	}
+
+	p {
+		margin: 0 !important;
+		font-size: 16px;
+	}
+
+	&.page-heading-1-centered {
+		padding-top: 20px;
+		text-align: center;
+	}
+}
+
+.page-heading-2 {
+	margin-bottom: 20px;
+
+	h2 {
+		font-size: 24px;
+		font-weight: 300;
+	}
+}
+
+.page-heading-3 {
+	margin-bottom: 10px;
+
+	h2 {
+		font-size: 22px;
+		font-weight: 300;
+	}
+}
+
+//
+// Generic default content
+//
+.page-content {
+	* { box-sizing: border-box; }
+
+	&.page-flexbox {
+		display: flex;
+
+		.page-10 { flex: 0 1 10%; }
+		.page-20 { flex: 0 1 20%; }
+		.page-30 { flex: 0 1 30%; }
+		.page-40 { flex: 0 1 40%; }
+		.page-50 { flex: 0 1 50%; }
+		.page-60 { flex: 0 1 60%; }
+		.page-70 { flex: 0 1 70%; }
+		.page-80 { flex: 0 1 80%; }
+		.page-90 { flex: 0 1 90%; }
+	}
+
+	&.page-flexbox-wrap {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+
+	&.page-dark {
+		background-color: rgba(20,20,20,0.3);
+	}
+
+	&.page-light {
+		background-color: rgba(140,140,140,0.3);
+	}
+
+	.page-pad-10 { padding: 10px; }
+	.page-pad-20 { padding: 20px; }
+	.page-pad-30 { padding: 30px; }
+
+	.page-seperate {
+		background-color: #333;
+	}
+}
+
+.page-top-row {
+	display: block;
+	margin-bottom: 15px;
+	font-size: 13px;
+
+	a {
+		display: block;
+		font-size: 14px;
+		font-weight: 400;
+	}
+}
+
+// ----------------------------------------------------------------------
+// Server links on the ranking page
+// ----------------------------------------------------------------------
+
+.page-servers-links {
+	display: block;
+	padding: 3px 8px;
+	border-radius: 3px;
+	font-size: 12px;
+
+	&:hover {
+		text-decoration: none;
+		background-color: darken($blue, 15%);
+		color: #fff;
+	}
+
+	&.page-servers-active {
+		background-color: darken($blue, 25%);
+		color: #fff;
+	}
+}
+
+// ----------------------------------------------------------------------
+// Comments throughout the site (not the main comment section)
+// ----------------------------------------------------------------------
+
+.page-comment {
+    @include cf();
+    margin-bottom: 25px;
+
+	.page-comment-top {
+		height: 60px;
+		display: flex;
+
+		> img {
+			flex: 0 1 5%;
+			border-radius: 50%;
+			background-color: #222;
+		}
+
+		> div {
+			flex: 0 1 95%;
+			padding-left: 20px;
+
+			> div:first-of-type {
+				font-size: 16px;
+				margin-bottom: 4px;
+			}
+		}
+
+		time {
+			font-size: 12px;
+			display: inline-block;
+			margin: 0 0 0 20px;
+			color: #aaa;
+		}
+	}
+
+	.page-comment-text {
+		background-color: rgba(0,0,0,0.2);
+		border-radius: 2px;
+		padding: 15px;
+		font-size: 13px;
+		line-height: 20px;
+	}
+
+}
+
+// ----------------------------------------------------------------------
+// Screenshots throughout the site (not the main screenshot section)
+// ----------------------------------------------------------------------
+
+.page-screenshots-list {
+	@include cf();
+
+	margin: 0 -30px;
+	padding: 30px;
+	background-color: #222;
+
+	a {
+		float: left;
+		width: 292px;
+		height: 200px;
+		margin: 5px;
+		background-position: center center;
+		background-size: cover;
+		border-radius: 3px;
+		box-shadow: 0 0 1px 1px #000;
+
+		&:hover {
+			position: relative;
+			z-index: 3;
+			box-shadow: 0 0 0 3px $blue, 0 0 20px #000;
+		}
+	}
+}

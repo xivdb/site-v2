@@ -1,0 +1,61 @@
+{# checkbox #}
+{% macro checkbox(name, text, checked) %}
+    <input id="{{ name }}" name="{{ name }}" type="checkbox" {% if checked is defined and checked == true %}checked="checked"{% endif %}>
+    <label for="{{ name }}">{{ text|raw }}</label>
+{% endmacro %}
+
+{# textarea #}
+{% macro textarea(name, placeholder, classes, value, info) %}
+    <textarea id="{{ name }}" name="{{ name }}" class="{{ classes }}" placeholder="{{ placeholder }}">{{ value }}</textarea>
+    {% if info is defined and info|length > 0 %}
+    <div class="faint fs12 mt5">
+        <label>{{ info|raw }}</label>
+    </div>
+    {% endif %}
+{% endmacro %}
+
+{# input #}
+{% macro input(name, placeholder, classes, value, info) %}
+    <input id="{{ name }}" name="{{ name }}" type="text" placeholder="{{ placeholder }}" class="{{ classes }}" value="{{ value }}">
+    {% if info is defined and info|length > 0 %}
+    <div class="faint fs12 mt5">
+        <label>{{ info|raw }}</label>
+    </div>
+    {% endif %}
+{% endmacro %}
+
+{# buttons #}
+{% macro submit(name, classes) %}
+    <button class="{{ classes }}" type="submit">{{ name }}</button>
+{% endmacro %}
+
+{# buttons #}
+{% macro button(name, classes) %}
+    <button class="{{ classes }}">{{ name }}</button>
+{% endmacro %}
+
+{# Render a form field #}
+{% macro formRow(name, id, value, type, helptext, options) %}
+<div class="form-row form-row-flex">
+	<label for="{{ id }}">{{ name }}</label>
+	<div class="option">
+    {# Print Option '#}
+    {% if type is not defined or type == 'text' %}
+	   <input type="text" id="{{ id }}" name="{{ id }}" value="{{ value }}" class="small">
+    {% elseif type == 'password' %}
+        <input type="password" id="{{ id }}" name="{{ id }}" value="{{ value }}" class="small">
+    {% elseif type =='select' %}
+        <select id="{{ id }}" name="{{ id }}" class="small">
+        {% for select_value, select_name in options %}
+            <option value="{{ select_value }}" {% if select_value == value %}selected="selected"{% endif %}>{{ select_name }}</option>
+        {% endfor %}
+        </select>
+    {% endif %}
+
+    {# Print any help text #}
+    {% if helptext %}
+        <div class="form-row-help">{{ helptext|raw }}</div>
+    {% endif %}
+	</div>
+</div>
+{% endmacro %}

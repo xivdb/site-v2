@@ -1,0 +1,46 @@
+{% extends 'Dashboard/Default/index.html.twig' %}
+{% set pagetitle %}Translations{% endset %}
+{% set page = 'translations' %}
+
+{% block body %}
+{{ Macros.breadcrumb([
+    { title: 'Translations' }
+]) }}
+
+<div class="container">
+    <h1>Introduction</h1>
+
+    <p>Welcome! Translations massively help people use the site, the whole site can be translated through the
+    hard work you guys devote. All translators become star members as a thank you for your help and you
+    will also be added to the about page as one of the core contributors to help build this site!
+    Below is a list of languages, choose which one you'd like to translate for. English is the main language
+    for the site and is required in all translation lines.</p>
+
+    <p><strong>Note</strong>, if you see a mistake in the English translation, just go ahead and fix it! My spelling is not great XD</p>
+
+    <h1>Dynamic Lines</h1>
+
+    <p>Some translations require dynamic values, for example:
+    <code>Page {page} out of {total}</code>, the values <code>{page}</code> and <code>{total}</code> are dynamic
+    and are injected by the code. Please do not translate words within the brackets, you can freely move the variable in your translation.</p>
+
+    <p>Some translations may also contain HTML, this looks like: <code>{{ '<span class="yellow">Some Text</span>'|escape }}</code>,
+        as similar to dynamic lines please ignore the "code" looking parts and just translate the text :), if you get stuck
+        don't hesitate to ask me on Skype!</p>
+
+    <hr>
+
+    <h1>Manage Translations</h1>
+    <a href="/translations/create" class="btn btn-success-outline btn-lg"><img src="img/flags/english.png" height="18"> New Translation</a>
+    <a href="/translations/manage/french" class="btn btn-primary-outline btn-lg"><img src="img/flags/french.png" height="18"> French</a>
+    <a href="/translations/manage/german" class="btn btn-primary-outline btn-lg"><img src="img/flags/german.png" height="18"> German</a>
+    <a href="/translations/manage/japanese" class="btn btn-primary-outline btn-lg"><img src="img/flags/japanese.png" height="18"> Japanese</a>
+    <a href="/translations/manage/chinese" class="btn btn-primary-outline btn-lg"><img src="img/flags/chinese.png" height="18"> Chinese</a>
+
+    <br><br><br><br>
+
+    <h2>Dev</h2>
+    <a href="/translations/ascode?order=id,desc" class="btn btn-primary-outline btn-lg">Code Blocks</a>
+    <a href="/translations/backups" class="btn btn-primary-outline btn-lg">Backups</a>
+</div>
+{% endblock %}

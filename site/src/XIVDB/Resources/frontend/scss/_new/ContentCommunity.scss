@@ -1,0 +1,394 @@
+// ----------------------------------------------------------------------
+// Social stuff, including:
+//  comments
+//  screenshots
+// ----------------------------------------------------------------------
+.moogleface {
+    background-image: url(/img/logo/moogle_avatar2.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #222;
+    box-shadow: inset 0 0 1px #000, inset 0 1px 3px #000;
+
+    display: inline-block;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+}
+
+.not-logged-in {
+    font-size: 22px;
+    font-weight: 400;
+    padding: 15px;
+    margin: 20px 100px;
+    border-radius: 3px;
+    border: solid 2px #222;
+    text-align: center;
+
+    @include mq($until: desktop) {
+        margin: 10px 0;
+        border: solid 1px #222;
+        font-size: 14px;
+    }
+}
+
+.no-comments, .no-screenshots {
+    background-color: #333;
+    border-radius: 3px;
+
+    font-size: 16px;
+    font-weight: 400;
+    padding: 20px;
+    text-align: center;
+
+    .moogleface {
+        vertical-align: bottom;
+        margin: 0 10px -3px 0;
+    }
+}
+
+.comment {
+    @extend .cf;
+
+    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, .3);
+    border-radius: 2px;
+    padding: 10px 10px 0 15px;
+
+    h1,h2,h3,h4,h5,h6 {
+        font-size: 26px;
+        margin-bottom: 15px;
+        letter-spacing: 0;
+        margin-top: 15px;
+    }
+
+    h2 { font-size: 24px; }
+    h3 { font-size: 22px; }
+    h4 { font-size: 20px; }
+    h5 { font-size: 18px; }
+    h6 { font-size: 16px; }
+
+    em {
+        font-weight: 400;
+        font-style: italic;
+    }
+
+    code {
+        display: block;
+        margin: 10px 0;
+        background-color: rgba(0,0,0,0.2);
+        padding: 8px 12px;
+        border-radius: 3px;
+        border: dashed 1px $blue;
+        color: $yellow;
+    }
+
+    .toggle-comment {
+        display: inline-block;
+        vertical-align: top;
+        margin: 8px 15px 0 0;
+        text-shadow: none;
+
+        @include mq($until: desktop) {
+            display: none;
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: $highlight;
+        }
+    }
+
+    .avatar {
+        height: 22px;
+        border-radius: 3px;
+        vertical-align: bottom;
+        margin: 0 0 0 0;
+        box-shadow: 0 1px 2px 1px #000;
+
+        @include mq($until: desktop) {
+            display: none;
+        }
+    }
+
+    .name {
+        font-size: 14px;
+        font-weight: 400;
+        vertical-align: top;
+        display: inline-block;
+        margin: 5px 0 0 10px;
+
+        @include mq($until: desktop) {
+            font-size: 14px;
+            margin: 5px 0 0 0;
+            display: block;
+        }
+
+        .character {
+            color: $yellow;
+        }
+
+    }
+
+    .time {
+        vertical-align: top;
+        display: inline-block;
+        font-size: 12px;
+        color: #999;
+        margin: 9px 0 0 14px;
+
+        @include mq($until: desktop) {
+            margin: 3px 0 0 0;
+            display: block;
+        }
+    }
+
+    .text {
+        font-size: 14px;
+        line-height: 22px;
+        text-shadow: none;
+        color: #eee;
+
+        p {
+            margin: 15px 0 !important;
+        }
+
+        ul {
+            margin: 5px 0 20px 20px;
+        }
+    }
+
+    .replies {
+        margin-top: 20px;
+    }
+
+    .replyto {
+        margin: 15px 0;
+        display: none;
+    }
+
+    .comment-reply {
+        background-color: #555 !important;
+        border-radius: 2px;
+    }
+
+    .ui-comment-reply {
+        background-color: #111;
+        padding: 10px;
+        border-radius: 3px;
+    }
+
+    .report-button {
+        opacity: 0.5;
+    }
+
+    .comment_minimized {
+        display: none;
+        color: #888;
+        margin-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .stop-edit-button {
+        display: none;
+    }
+
+    .comment-edit {
+        margin-top: 15px;
+        display: none;
+        padding-bottom: 20px;
+
+        textarea {
+            width: 100%;
+            display: block;
+        }
+
+        button {
+            margin-top: 15px;
+        }
+    }
+
+    &:hover {
+        .time, .report-button {
+            opacity: 1;
+        }
+    }
+
+    .comment-deleted {
+        display: block;
+        color: #aaa;
+        margin: 10px 0;
+    }
+
+    .comment-buttons {
+        float: right;
+        text-align: right;
+    }
+}
+
+.comments-form {
+    @extend .cf;
+
+    &.comments-form-top {
+        margin-bottom: 10px;
+    }
+
+    textarea {
+        float: left;
+        width: calc(100% - 90px);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        padding: 6px 10px;
+        background-color: #222;
+
+        &:hover {
+            background-color: #111;
+        }
+
+        @include mq($until: desktop) {
+            font-size: 16px;
+        }
+    }
+
+    button {
+        float: right;
+        width: 80px;
+    }
+}
+
+.screenshot-form {
+    border: dashed 2px #555;
+    text-align: center;
+    padding: 30px;
+    font-weight: 400;
+    margin: 0 5px 10px 3px;
+
+    background-size: cover;
+    background-position: center center;
+    background-color: #333;
+
+    p {
+        font-size: 14px;
+    }
+
+    .moogleface {
+        vertical-align: bottom;
+        margin: 0 20px -10px 0;
+    }
+
+    &.active { border: dashed 2px $blue; }
+    &.uploading { border: dashed 2px $green; }
+    &.fail { border: dashed 2px $red; }
+
+    .progress {
+        margin: 20px 100px 0 100px;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .ss-instruction1 {
+        margin-bottom: 2px;
+        color: $highlight;
+        font-size: 14px;
+    }
+
+    .ss-instruction2 {
+        color: #ccc;
+        font-size: 12px;
+    }
+
+    .upload-status {
+        padding: 5px 15px;
+        display: inline-block;
+        background-color: rgba(0,0,0,0.8);
+    }
+}
+
+.screenshots {
+    @inclide cf();
+    text-align: center;
+
+    .screenshot-post {
+        background-color: #111;
+        background-image: url(/img/textures/bg6.png);
+        border: solid 1px #111;
+        float: left;
+
+        position: relative;
+        z-index: 2;
+
+        line-height: 0;
+        margin: 2px;
+        border-radius: 2px;
+        overflow: hidden;
+
+        width: 396px;
+        height: 280px;
+
+        @include mq($until: desktop) {
+            width: 100%;
+            float: none;
+            display: block;
+            margin: 0 0 10px 0;
+        }
+        
+        a {
+            display: block;
+        }
+
+        .screenshot-uploader {
+            line-height: 10px;
+            display: inline-block;
+            top: 0;
+            left: 0;
+
+            position: absolute;
+            z-index: 5;
+            background-color: #111;
+            padding: 6px 8px;
+            font-size: 13px;
+            border-radius: 1px 0 2px 0;
+        }
+
+        .screenshot-delete {
+            line-height: 13px;
+            display: inline-block;
+            bottom: 0; right: 0;
+            z-index: 50;
+
+            position: absolute;
+            background-color: $red;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 2px 0 2px 0;
+            box-shadow: 0 0 10px #000;
+            color: #fff;
+
+            &:hover {
+                background-color: darken($red, 20%);
+            }
+
+            &:active {
+                background-color: darken($red, 30%);
+            }
+        }
+
+        &.screenshot-author .screenshot-uploader {
+            color: #fff;
+            background-color: darken($green, 20%);
+        }
+
+        &:hover {
+            background-color: #333;
+            cursor: pointer;
+            box-shadow: 0 0 0 2px $blue;
+            border: solid 1px $blue;
+        }
+
+        img {
+            @include center();
+            border-radius: 2px;
+            max-width: 460px;
+            max-height: 460px;
+        }
+    }
+}

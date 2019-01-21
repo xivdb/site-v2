@@ -1,0 +1,20 @@
+<div class="xivdb-map xiv-cm-embed"></div>
+<script>
+$(function() {
+    // loadmap via placename id
+    XIVDBMaps
+        .setOption('width', 820)
+        .embed('.xivdb-map', {{ content.map.placename.id }}, function() {
+            XIVDBMaps.Markers.add({
+                id: '{{ content.id }}',
+                map: '{{ content.map.placename.maps[0].id }}',
+                icon: '{{ content.icon }}',
+                size: 32,
+                x: {{ content.map.x }},
+                y: {{ content.map.z }},
+                focus: true,
+                tooltip: "{{ content.name }} (X: {{ content.map.x }} / Y: {{ content.map.z }})",
+            });
+        });
+});
+</script>

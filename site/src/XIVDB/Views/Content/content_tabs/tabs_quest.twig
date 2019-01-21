@@ -1,0 +1,8 @@
+{% include 'Content/content_tabs/tabs.twig' with { tabs: [
+    [ languages.custom[875], content.pre_quests, 'Content/extras/quest_pre.twig' ],
+    [ languages.custom[843], content.post_quests, 'Content/extras/quest_post.twig' ],
+    [ languages.custom[408], content.items, 'Content/extras/quest_items.twig', content.items_total ],
+    [ languages.custom[844], content.text.todo is defined ? content.text.todo : [], 'Content/extras/quest_todo.twig' ],
+    [ languages.custom[845], content.text.text is defined ? content.text.text : [], 'Content/extras/quest_text.twig' ],
+    [ languages.custom[846], content.text.journal is defined ? content.text.journal : [], 'Content/extras/quest_journal.twig' ],
+]} %}

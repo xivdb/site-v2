@@ -1,0 +1,139 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle -%}
+	{{ (app.request.get('loresearch') ? app.request.get('loresearch')|escape ~ ' - ' : '') ~ languages.custom[803] }}
+{%- endset %}
+
+{% block body %}
+<div class="content-block content-nopad tool-lorefinder">
+
+	<div class="lf-header">
+		<h1 class="lf-title">{{ languages.custom[803] }}</h1>
+		<form method="get" class="lf-search">
+			<input type="text" name="loresearch" placeholder="{{ languages.custom[953] }}" class="w100" value="{{ app.request.get('loresearch') }}">
+			<button class="blue w100">{{ languages.custom[657] }}</button>
+		</form>
+	</div>
+
+
+	<div class="lf-results">
+		{% if string %}
+			{% set foundResults = false %}
+			{% set tableToName = {
+				'xiv_quests_to_text': 'Quest Dialogue',
+				'xiv_items': 'Item Descriptions',
+				'xiv_leves': 'Guildleve Descriptions',
+				'xiv_fates': 'FATE Descriptions',
+				'xiv_balloons': 'Speech Bubbles',
+				'xiv_quests_to_text': 'Quest Dialogue',
+				'xiv_contents_description': 'Content Descriptions',
+				'xiv_instances_text_data': 'Instance Text Data',
+				'xiv_npc_yells': 'NPC Shouts',
+				'xiv_public_content_text_data': 'Public Content Data',
+			} %}
+			<div class="lf-tabs">
+				{% for table, list in results if list %}
+					{% set foundResults = true %}
+					{% set name = tableToName[table] %}
+					<button data-table="{{ table|md5 }}" {% if loop.first %}class="active"{% endif %}>
+						<strong>{{ list|length }}</strong> {{ name }}
+					</button>
+				{% endfor %}
+				<span class="lf-helptext">
+					{{ languages.custom[958] }}
+				<span>
+			</div>
+
+			<div class="lf-display">
+				{% if foundResults %}
+					{% for table, list in results if list %}
+						{% set foundResults = true %}
+						{% set name = tableToName[table] %}
+						<div data-tab="{{ table|md5 }}" class="lf-content {% if loop.index == 1%}active{% endif %}">
+							<h2><strong>{{ list|length }}</strong> {{ name }}</h2>
+							{% for data in list %}
+								<div class="lf-block">
+									<div class="lf-block-text">
+										{{ data.text|raw }}
+									</div>
+									{% if data.quest is defined %}
+									<div class="lf-block-info">
+										{{ languages.custom[475] }}:
+										<a href="/quest/{{ data.quest }}" target="_blank" data-xivdb-replace="1">{{ data.name }} (#{{ data.quest }})</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										[{{ data.define }}]
+									</div>
+									{% elseif table == 'xiv_items' %}
+										<div class="lf-block-info">
+											<a href="/item/{{ data.id }}" target="_blank" data-xivdb-replace="1">{{ data.name }} (#{{ data.id }})</a>
+										</div>
+									{% elseif table == 'xiv_leves' %}
+										<div class="lf-block-info">
+											<a href="/leve/{{ data.id }}" target="_blank" data-xivdb-replace="1">{{ data.name }} (#{{ data.id }})</a>
+										</div>
+									{% elseif table == 'xiv_fates' %}
+										<div class="lf-block-info">
+											<a href="/fate/{{ data.id }}" target="_blank" data-xivdb-replace="1">{{ data.name }} (#{{ data.id }})</a>
+										</div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+					{% endfor %}
+				{% else %}
+				<div class="panel tac">
+					<div class="alert alert-info">
+						No results.
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		{% else %}
+			<div class="lf-info">
+
+				<div align="center">
+					<img src="/img/ui/lore.png">
+				</div>
+				<div>
+					<div class="panel panel-big">
+						<p>{{ languages.custom[954] }}</p>
+
+						<ul>
+							<li><em class="yellow">{{ totals.xiv_quests_to_text|number_format }}</em> Quest Dialogue</li>
+							<li><em class="yellow">{{ totals.xiv_items|number_format }}</em> Item Descriptions</li>
+							<li><em class="yellow">{{ totals.xiv_leves|number_format }}</em> Leve Descriptions</li>
+							<li><em class="yellow">{{ totals.xiv_fates|number_format }}</em> FATE Descriptions</li>
+							<li><em class="yellow">{{ totals.xiv_balloons|number_format }}</em> Speech Bubbles</li>
+							<li><em class="yellow">{{ totals.xiv_contents_description|number_format }}</em> Content Descriptions</li>
+							<li><em class="yellow">{{ totals.xiv_instances_text_data|number_format }}</em> Instance Text Data</li>
+							<li><em class="yellow">{{ totals.xiv_npc_yells|number_format }}</em> NPC Shouts</li>
+							<li><em class="yellow">{{ totals.xiv_public_content_text_data|number_format }}</em> Public Content Data</li>
+						</ul>
+
+						<hr>
+
+						<p>{{ languages.custom[955] }}, {{ languages.custom[956] }}</p>
+						<p class="red">{{ languages.custom[957] }}</p>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</div>
+<script>
+$('.lf-block').on('click', function() {
+	$(this).toggleClass('active');
+});
+
+$('.lf-tabs button').on('click', function() {
+	var id = $(this).attr('data-table');
+
+	// make stuff unactive
+	$('.lf-tabs .active').removeClass('active');
+	$('.lf-display .active').removeClass('active');
+
+	// set tab active
+	$(this).addClass('active');
+	$('.lf-display').find('[data-tab="'+ id +'"]').addClass('active');
+});
+</script>
+{% endblock %}

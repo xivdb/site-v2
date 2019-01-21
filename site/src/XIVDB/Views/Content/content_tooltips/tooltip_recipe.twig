@@ -1,0 +1,47 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    <div class="xivdb-cf">
+        <div class="xivdb-left">
+            {{ Layout.dataline(languages.custom[1108], content.stars_html|default('-')|raw, 'xivdb-yellow') }}
+            {{ Layout.dataline(languages.custom[457], content.level, 'xivdb-yellow') }}
+            {{ Layout.dataline(languages.custom[1109], content.level_view, 'xivdb-yellow') }}
+            {{ Layout.dataline(languages.custom[384], content.class_name, 'xivdb-sky') }}
+            {{ Layout.dataline(languages.custom[1111], content.required_craftsmanship|number_format) }}
+            {{ Layout.dataline(languages.custom[1112], content.required_control|number_format) }}
+            {{ Layout.dataline(languages.custom[1113], content.durability|number_format) }}
+            {{ Layout.dataline(languages.custom[1114], content.quality|number_format) }}
+            {{ Layout.dataline(languages.custom[781], content.difficulty|number_format) }}
+            {{ Layout.dataline(languages.custom[1110], content.element_name) }}
+            {{ Layout.dataline(languages.custom[1128], content.can_quick_synth ? '<em class="xivdb-green">✔</em>' : '<em class="xivdb-red">✖</em>') }}
+            {{ Layout.dataline(languages.custom[1115], content.can_hq ? '<em class="xivdb-green">✔</em>' : '<em class="xivdb-red">✖</em>') }}
+        </div>
+        <div class="xivdb-right">
+            {% set gap = false %}
+            <span>{{ languages.custom[1129] }}</span>
+            {% for item in content.tree %}
+                {% if item.id > 30 and gap == false %}
+                    {% set gap = true %}
+                    <div style="height:15px;"></div>
+                    <span>{{ languages.custom[1130] }}</span>
+                {% endif %}
+
+                <div class="xivdb-sti">
+                    <img src="{{ item.icon }}" height="18" class="xivdb-ii">
+                    &nbsp;&nbsp;
+                    <span class="xivdb-light">x</span><span class="xivdb-yellow">{{ item.quantity }}</span>
+                    &nbsp;<span class="xivdb-rarity-{{ item.color }}">{{ item.name }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endspaceless %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    {# help text #}
+    {{ Layout.datahelp(content.help) }}
+
+    {# other info #}
+    {{ Layout.dataline(languages.custom[479], content.points, 'xivdb-yellow') }}
+    {{ Layout.dataline(languages.custom[589], content.kind_name) }}
+    {{ Layout.dataline(languages.custom[316], content.category_name) }}
+
+
+    {% if content.item %}
+        {% set reward = content.item %}
+        {% set html %}
+            <img src="{{ reward.icon }}" height="18" class="xivdb-ii">
+            <span class="xivdb-lime">{{ reward.name }}</span>
+        {% endset %}
+        {{ Layout.dataline(languages.custom[1145], html) }}
+    {% endif %}
+
+    {% if content.title %}
+        {% set reward = content.title %}
+        {% set html %}
+            <i class="fa fa-mars xivdb-sky"></i>&nbsp;
+            <span class="xivdb-lime">{{ reward.name_male }}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fa fa-venus xivdb-pink"></i>&nbsp;
+            <span class="xivdb-lime">{{ reward.name_female }}</span>
+        {% endset %}
+        {{ Layout.dataline(languages.custom[1146], html) }}
+    {% endif %}
+
+{% endspaceless %}
+{% endblock %}

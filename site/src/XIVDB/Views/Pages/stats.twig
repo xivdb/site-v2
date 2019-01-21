@@ -1,0 +1,243 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+.container {
+    max-width: 85%;
+}
+.box {
+    background-color: #d8d8d8;
+    border-radius: 10px;
+    padding: 30px;
+}
+.js-plotly-plot {
+    margin-bottom: 30px;
+    box-shadow: 0 1px 15px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 300;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+</style>
+<div style="padding: 30px 0 150px 0;">
+
+    <div class="container">
+
+        <div class="box">
+            <h1>Hits</h1>
+            <div id="hits"></div>
+            <script>
+                Plotly.newPlot('hits', [{
+                    x: [{{ stats.hits.all|keys|join(',') }}],
+                    y: [{{ stats.hits.all|join(',') }}],
+                    type: 'scatter',
+                    name: 'All',
+                }, {
+                    x: [{{ stats.hits.en|keys|join(',') }}],
+                    y: [{{ stats.hits.en|join(',') }}],
+                    type: 'scatter',
+                    name: 'English',
+                }, {
+                    x: [{{ stats.hits.de|keys|join(',') }}],
+                    y: [{{ stats.hits.de|join(',') }}],
+                    type: 'scatter',
+                    name: 'German',
+                }, {
+                    x: [{{ stats.hits.fr|keys|join(',') }}],
+                    y: [{{ stats.hits.fr|join(',') }}],
+                    type: 'scatter',
+                    name: 'French',
+                }, {
+                    x: [{{ stats.hits.ja|keys|join(',') }}],
+                    y: [{{ stats.hits.ja|join(',') }}],
+                    type: 'scatter',
+                    name: 'Japanese',
+                }]);
+            </script>
+            <table class="table table-bordered table-dark">
+                <thead>
+                <th>Day</th>
+                <th>All Languages</th>
+                <th>English</th>
+                <th>German</th>
+                <th>French</th>
+                <th>Japanese</th>
+                </thead>
+                <tbody>
+                {% for i, value in stats.hits.all if value > 0 %}
+                    <tr>
+                        <td><span class="text-warning">{{ i }}</span> </td>
+                        <td><strong>{{ value|number_format }}</strong></td>
+                        <td>{{ stats.hits.en[i]|number_format }}</td>
+                        <td>{{ stats.hits.de[i]|number_format }}</td>
+                        <td>{{ stats.hits.fr[i]|number_format }}</td>
+                        <td>{{ stats.hits.ja[i]|number_format }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <br><br><hr><br><br>
+
+
+        <div class="box">
+            <h1>Unique</h1>
+            <div id="unique"></div>
+            <script>
+                Plotly.newPlot('unique', [{
+                    x: [{{ stats.unique.all|keys|join(',') }}],
+                    y: [{{ stats.unique.all|join(',') }}],
+                    type: 'scatter',
+                    name: 'All',
+                }, {
+                    x: [{{ stats.unique.en|keys|join(',') }}],
+                    y: [{{ stats.unique.en|join(',') }}],
+                    type: 'scatter',
+                    name: 'English',
+                }, {
+                    x: [{{ stats.unique.de|keys|join(',') }}],
+                    y: [{{ stats.unique.de|join(',') }}],
+                    type: 'scatter',
+                    name: 'German',
+                }, {
+                    x: [{{ stats.unique.fr|keys|join(',') }}],
+                    y: [{{ stats.unique.fr|join(',') }}],
+                    type: 'scatter',
+                    name: 'French',
+                }, {
+                    x: [{{ stats.unique.ja|keys|join(',') }}],
+                    y: [{{ stats.unique.ja|join(',') }}],
+                    type: 'scatter',
+                    name: 'Japanese',
+                }]);
+            </script>
+            <table class="table table-bordered table-dark">
+                <thead>
+                <th>Day</th>
+                <th>All Languages</th>
+                <th>English</th>
+                <th>German</th>
+                <th>French</th>
+                <th>Japanese</th>
+                </thead>
+                <tbody>
+                {% for i, value in stats.unique.all if value > 0 %}
+                    <tr>
+                        <td><span class="text-warning">{{ i }}</span> </td>
+                        <td><strong>{{ value|number_format }}</strong></td>
+                        <td>{{ stats.unique.en[i]|number_format }}</td>
+                        <td>{{ stats.unique.de[i]|number_format }}</td>
+                        <td>{{ stats.unique.fr[i]|number_format }}</td>
+                        <td>{{ stats.unique.ja[i]|number_format }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <br><br><hr><br><br>
+
+        <div class="box">
+            <h1>Per Second</h1>
+            <div id="seconds"></div>
+            <script>
+                Plotly.newPlot('seconds', [{
+                    x: [{{ stats.seconds|keys|join(',') }}],
+                    y: [{{ stats.seconds|join(',') }}],
+                    type: 'scatter',
+                    name: 'Per Second',
+                }]);
+            </script>
+
+            <table class="table table-bordered table-dark">
+                <thead>
+                {% for i, value in stats.seconds %}
+                    <th>
+                        <div align="center">
+                            <span class="text-info">{{ i }}</span>
+                        </div>
+                    </th>
+                {% endfor %}
+                </thead>
+                <tbody>
+                <tr>
+                    {% for i, value in stats.seconds %}
+                        <td align="center">{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br><br><hr><br><br>
+
+        <div class="box">
+            <h1>Per Hour</h1>
+            <div id="hours"></div>
+            <script>
+                Plotly.newPlot('hours', [{
+                    x: [{{ stats.hours|keys|join(',') }}],
+                    y: [{{ stats.hours|join(',') }}],
+                    type: 'scatter',
+                    name: 'Per Hour',
+                }]);
+            </script>
+
+            <table class="table table-bordered table-dark">
+                <thead>
+                {% for i, value in stats.hours %}
+                    <th>
+                        <div align="center">
+                            <span class="text-info">{{ i }}</span>
+                        </div>
+                    </th>
+                {% endfor %}
+                </thead>
+                <tbody>
+                <tr>
+                    {% for i, value in stats.hours %}
+                        <td align="center">{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br><br><hr><br><br>
+
+        <div class="box">
+            <h1>API</h1>
+            <div id="api"></div>
+            <script>
+                Plotly.newPlot('api', [{
+                    x: [{{ stats.api|keys|join(',') }}],
+                    y: [{{ stats.api|join(',') }}],
+                    type: 'scatter',
+                    name: 'API Hits',
+                }]);
+            </script>
+
+            <table class="table table-bordered table-dark">
+                <thead>
+                <th>Day</th>
+                <th>All Languages</th>
+                </thead>
+                <tbody>
+                {% for i, value in stats.api if value > 0 %}
+                    <tr>
+                        <td><span class="text-warning">{{ i }}</span> </td>
+                        <td><strong>{{ value|number_format }}</strong></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>

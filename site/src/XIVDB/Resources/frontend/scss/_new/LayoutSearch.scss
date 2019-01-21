@@ -1,0 +1,802 @@
+//
+// Search loading class
+//
+.search-loading {
+    @include center();
+    position: fixed;
+    display: none;
+    background-color: #000;
+    border-radius: 50%;
+    line-height: 0;
+    padding: 20px;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+//
+// Spinner
+//
+
+$offset: 187;
+$duration: 1.4s;
+
+.loading {
+    animation: rotator $duration linear infinite;
+}
+
+@keyframes rotator {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(270deg); }
+}
+
+.loading-path {
+    stroke-dasharray: $offset;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    animation:
+        dash $duration ease-in-out infinite,
+        colors ($duration*4) ease-in-out infinite;
+}
+
+@keyframes colors {
+    0% { stroke: #4285F4; }
+    25% { stroke: #DE3E35; }
+    50% { stroke: #F7C223; }
+    75% { stroke: #1B9A59; }
+    100% { stroke: #4285F4; }
+}
+
+@keyframes dash {
+    0% { stroke-dashoffset: $offset; }
+    50% {
+        stroke-dashoffset: $offset/4;
+        transform:rotate(135deg);
+    }
+    100% {
+        stroke-dashoffset: $offset;
+        transform:rotate(450deg);
+    }
+}
+
+//
+// Result nav
+// - the tabbed nav for search results
+//
+.search-results-nav {
+    display: inline-block;
+    position: relative;
+    z-index: 100;
+    margin-bottom: 5px;
+    margin-right: -2px;
+
+    > span {
+        font-size: 13px;
+        color: #ddd;
+        display: inline-block;
+        padding: 0 10px;
+        line-height: 30px;
+        background-color: #444;
+        margin: 0 2px 2px 0;
+
+        i {
+            font-style: normal;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 3px;
+            color: #fff;
+        }
+
+        &:hover {
+            color: #fff;
+            cursor: pointer;
+            background-color: #666;
+        }
+
+        &.active {
+            background-color: darken($blue, 20%);
+            color: #fff;
+        }
+    }
+}
+
+
+//
+// Search bar and stuff
+//
+.search {
+    @extend .cf;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    display: flex;
+    box-shadow: 0 1px 5px #000;
+
+    .search-input {
+        box-sizing: border-box;
+        flex: 0 0 calc(100% - 55px);
+    }
+
+    .search-button {
+        box-sizing: border-box;
+        flex: 0 0 55px;
+    }
+
+    input {
+        height: 45px;
+        width: 100%;
+        font-weight: 300;
+        padding: 0 15px;
+
+        background-color: #444;
+        color: #f9ffbb;
+        border: none;
+        outline: none;
+        border-radius: 2px 0 0 2px;
+        font-size: 17px;
+    }
+
+    button {
+        height: 45px;
+        width: 100%;
+
+        font-size: 14px;
+        border: none;
+        text-align: right;
+        color: #888;
+        outline: none;
+
+        background-color: #444;
+        border-radius: 0 2px 2px 0;
+        padding: 0 20px 0 0;
+
+        &:hover, &:focus {
+            color: #fff;
+            background-color: #333;
+            cursor: pointer;
+        }
+
+        .fa-search {
+            margin-left: 5px;
+        }
+    }
+}
+
+//
+// Search result visuals
+//
+.search-results {
+    @extend .cf;
+    display: block;
+    margin: 5px -1px;
+    width: $siteWidth + 3px;
+
+    @include mq($until: desktop) {
+        width: calc(100% + 2px);
+    }
+
+    //
+    // Group full of stuff
+    //
+    .search-results-group {
+        display: none;
+        width: 100%;
+
+        &.active {
+            display: flex;
+
+            @include mq($until: desktop) {
+                display: block;
+            }
+        }
+    }
+
+    //
+    // The actual entity
+    //
+    .entity {
+        @extend .cf;
+        background-image: url(/img/textures/gradient.png);
+        background-repeat: repeat-x;
+        background-color: #444;
+
+        position: relative;
+        border: solid 1px #000;
+        box-shadow: inset 0 0 0 1px #555;
+
+        &:hover {
+            background-image: url(/img/textures/gradient_hover.png);
+            box-shadow: inset 0 0 0 1px #333;
+
+            .extra {
+                opacity: 1 !important;
+            }
+        }
+
+        &.ui-draggable-handle {
+            &:hover {
+                cursor: move !important;
+                outline: solid 3px $yellow;
+                z-index: 500;
+
+                * {
+                    cursor: move !important;
+                }
+            }
+        }
+
+        &.ui-draggable-dragging {
+            box-shadow: inset 0 0 0 1px #555, 20px 20px 20px #333;
+        }
+
+        .icon {
+            position: absolute;
+            top: 0;
+            float: none;
+            height: 100%;
+            overflow: hidden;
+            background-color: #222;
+            border-right: solid 1px #000;
+            box-shadow: inset 0 0 0 1px #333;
+
+            img {
+                @include center();
+            }
+        }
+
+        .data {
+            padding: 7px 10px 0 10px;
+
+            .name {
+                font-size: 13px;
+                margin-bottom: 4px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                max-width: 100%;
+                display: block;
+                line-height: 18px;
+
+                i {
+                    color: $yellow;
+                    display: inline-block;
+                    margin: 0 !important;
+                }
+
+                a {
+                    color: $rarity-common !important;
+                    width: auto;
+                    display: block;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                &.rarity-common a { color: $rarity-common !important; }
+                &.rarity-scares a { color: $rarity-scares !important; }
+                &.rarity-rare a { color: $rarity-rare !important; }
+                &.rarity-relic a { color: $rarity-relic !important; }
+                &.rarity-aetherial a { color: $rarity-aetherial !important; }
+            }
+
+            .extra {
+                font-size: 11px;
+                font-family: 'Verdana';
+
+                display: block;
+                overflow: hidden;
+                max-width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                opacity: 0.6;
+            }
+
+            &.data-small .name {
+                margin-bottom: 2px !important;
+                font-size: 13px;
+            }
+        }
+    }
+
+    &.grid {
+        .search-results-group {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .entity {
+            @include cf;
+            height: 52px;
+            flex: 0 1 33%;
+            max-width: 33%;
+            overflow: hidden;
+
+            &:nth-child(3n) {
+                flex: 0 1 34%;
+                max-width: 34%;
+
+                @include mq($until: desktop) {
+                    flex: 0;
+                    max-width: 100%;
+                }
+            }
+
+            @include mq($until: desktop) {
+                flex: 0;
+                max-width: 100%;
+            }
+
+            .icon {
+                width: 50px;
+
+                img {
+                    max-width: 52px;
+                    max-height: 52px;
+                }
+            }
+
+            .data {
+                width: 100%;
+                max-width: 240px;
+                margin: 0 0 8px 50px;
+            }
+
+            .extra {
+                vertical-align: top;
+                color: #aaa;
+
+                display: block;
+                overflow: hidden;
+                width: auto;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                *:not(i) { vertical-align: top; }
+            }
+        }
+    }
+
+    &.list {
+        .search-results-group {
+            flex-direction: column;
+        }
+
+        .entity {
+            flex: 1 1 100%;
+            height: 32px;
+        }
+
+        .icon {
+            width: 30px;
+            height: 100%;
+
+            img {
+                max-width: 40px;
+                max-height: 40px;
+            }
+        }
+
+        .data {
+            @include cf;
+            width: 100%;
+            margin: 0 0 8px 30px;
+
+            .name,
+            .extra {
+                float: left;
+            }
+
+            .name {
+                margin: 0 10px 0 0;
+                width: 50%;
+            }
+
+            .extra {
+                margin-top: 2px;
+            }
+        }
+    }
+
+    .type-titles {
+        .data div:first-child {
+            margin-bottom: 5px;
+
+            .fa { font-size: 12px; }
+        }
+
+        .fa {
+            color: $blue;
+            display: inline-block;
+            width: 18px;
+        }
+    }
+}
+
+//
+// Search paging
+//
+.search-paging {
+    text-align: center;
+    margin-top: 5px;
+
+    .search-paging-container {
+        @extend .cf;
+        @include vertical-gradient(#666, 0%, #555, 100%);
+    }
+
+    .left {
+        float: left;
+
+        button {
+            border-right: solid 1px #111;
+            float: right;
+        }
+    }
+
+    .right {
+        float: right;
+
+        button {
+            border-left: solid 1px #111;
+            float: left;
+        }
+    }
+
+    .center {
+        button {
+            border-right: solid 1px #111;
+
+            &:first-child {
+                border-left: solid 1px #111;
+            }
+
+            @include mq($until: desktop) {
+                display: none;
+            }
+        }
+    }
+
+    button {
+        display: inline-block;
+        line-height: 30px;
+        height: 30px;
+        padding: 0 15px;
+        background-color: #333;
+        border: none;
+        color: #fff;
+        outline: none;
+
+        &:hover {
+            cursor: position;
+            background-color: darken($blue, 20%);
+        }
+
+        &.active {
+            background-color: darken($green, 20%);
+        }
+
+        &.disabled {
+            opacity: 0.3;
+        }
+    }
+
+    .search-one-paging {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+}
+
+//
+// Search info
+//
+.search-info {
+    background-color: #333;
+    border-top: solid 1px #191919;
+    line-height: 34px;
+    height: 34px;
+    text-align: center;
+    font-size: 12px;
+
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    span {
+        color: $green;
+    }
+
+    em {
+        color: #aaa;
+        display: inline-block;
+        margin-left: 10px;
+        font-size: 11px;
+    }
+}
+
+//
+// Search number
+//
+.search-numbers {
+    user-select: all;
+    margin-right: 10px;
+    color: #aaa;
+
+    span {
+        color: #fff;
+    }
+}
+
+//
+// the actual container for the search
+//
+.search-content {
+    display: none;
+}
+
+//
+// when a search error is shown
+//
+.search-error {
+    margin-bottom: 20px;
+}
+
+//
+// The search header bar
+//
+.search-header {
+    .is-sticky > .search-interaction {
+        box-shadow: 0 2px 6px #111;
+    }
+
+    &.search-header-flex {
+        height: auto !important;
+
+        .search-results-nav {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+
+            > span {
+                flex: 1 0 15%;
+            }
+        }
+    }
+}
+
+//
+// No search results
+//
+.search-no-results
+{
+    display: none;
+    padding: 150px 0;
+    background-color: #333;
+    text-align: center;
+
+    .no-results-title
+    {
+        font-weight: 200;
+        font-size: 32px;
+        color: #888;
+
+        strong {
+            color: $blue;
+            font-weight: 400;
+        }
+    }
+}
+
+//
+// Generic styling for a search panel, used by:
+// - Shopping Cart
+// - Search Options
+// - Crafty
+// - Wardrobe
+//
+// By default it hides the element, add "open" class
+// to show the element
+//
+.search-theme-panel {
+    padding: 10px;
+    transition: .1s;
+    background-color: #444;
+    border-top: solid 1px #000;
+    box-shadow: inset 0 2px 0 #222,inset 0 -1px 0 #000;
+    display: none;
+    position: relative;
+
+	&.open {
+		display: block;
+	}
+
+    .title {
+        font-size: 18px;
+        font-weight: 300;
+    }
+}
+
+.search-tool-panel {
+    @extend .search-theme-panel;
+    padding: 20px;
+    background-color: #222;
+    background-image: url(/img/textures/bg5.png);
+}
+
+//
+// Search interaction area
+// - Fitlers
+// - Tools
+// etc
+//
+.search-interaction {
+
+}
+
+//
+// Search options panel
+//
+.search-options {
+    @extend .search-theme-panel;
+
+    .search-groups {
+        display: flex;
+
+        > div {
+            flex: 0 1 25%;
+            padding: 0 0 10px 0;
+            box-sizing: border-box;
+
+            .search-form {
+                p {
+                    display: block;
+                    font-family: Tahoma;
+                    font-size: 11px;
+                    margin-top: 8px;
+                    color: #aaa;
+                }
+
+                &.search-form-top {
+                    height: 80px;
+                }
+            }
+
+            h2 {
+                font-size: 11px;
+                text-transform: uppercase;
+                color: $highlight;
+                margin: 0 0 5px 0;
+            }
+
+            button,
+            input,
+            select {
+                font-size: 12px;
+                background-color: #666;
+                border: none;
+                color: #fff;
+                outline: none;
+            }
+
+            button {
+                margin-right: 2px;
+                padding: 5px 10px;
+
+                .fa {
+                    vertical-align: bottom;
+                    margin: 0 3px 1px 0;
+                    font-size: 14px;
+                }
+
+                &:first-of-type {
+                    border-top-left-radius: 3px;
+                    border-bottom-left-radius: 3px;
+                }
+
+                &:last-of-type {
+                    border-top-right-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                }
+
+                &.active {
+                    background-color: darken($blue, 20%);
+                }
+            }
+
+            input,
+            select {
+                width: 80%;
+                display: block;
+                padding: 6px 10px;
+
+                &:first-of-type {
+                    border-top-left-radius: 3px;
+                    border-bottom-left-radius: 3px;
+                }
+
+                &:last-of-type {
+                    border-top-right-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                }
+            }
+
+            select {
+                background-image: url('../img/ui/arrow_light.png');
+                background-position: center right;
+                background-repeat: no-repeat;
+                background-size: auto auto;
+                appearance: none;
+            }
+        }
+    }
+}
+
+//
+// Search tools panel
+//
+.search-tools {
+    @extend .search-theme-panel;
+    @extend .cf;
+
+    button {
+        float: left;
+        width: 140px;
+        height: 100px;
+        border: none;
+        box-shadow: 0 1px 2px #000;
+        background-color: #333;
+        background-image: url(/img/textures/bg1.jpg);
+        background-size: 100% 100%;
+        background-position: center;
+        border-radius: 3px;
+        color: #fff;
+        text-shadow: 0 1px 2px #000;
+        margin-right: 10px;
+
+        i.fa {
+            font-size: 32px;
+        }
+
+        img {
+            margin: 0 0 -6px 0;
+            height: 36px;
+        }
+
+        > div {
+            margin-top: 10px;
+        }
+
+        &:hover {
+            box-shadow: 0 1px 2px #000, inset 0 0 0 3px darken($blue, 10%);
+        }
+    }
+}
+
+//
+// Language button
+//
+.language-button {
+    background-color: transparent;
+    float: right;
+    border-right: none;
+    border-left: solid 1px #444;
+
+    border-radius: 0 2px 2px 0;
+    margin-right: -1px;
+    cursor: pointer !important;
+    border: none;
+
+    font-size: 13px;
+    padding: 0 12px;
+    height: 32px;
+    line-height: 32px;
+    color: #aaa;
+    outline: none;
+
+    &:hover {
+        color: $blue;
+    }
+}

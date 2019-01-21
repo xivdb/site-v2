@@ -1,0 +1,8 @@
+config.php
+composer.phar
+vendor/
+src/Sync/Views/Home/stats.json
+.idea
+logging
+hash/
+.vagrant

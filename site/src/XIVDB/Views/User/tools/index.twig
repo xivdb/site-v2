@@ -1,0 +1,20 @@
+{% set bgcss = 'bg-account' %}
+{% extends 'Default/index_simplified.twig' %}
+{% set pagetitle %}{{ languages.custom[433] }}{% endset %}
+
+{% block body %}
+{% include 'User/base/header.twig' %}
+<div class="acc-heading">
+	<h1>{{ languages.custom[433] }}</h1>
+</div>
+<div class="acc-content">
+
+	{% include 'User/base/notices.twig' %}
+
+	{# Tools #}
+	{% include 'User/tools/shopping_carts.twig' %}
+	<br><hr>
+	{% include 'User/tools/gearsets.twig' %}
+
+</div>
+{% endblock %}

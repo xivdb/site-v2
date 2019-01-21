@@ -1,0 +1,202 @@
+<h2>
+	<img src="/img/loader/loading2.gif" data-src="{{ role.data.icon }}" height="32">&nbsp;
+	<span class="highlight">{{ role.level }}</span>&nbsp;
+	{{ role.data.name }}
+</h2>
+
+{# Progress #}
+<div class="cc-block">
+	{# Progress to full level 60 #}
+	<h6>{{ languages.custom[1215] }}</h6>
+	{% if role.exp.at_cap %}
+	<div class="cc-block-sub cc-block-sub-margin">
+		<div class="cc-data">
+			<div>
+				<span class="cc-data-figure green">Level {{ defines.GAME_MAX_LEVEL }}!</span>
+			</div>
+			<div>
+				<span class="cc-data-togo">100%</span>
+			</div>
+		</div>
+		<div class="cp-bar"><div class="green" style="width:100%;"></div></div>
+	</div>
+
+	{# Level 60 achievement, if they're public #}
+	{% if role.exp.at_cap and achievements_public and achievements_score_reborn > 0 and stats_summary.achievements[role.data.id] is defined %}
+		<div class="cc-block-sub">
+			{% set achieve = stats_summary.achievements[role.data.id] %}
+			<div class="cp-achieve-row">
+				<div>
+					<img src="/img/loader/loading2.gif" data-src="{{ achieve.icon }}" height="32">
+				</div>
+				<div>
+					<div class="cp-achieve-top">
+						<div>
+							<span class="cp-achieve-points">+{{ achieve.points }} Points</span>
+							<span class="cp-achieve-date">{{ achieve.obtained|date('F jS, Y') }}</span>
+						</div>
+						<a href="{{ achieve.url }}" data-xivdb-replace="1" target="_blank">{{ achieve.name }}</a>
+					</div>
+					<div class="cp-achieve-info">
+						{{ achieve.help }}
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	{% else %}
+	<div class="cc-block-sub cc-block-sub-margin">
+		<h5>Experience Points</h5>
+		<div class="cc-data">
+			<div>
+				<span class="cc-data-figure">{{ role.exp.total_gained|number_format }}</span>
+				<span class="cc-data-value">/ {{ role.exp.total_max|number_format }}</span>
+				<span class="cc-data-percent">({{ role.exp.total_percent }}%)</span>
+			</div>
+			<div>
+				<span class="cc-data-togo">{{ role.exp.total_togo|number_format }} togo</span>
+			</div>
+		</div>
+		<div class="cp-bar"><div class="yellow" style="width:{{ role.exp.total_percent }}%;"></div></div>
+	</div>
+	<div class="cc-block-sub">
+		<h5>Levels</h5>
+		<div class="cc-data">
+			<div>
+				<span class="cc-data-figure">{{ role.level|number_format }}</span>
+				<span class="cc-data-value">/ {{ defines.GAME_MAX_LEVEL|number_format }}</span>
+				<span class="cc-data-percent">({{ role.level_percent }}%)</span>
+			</div>
+			<div>
+				<span class="cc-data-togo">{{ role.level_togo|number_format }} togo</span>
+			</div>
+		</div>
+		<div class="cp-bar"><div class="yellow" style="width:{{ role.level_percent }}%;"></div></div>
+	</div>
+
+	{# Prediction to 60 #}
+	<h6 class="h6sub">{{ languages.custom[1216] }} {{ defines.GAME_MAX_LEVEL }}</h6>
+	<div class="cc-block-sub">
+		{% set key = 'prediction_' ~ role.data.id %}
+		{% set key2 = 'exp_stats_' ~ role.data.id %}
+		{% if stats_summary[key] is defined %}
+		{% set prediction = stats_summary[key] %}
+			<div class="cc-prediction-title">
+				{{ prediction.unix|moment }} - {{ prediction.dt|date('F jS, Y') }}
+			</div>
+			<div class="cc-prediction-info">
+				Based on: Gaining <em>{{ stats_summary[key2].exp_session|number_format }}</em> experience points
+				in <span>{{ stats_summary.per_hour_average }}</span> hours, every day (on average),
+				for the next <time>{{ stats_summary[key].days }}</time> days. The faster you level, the higher
+				your session average will be and the prediction will reduce.
+			</div>
+		{% else %}
+			{{ languages.custom[1217] }}
+		{% endif %}
+	</div>
+	{% endif %}
+</div>
+
+<h6>EXP Speed</h6>
+<div class="cc-speed">
+	{% set key = 'exp_stats_' ~ role.data.id %}
+	{% if stats_summary[key] is defined %}
+	<table class="table-clean cc-timeline-table">
+		<tr>
+			<td>exp/sec</td>
+			<td>exp/min</td>
+			<td>exp/hr</td>
+			<td>exp/session *</td>
+		</tr>
+		<tr>
+			<td>{{ stats_summary[key].exp_second|number_format(2) }}</td>
+			<td>{{ stats_summary[key].exp_minute|number_format(2) }}</td>
+			<td>{{ stats_summary[key].exp_hour|number_format(2) }}</td>
+			<td>{{ stats_summary[key].exp_session|number_format(2) }}</td>
+		</tr>
+	</table>
+	<p class="cc-note">* {{ languages.custom[1218] }}</p>
+	{% else %}
+	<p>No event data.</p>
+	{% endif %}
+</div>
+
+{# Best EXP Event #}
+<div class="cc-best">
+	<h5>
+		<span><i class="fa fa-star-o" aria-hidden="true"></i></span>{{ languages.custom[1219] }}
+	</h5>
+	{% set key = 'best_exp_event_' ~ role.data.id %}
+	{% if stats_summary[key] is defined %}
+		<div>
+		{{
+			'Gained <em>%s</em> exp on <span>%s</span>'|format(
+				stats_summary[key].gained|number_format,
+				data.classjobs[stats_summary[key].jobclass].data.name
+			)|raw
+		}}
+		</div>
+		<span>
+			{{ stats_summary[key].time|date('F jS, Y') }}
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			{{ stats_summary[key].old|number_format }}
+			<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+			{{ stats_summary[key].new|number_format }}
+		</span>
+	{% else %}
+		<div>No best event, get levelling!</div>
+	{% endif %}
+</div>
+
+{# Best Level Event #}
+<div class="cc-best">
+	<h5>
+		<span><i class="fa fa-star-o" aria-hidden="true"></i></span>{{ languages.custom[1220] }}
+	</h5>
+	{% set key = 'best_lv_event_' ~ role.data.id %}
+	{% if stats_summary[key] is defined %}
+		<div>
+		{{
+			'Gained <em>%s</em> levels on <span>%s</span>'|format(
+				stats_summary[key].gained|number_format,
+				data.classjobs[stats_summary[key].jobclass].data.name
+			)|raw
+		}}
+		</div>
+		<span>
+			{{ stats_summary[key].time|date('F jS, Y') }}
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			{{ stats_summary[key].old|number_format }}
+			<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+			{{ stats_summary[key].new|number_format }}
+		</span>
+	{% else %}
+		<div>No best event, get levelling!</div>
+	{% endif %}
+</div>
+
+{# Timeline #}
+{% set key = 'events_' ~ role.data.id %}
+{% if stats_summary[key] is defined %}
+	<h6 class="h6value">{{ stats_summary[key]|length }} events</h6>
+	<table class="table-clean cc-timeline-table">
+		<thead>
+			<th>{{ languages.custom[1221] }}</th>
+			<th>{{ languages.custom[1222] }}</th>
+			<th>{{ languages.custom[1223] }}</th>
+		</thead>
+		<tbody>
+			{% for event in stats_summary[key] %}
+			<tr>
+				<td>{{ event.time|moment }}</td>
+				<td><em>{{ event.gained|number_format }}</em> {{ event.type }}</td>
+				<td>
+					{{ event.old|number_format }}
+					<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+					{{ event.new|number_format }}
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endif %}

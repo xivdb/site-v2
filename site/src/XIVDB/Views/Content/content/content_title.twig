@@ -1,0 +1,19 @@
+{# Pre-Achievements #}
+{% if content.achievements is defined and content.achievements %}
+    {# Format pre achievements #}
+    {% set html = ['<h4>'~ languages.custom[830] ~'</h4>'] %}
+    {% set total = 0 %}
+    {% for id, achievement in content.achievements %}
+        {% set html = html|merge([ Layout.achievement(achievement) ]) %}
+        {% set total = total + achievement.points %}
+    {% endfor %}
+    {% set html = html|merge([ '<div class="lc lc-total">'~ total ~' '~ languages.custom[831] ~'</div>' ]) %}
+    {{ Layout.block(html) }}
+{% endif %}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

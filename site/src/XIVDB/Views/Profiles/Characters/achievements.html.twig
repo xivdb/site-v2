@@ -1,0 +1,70 @@
+{% if achievements_public %}
+
+	{% if achievements_score_reborn > 0 and achievements_menu is defined %}
+		<div class="character-achievements">
+			<div>
+				{# Summary #}
+				<div class="ac-page active" data-ac="0">
+					{% include 'Profiles/Characters/achievements.summary.html.twig' %}
+				</div>
+
+				{# Individual Roles #}
+				{% for kind, categories in achievements_menu %}
+					{% for category, stats in categories %}
+					<div class="ac-page" data-ac="{{ stats.id }}">
+						{% set achievelist = achievements_all[stats.id] %}
+						{% include 'Profiles/Characters/achievements.category.html.twig' with {
+							'achievelist': achievelist
+						} %}
+					</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
+			<div>
+				<div class="ac-list">
+					<div class="ac-list-group">
+						<button data-ac="0" class="active">{{ languages.custom[1046] }}</button>
+					</div>
+				</div>
+
+				{% for kind, categories in achievements_menu %}
+				<div class="ac-list-title">{{ kind }}</div>
+				<div class="ac-list">
+					<div class="ac-list-group">
+						{% for category, stats in categories %}
+							{% if stats.is_numbered %}
+                                <button data-ac="{{ stats.id }}" data-tt="{{ stats.percent_count }}% complete<br>{{ stats.obtained_count }}/{{ stats.total_count }} Achievements">
+                                    <div class="progress" style="width:{{ stats.percent_count }}%"></div>
+                                    {{ stats.category }}
+                                </button>
+                            {% else %}
+							<button data-ac="{{ stats.id }}" data-tt="{{ stats.percent }}% complete<br>{{ stats.obtained }}/{{ stats.total }} points">
+								<div class="progress" style="width:{{ stats.percent }}%"></div>
+								{{ stats.category }}
+							</button>
+                            {% endif %}
+						{% endfor %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% else %}
+		<div class="achievements-private">
+			<div>
+				<img src="/img/logo/moogle.png">
+			</div>
+			<div class="pink">{{ languages.custom[1123] }}</div>
+			{{ languages.custom[1209] }}
+		</div>
+	{% endif %}
+
+{% else %}
+<div class="achievements-private">
+	<div>
+		<img src="/img/logo/moogle.png">
+	</div>
+	<div class="pink">{{ languages.custom[1123] }}</div>
+	{{ languages.custom[1210] }}
+</div>
+{% endif %}

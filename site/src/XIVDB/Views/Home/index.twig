@@ -1,0 +1,19 @@
+{% extends 'Default/index.twig' %}
+{% set ishome = true %}
+
+{% block body %}
+{% if not verifiedExistingSearch %}
+<div class="home">
+    {% if patch_lockdown %}
+        <div class="panel" style="padding: 15px;text-align: center;margin-bottom: 10px;font-size: 18px;border: solid 1px #555;">
+            <em class="yellow">{{ patch_lockdown.name }}</em> data is on lockdown,
+            unlocks: <em class="pink">{{ defines.HIDDEN_PATCH_REMOVAL|moment }}</em>
+        </div>
+    {% endif %}
+    <div class="home-content">
+        <div class="left">{% include 'Home/index_left.twig' %}</div>
+        <div class="right">{% include 'Home/index_right.twig' %}</div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

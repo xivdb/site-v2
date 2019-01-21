@@ -1,0 +1,14 @@
+{
+    "require": {
+        "dimabdc/php-fast-simple-html-dom-parser": "^1.1",
+        "silex/silex": "~2.0",
+        "doctrine/dbal": "~2.2",
+        "twig/twig": "^1.25"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Sync": "src/"
+        }
+    }
+}

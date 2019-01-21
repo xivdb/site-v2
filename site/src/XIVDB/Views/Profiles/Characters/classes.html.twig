@@ -1,0 +1,58 @@
+{% macro roleButton(id, list) -%}
+	{% set role = list[id] %}
+	<button data-cc="{{ id }}">
+		<img src="/img/loader/loading2.gif" data-src="{{ role.data.icon }}" height="16">
+		<span class="{{ role.level == defines.GAME_MAX_LEVEL ? 'cc-cap' : role.level < 2 ? 'cc-non' : '' }}">{{ role.level }}</span>
+		{{ role.data.name }}
+	</button>
+{%- endmacro %}
+
+<div class="character-classes">
+	<div>
+		{# Summary #}
+		<div class="cc-page active" data-cc="0">
+			{% include 'Profiles/Characters/classes.summary.html.twig' %}
+		</div>
+
+		{# Individual Roles #}
+		{% for role in data.classjobs %}
+		<div class="cc-page" data-cc="{{ role.data.id }}">
+			{% include 'Profiles/Characters/classes.role.html.twig' %}
+		</div>
+		{% endfor %}
+	</div>
+	<div>
+		<div class="cc-list">
+			<div class="cc-list-group">
+				<button data-cc="0" class="active">{{ languages.custom[1046] }}</button>
+			</div>
+		</div>
+
+		{# Classes #}
+		<div class="cc-list">
+			<div class="cc-list-group">
+			{% for id in [1,2,3,4,5,6,7,26,29] %}
+				{{ _self.roleButton(id, data.classjobs) }}
+			{% endfor %}
+			</div>
+		</div>
+
+		{# New Jobs #}
+		<div class="cc-list">
+			<div class="cc-list-group">
+			{% for id in [31,32,33,34,35] %}
+				{{ _self.roleButton(id, data.classjobs) }}
+			{% endfor %}
+			</div>
+		</div>
+
+		{# Gathering/Crafting #}
+		<div class="cc-list">
+			<div class="cc-list-group">
+			{% for id in [8,9,10,11,12,13,14,15,16,17,18] %}
+				{{ _self.roleButton(id, data.classjobs) }}
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

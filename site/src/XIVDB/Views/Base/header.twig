@@ -1,0 +1,24 @@
+<header id="top">
+    <div class="search-box">
+        {% include 'Search/bar.twig' %}
+    </div>
+</header>
+
+{# Language selection - visible for mobiles #}
+<div class="language-selection">
+    <div class="lang-box">
+
+        {# close button #}
+        <div class="lang-top">
+            <button type="button" class="lang-close"><i class="fa fa-times"></i> {{ languages.custom[662] }}</button>
+        </div>
+
+        <div class="lang-list">
+            <a href="{{ urls.en }}" title="{{ urls.en }}" data-xivdb-ignore="1"><img src="/img/flags/english.png">English</a>
+            <a href="{{ urls.fr }}" title="{{ urls.fr }}" data-xivdb-ignore="1"><img src="/img/flags/french.png">Français</a>
+            <a href="{{ urls.de }}" title="{{ urls.de }}" data-xivdb-ignore="1"><img src="/img/flags/german.png">Deutsch</a>
+            <a href="{{ urls.ja }}" title="{{ urls.ja }}" data-xivdb-ignore="1"><img src="/img/flags/japanese.png">日本語</a>
+            {# <a href="/" href="{{ urls.ch }}" title="{{ urls.ch }} data-xivdb-ignore="1"><img src="/img/flags/chinese.png"> Chinese</a> #}
+        </div>
+    </div>
+</div>

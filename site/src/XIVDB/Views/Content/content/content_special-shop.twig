@@ -1,0 +1,15 @@
+{# Usable Currency #}
+{% if content.currency %}
+    {% set html = ['<h4>'~ languages.custom[934] ~'</h4>'] %}
+    {% for id, item in content.currency %}
+        {% set html = html|merge([ Layout.item(item) ]) %}
+    {% endfor %}
+    {{ Layout.block(html) }}
+{% endif %}
+
+{# latest comment #}
+{{
+    Layout.row([
+        Layout.comment(latestComment)
+    ])
+}}

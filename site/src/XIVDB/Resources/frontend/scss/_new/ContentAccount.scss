@@ -1,0 +1,312 @@
+//
+// Account specific
+//
+.acc-top {
+    padding: 0 20px 0 20px;
+
+    @include mq($until: desktop) {
+        padding:0;
+    }
+
+    nav {
+        @include mq($until: desktop) {
+            display: flex;
+        }
+
+        a {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 2px 2px 0 0;
+            margin-right: 5px;
+            min-width: 80px;
+            text-align: center;
+
+            @include mq($until: desktop) {
+                background-color: #444;
+                flex: 1 1 auto;
+                margin: 0;
+
+                &:nth-child(2) {
+                    margin: 0 3px;
+                }
+            }
+
+            &:hover {
+                text-decoration: none;
+                background-color: #333;
+                color: #fff;
+            }
+
+            &.active {
+                color: #fff;
+                background-color: #555;
+            }
+        }
+    }
+}
+
+.acc-heading {
+    padding: 20px 30px;
+    background-color: #555;
+
+    @include mq($until: desktop) {
+        padding: 5px 10px;
+    }
+}
+
+.acc-content {
+    padding: 30px;
+    background-color: #444;
+
+    @include mq($until: desktop) {
+        padding: 10px;
+    }
+
+    .acc-title {
+        font-size: 13px;
+        color: $highlight;
+        margin-bottom: 10px;
+    }
+
+    .acc-group {
+        margin-bottom: 50px;
+    }
+}
+
+.acc-char-row {
+    margin-bottom: 10px;
+    display: flex;
+
+    > img {
+        margin-right: 20px;
+        border-radius: 3px;
+        flex: 0 1 42px;
+    }
+
+    .acc-char-info {
+        @include vertical-gradient(#666, 0%, #555, 100%);
+        box-sizing: border-box;
+        padding: 0 10px;
+        border-radius: 3px;
+        flex: 0 1 calc(100% - 42px);
+        line-height: 42px;
+        font-size: 16px;
+
+        a {
+            float: right;
+            font-size: 12px;
+            padding: 4px 10px;
+            background-color: rgba(0,0,0,0.3);
+            line-height: normal;
+            margin-top: 9px;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+
+        em {
+            font-size: 12px;
+            color: #ccc;
+            margin-left: 10px;
+            display: inline-block;
+        }
+    }
+}
+
+.acc-char-add {
+    display: block;
+    width: 100%;
+    line-height: 42px;
+    color: $green;
+    background-color: transparent;
+    border: solid 1px #222;
+    box-shadow: inset 0 0 2px #666;
+    border-radius: 3px;
+    font-size: 16px;
+    outline: none;
+
+    .fa {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    &:hover {
+        background-color: #444;
+        color: lighten($green, 20%);
+        border: solid 1px #000;
+        box-shadow: inset 0 0 4px #666;
+    }
+}
+
+.acc-ajax-waiting {
+    border: dashed 1px #888;
+    padding: 40px;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 16px;
+    display: none;
+
+    i.fa {
+        text-shadow: none;
+        margin-bottom: 20px;
+        color: #666;
+    }
+}
+
+.acc-char-add-form {
+    display: none;
+    width: 100%;
+    border: solid 1px #222;
+    box-shadow: inset 0 0 2px #666;
+    border-radius: 3px;
+    margin-top: 10px;
+
+    .acc-char-add-form-group {
+        border-bottom: solid 1px #111;
+        box-shadow: 0 1px 0 #555;
+        padding: 20px;
+
+        .acc-form-flex {
+            display: flex;
+
+            > div:first-of-type {
+                flex: 0 1 80%;
+                margin-right: 50px;
+            }
+
+            > div:last-of-type {
+                flex: 0 1 20%;
+            }
+        }
+
+        em {
+            display: block;
+            font-size: 11px;
+            font-family: Tahoma;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+    }
+
+    .acc-inline-code {
+        color: $yellow;
+        padding: 1px 5px;
+        background-color: #333;
+    }
+
+    .acc-char-info {
+        padding: 20px;
+    }
+
+    .acc-char-usercode {
+        background-color: #333;
+        color: $yellow;
+        border: solid 1px $yellow;
+        padding: 6px 12px;
+        text-align: center;
+        outline: none;
+    }
+
+    .acc-steps li {
+        margin: 10px 0;
+
+        > img {
+            vertical-align: bottom;
+            margin: 0 3px;
+            border-radius: 5px;
+        }
+    }
+
+    .acc-char-add-response {
+        display: none;
+
+        .acc-title {
+            margin-top: 10px;
+        }
+
+        .acc-char-add-list {
+            @include cf();
+            margin-bottom: 10px 0;
+        }
+
+        button.acc-char-add-btn {
+            @include cf();
+            float: left;
+            width: 33%;
+
+            border: none;
+            background-color: #282828;
+            color: #fff;
+            margin: 1px;
+            text-align: left;
+            padding: 0;
+            outline: none;
+
+            &:hover {
+                background-color: darken($blue, 10%);
+                cursor: pointer;
+            }
+
+            img, > div {
+                float: left;
+            }
+
+            img {
+                width: 32px;
+                height: 32px;
+            }
+
+            > div {
+                float: left;
+                padding: 6px 0 0 10px;
+            }
+        }
+    }
+}
+
+.acc-logout {
+	padding: 6px 10px;
+	background-color: #383838;
+	color: #aaa;
+	float: right;
+	font-size: 14px;
+
+    @include mq($until: desktop) {
+        margin-top: 5px;
+    }
+}
+
+.acc-bg-preview {
+	display: block;
+	margin: 5px 0 15px 0;
+	border: solid 1px #222;
+	background-color: #191919;
+	border-radius: 3px;
+	height: 80px;
+
+	&[data-preview="0"] { background-image: none; }
+
+    // up to 20 repeat x backgrounds
+    @for $i from 1 through 20 {
+        &[data-preview="#{$i}"] {
+            background-image: url(/img/backgrounds/#{$i}.png);
+            background-repeat: repeat-x;
+        }
+    }
+
+    // up to 20 full repeat backgrounds
+    @for $i from 21 through 40 {
+        &[data-preview="#{$i}"] {
+            background-image: url(/img/backgrounds/#{$i}.png);
+        }
+    }
+
+    // up to 20 jpg cover backgrounds
+    @for $i from 41 through 60 {
+        &[data-preview="#{$i}"] {
+            background-image: url(/img/backgrounds/#{$i}.jpg);
+            background-position: top center;
+            background-size: cover;
+        }
+    }
+}

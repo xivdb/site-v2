@@ -1,0 +1,67 @@
+{% extends 'Default/index.twig' %}
+{% set pagetitle %}{{ cart.basket|length }} {{ languages.custom[408] }} - {{ languages.custom[734] }}{% endset %}
+{% set pagedescription -%}
+Shopping Cart for:
+{% for item in cart.basket %}
+ {{ item.quantity }}x {{ item.data.name }}{% if loop.last == false %} - {% endif %}
+{% endfor %}
+{%- endset %}
+{% set type = 'shoppingcart' %}
+
+{% block body %}
+{% if saved %}
+<script>
+localStorage.setItem('cartprices', '{{ saved.cart_prices|raw }}');
+localStorage.setItem('basketprices', '{{ saved.basket_prices|raw }}');
+</script>
+{% endif %}
+<div class="content-block tool-cart-page">
+	<div class="top">
+		<h1>{{ languages.custom[734] }} <em>{{ languages.custom[775] }}</em></h1>
+		<span><em>{{ cart.stats.totalItems }}</em>{{ languages.custom[408]|lower }}</span>
+		<span><em>{{ cart.stats.totalUniqueItems }}</em>{{ languages.custom[357]|lower }}</span>
+		<span><em>{{ cart.stats.totalInventorySlots }}</em>{{ languages.custom[741]|lower }}</span>
+
+        <div class="tool-cart-tabs">
+            <button type="button" data-tab="cart" class="active">{{ languages.custom[1056] }}</button>
+            <button type="button" data-tab="items">{{ languages.custom[408] }}</button>
+
+            {% if user %}
+            <button type="button" data-tab="load">{{ languages.custom[1030] }}</button>
+            <button type="button" data-tab="save">{{ languages.custom[22] }}</button>
+            {% endif %}
+
+            <button type="button" data-tab="migrate" style="color: yellow; background-color: #000;">Migration to FFXIV Team Craft</button>
+        </div>
+	</div>
+
+	{# Cart #}
+    <div class="tool-cart-tabs-page active" data-tab="cart">
+        {% include "Tools/ShoppingCart/cart.html.twig" %}
+    </div>
+
+    {# Items #}
+    <div class="tool-cart-tabs-page" data-tab="items">
+        {% include "Tools/ShoppingCart/items.html.twig" %}
+    </div>
+
+    {# Load #}
+    <div class="tool-cart-tabs-page" data-tab="load">
+        {% include "Tools/ShoppingCart/load.html.twig" %}
+    </div>
+
+    {# Save #}
+    <div class="tool-cart-tabs-page" data-tab="save">
+        {% include "Tools/ShoppingCart/save.html.twig" %}
+    </div>
+
+    {# Save #}
+    <div class="tool-cart-tabs-page" data-tab="migrate">
+        {% include "Tools/ShoppingCart/migrate.html.twig" %}
+    </div>
+
+<div>
+
+{# Templates #}
+{% include "Tools/ShoppingCart/templates.html.twig" %}
+{% endblock %}

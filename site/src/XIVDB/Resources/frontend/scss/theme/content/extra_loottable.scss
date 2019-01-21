@@ -1,0 +1,89 @@
+//
+// Style for loot tables when they're shown in "extras"
+//
+.content-loot-table
+{
+    display: flex;
+
+    @include mq($until: desktop) {
+        display: block;
+    }
+
+    &--left {
+        margin-right: 10px;
+
+        @include mq($until: desktop) {
+            margin-right: 0;
+        }
+    }
+
+    &--right {
+        margin-left: 10px;
+
+        @include mq($until: desktop) {
+            margin-right: 0;
+        }
+    }
+
+    &--left, &--right {
+        flex: 0 1 50%;
+
+        @include mq($until: desktop) {
+            flex: none;
+            margin-right: 0;
+            margin-left: 0;
+            width: 100%;
+            display: block;
+        }
+    }
+
+    h3 {
+        font-size: 14px;
+        text-transform: uppercase;
+        color: $highlight;
+        margin-bottom: 10px;
+    }
+
+    h4 {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: $highlighter;
+        padding: 10px;
+    }
+
+    &--items {
+        padding: 5px;
+        background-color: #2a2a2a;
+        border-radius: 3px;
+        margin-bottom: 20px;
+
+        &-item {
+            margin: 0 0 5px 10px;
+            display: flex;
+
+            > div:nth-of-type(1) {
+                flex: 0 1 42px;
+            }
+
+            > div:nth-of-type(2) {
+                flex: 0 1 calc(100% - 42px);
+                padding-left: 10px;
+            }
+
+            img {
+                border-radius: 5px;
+                box-shadow: 0 1px 2px #000;
+                background-color: #444;
+            }
+        }
+
+        &-info {
+            font-size: 12px;
+            color: #aaa;
+        }
+    }
+}
+
+.grid-item {
+    width: 350px;
+}

@@ -1,0 +1,19 @@
+{% extends 'Content/content_tooltips/frame.twig' %}
+{% import 'Content/content_tooltips/macros.twig' as Layout %}
+
+{% set template_flags = 'Content/content_flags/flags_' ~ content.url_type ~ '.twig' %}
+{% set template_categories = 'Content/content_categories/cats_' ~ content.url_type ~ '.twig' %}
+
+{% block html %}
+{% spaceless %}
+    {{ Layout.header(content, false, template_categories) }}
+
+    {{ Layout.datahelp(content.item.help) }}
+
+    {{ Layout.dataline(languages.custom[1108], content.stars_html|default('-')|raw, 'xivdb-yellow') }}
+    {{ Layout.dataline(languages.custom[457], content.level, 'xivdb-yellow') }}
+    {{ Layout.dataline(languages.custom[1109], content.level_view, 'xivdb-yellow') }}
+    {{ Layout.dataline(languages.custom[146], content.type_name) }}
+    {{ Layout.dataline(languages.custom[1126], content.node_zone_name) }}
+{% endspaceless %}
+{% endblock %}

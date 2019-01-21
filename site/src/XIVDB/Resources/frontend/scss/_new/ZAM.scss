@@ -1,0 +1,40 @@
+//
+// ZAM specific styles
+//
+.zul-bar-relative-to-body {
+    margin: 0;
+}
+
+// ----------------------------------------------------------------------
+// ZAM stuff, please try not touch this. Ignore for responsiveness
+// ----------------------------------------------------------------------
+
+body.has-zul-bar {
+    margin-top: 0 !important;
+}
+
+body.has-zul-bar.zul-bar-relative-to-body .zul-bar {
+    top: 0 !important;
+}
+
+.zul-bar {
+    background: #333 !important;
+    height: 40px;
+}
+
+.zul-bar-sites-list-cover {
+    background: url(/zam/zul/icons/chevrons.png) 84px 16px no-repeat !important;
+    box-shadow: none !important;
+    width: 106px;
+}
+
+.zul-bar .zul-bar-sites .zul-bar-zam-logo {
+    background: url(https://cdn.zamimg.com/zul/2.1.x/logos/zam-small.png) 2px 8px no-repeat !important;
+    width: 75px !important;
+}
+
+.zul-bar {
+    background: transparent !important;
+    right: auto !important;
+    z-index: 9600 !important;
+}

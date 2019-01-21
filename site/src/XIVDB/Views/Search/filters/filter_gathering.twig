@@ -1,0 +1,18 @@
+<div class="filter-panel filter-panel-gathering" data-filter-type="gathering">
+{% spaceless %}
+
+    {# general #}
+    <div class="filter-panel-tabs active" data-tab="general">
+        <div class="filter-param-row">
+            {{ SearchFilter.level('GATHER LEVEL', 'level') }}
+            {{ SearchFilter.level('CLASS LEVEL', 'level_view') }}
+            {{ SearchFilter.select('DIFFICULTY', 'level_diff', [filters.stars, 'id', 'name']) }}
+            {{ SearchFilter.select('TYPE', 'gathering_type', [filters.gathering_type, 'id', 'name']) }}
+        </div>
+    </div>
+
+    {# filter footer #}
+    {{ SearchFilter.footer(filters.order.gathering) }}
+
+{% endspaceless %}
+</div>

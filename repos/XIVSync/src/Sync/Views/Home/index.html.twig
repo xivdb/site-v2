@@ -1,0 +1,64 @@
+{% extends 'Base/index.html.twig' %}
+{% block body %}
+<div class="center">
+
+	<h2>{{ stats[9]|number_format }} Characters being tracked</h2>
+
+	<h3>Updates</h3>
+	<div class="flex1">
+		<div>
+			<h4>{{ stats[0]|number_format }}<h4>
+			<summary>past minute</summary>
+		</div>
+		<div>
+			<h4>{{ stats[1]|number_format }}<h4>
+			<summary>past hour</summary>
+		</div>
+		<div>
+			<h4>{{ stats[2]|number_format }}<h4>
+			<summary>past day</summary>
+		</div>
+	</div>
+
+	<div class="gap"></div>
+
+	<h3>Added</h3>
+	<div class="flex1">
+		<div>
+			<h4>{{ stats[3]|number_format }}<h4>
+			<summary>past minute</summary>
+		</div>
+		<div>
+			<h4>{{ stats[4]|number_format }}<h4>
+			<summary>past hour</summary>
+		</div>
+		<div>
+			<h4>{{ stats[5]|number_format }}<h4>
+			<summary>past day</summary>
+		</div>
+	</div>
+
+	<div class="gap"></div>
+
+	<h3>Achievements Updates</h3>
+	<div class="flex1">
+		<div>
+			<h4>{{ stats[6]|number_format }}<h4>
+			<summary>past minute</summary>
+		</div>
+		<div>
+			<h4>{{ stats[7]|number_format }}<h4>
+			<summary>past hour</summary>
+		</div>
+		<div>
+			<h4>{{ stats[8]|number_format }}<h4>
+			<summary>past day</summary>
+		</div>
+	</div>
+
+	<div class="gap"></div>
+
+	<p>{{ cached ? 'Cached' : 'Realtime' }} - {{ cachetime|date('F j, Y, g:i:s a') }}</p>
+
+</div>
+{% endblock %}

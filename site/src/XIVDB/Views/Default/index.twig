@@ -1,0 +1,209 @@
+{% import 'Macros/pages.macro.twig' as PageMacro %}
+{% import 'Macros/form.macro.twig' as FormMacro %}
+{% import 'Macros/graphs.macro.twig' as GraphMacro %}
+{% set version = defines.DEV ? "now"|date('U') : defines.VERSION  %}
+{% spaceless %}
+{# Existing search filters #}
+{% set verifiedExistingSearch = false %}
+{% if search.search is defined and search.search is not empty or search.filters is defined and search.filters is not empty %}
+{% set verifiedExistingSearch = true %}
+{% endif %}
+{# set bg #}
+{% set siteBackground = 'bg5' %}
+{% if user and user.data.site_background is defined %}
+    {% set siteBackground = 'bg' ~ user.data.site_background %}
+{% endif %}
+{# set title #}
+{% if pagetitle is not defined %}{% set pagetitle = defines.META_TITLE %}
+{% else %}{% set pagetitle = '%s - %s'|format(pagetitle, defines.META_TITLE) %}{% endif %}
+{# page description #}
+{% if pagedescription is not defined %}{% set pagedescription = defines.META_DESC %}{% endif %}
+{% if pageicon is not defined %}{% set pageicon = '%s/img/logo/koko4.png'|format(defines.URL) %}{% endif %}
+{# page css #}
+{% if pagecss is not defined %}
+    {% set pagecss = '' %}
+{% endif %}
+{% if ishome is not defined %}
+    {% set ishome = false %}
+{% endif %}
+<!DOCTYPE html>
+<html lang="{{ defines.LANGUAGE }}" class="lang-{{ defines.LANGUAGE }} {{ siteBackground }} {{ pagecss }}">
+    <head>
+        {# Analytics #}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125096878-4"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-125096878-4');
+        </script>
+        <script>
+            var APP = 'app',
+                VERSION = '{{ defines.VERSION }}',
+                SITETITLE = '{{ pagetitle }}',
+                LANGUAGE = '{{ defines.LANGUAGE }}',
+                API_URL = '{{ defines.API }}',
+                SID = "{{ user ? user.id : '' }}",
+                USERNAME = "{{ user ? user.username : 'Not logged in' }}";
+        </script>
+        <title>{{ pagetitle|raw }}</title>
+        <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+
+        {# enable mobile #}
+        {% if not nomobile %}
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% endif %}
+        <meta name="google-site-verification" content="j0xlPWc0c-_3XWqdWoxt4F257R43A7BMkTtkkfgmhaE" />
+        <script>function isOnMobile() { var state = {{ devices.mobile and not nomobile ? 'true' : 'false' }}; state = state ? state : Math.max(document.documentElement.clientWidth, window.innerWidth || 0) <= 720 ? true : false; return state; }</script>
+
+        {# so meta #}
+        <meta charset="utf-8">
+        <meta name="copyright" content="{{ pagetitle|raw }}">
+        <meta name="description" content="{{ pagedescription|replace({ "\n" : "", "  ": " " })|striptags|raw }}">
+        <meta name="page-topic" content="{{ pagetitle|raw }}">
+        <meta name="page-type" content="{{ defines.META_TYPE }}">
+        <meta name="audience" content="{{ defines.META_AUDIENCE }}">
+        <meta name="robots" content="{{ defines.META_ROBOTS }}">
+
+        {# favicons #}
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+        <meta name="theme-color" content="#222">
+
+        {# Facebook #}
+        <meta property="og:title" content="{{ pagetitle|raw }}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="{{ pageicon|replace({ 'https://xivdb.com':'https://secure.xivdb.com' }) }}" />
+        <meta property="og:url" content="{{ app.request.uri|split('?')[0] }}" />
+        <meta property="og:description" content="{{ pagedescription|striptags|raw }}" />
+        <meta property="og:image:secure_url" content="{{ pageicon|replace({ 'https://xivdb.com':'https://secure.xivdb.com' }) }}" />
+
+        {# Twitter #}
+        <meta name="twitter:site" content="@xivdb" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="{{ pagetitle|raw }}" />
+        <meta name="twitter:description" content="{{ pagedescription|striptags|raw }}" />
+        <meta name="twitter:image" content="{{ pageicon }}" />
+
+        {# Google Font #}
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+        {# enable open search #}
+        <link rel="search" type="application/opensearchdescription+xml" title="XIVDB" href="/opensearch.xml">
+
+        {# my styles #}
+        <link href="/assets/frontend.min.css?v={{ version }}" rel="stylesheet" type="text/css">
+        <link href="/tooltips.css?v={{ version }}" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.0/css/font-awesome.min.css?v={{ version }}" rel="stylesheet">
+
+        {# swal #}
+        <link href="/assets/swal/sweetalert.css?v={{ version }}" rel="stylesheet" type="text/css">
+        <script src="/assets/swal/sweetalert.min.js?v={{ version }}"></script>
+
+        {# Javascripts !#}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js?v={{ version }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js?v={{ version }}"></script>
+        <script src="/assets/libs.min.js?v={{ version }}"></script>
+        <script src="/assets/frontend.min.js?v={{ version }}"></script>
+
+        {# Translations #}
+        <script>
+        languages.set('custom', {{ languages.custom|json_encode|raw }});
+        languages.set('params', {{ languages.params|json_encode|raw }});
+        </script>
+    </head>
+    <body class="{{ (user is defined and user is not empty and user.star) ?  'is-star' : '' }} {{ bgcss is defined ? bgcss : '' }}">
+
+        <div style="background-color: #643333; padding: 10px; border-radius: 5px; text-align: center;">
+
+            XIVDB will be closing on Sunday 6th of January - <a href="/end.html">Read more information here.</a>
+
+        </div>
+
+        {# top #}
+        {% include "Base/userbar.twig" %}
+
+        {# Search results #}
+        {% if devices.mobile and not nomobile %}
+            {% include 'Search/menu_mobile.twig' %}
+        {% endif %}
+
+        {# actual site #}
+        <div class="site">
+
+            {% if defines.SITE_UNDER_MAINTENANCE %}
+                <div class="alert alert-error">Site under maintenance</div>
+            {% endif %}
+
+            {# Ad and mascot #}
+            {% if (user == false or user.star == false) and not devices.mobile and cookies.adremove == false %}
+            <div class="header-shop">
+                <a href="/" title="XIVDB Homepage">
+                    <img src="/img/logo/koko4.png" height="140" class="mascot">
+                </a>
+            </div>
+            {% endif %}
+
+            {# header + search #}
+            {% include "Base/header.twig" %}
+
+            {# Search results #}
+            {% include 'Search/search.twig' %}
+
+            {# main site content #}
+            <main class="site-container" {% if verifiedExistingSearch %}style="display:none;"{% endif %}>
+                {% block body %}{% endblock %}
+            </main>
+
+            {# footer #}
+            {% include "Base/footer.twig" %}
+
+        </div>
+
+        {# Feedback form #}
+        {% include 'Feedback/form.twig' %}
+
+        {# current patch #}
+        <script>var _patch = '{{ defines.CURRENT_PATCH|replace({ '/extract-':'' }) }}';</script>
+        <script>var _base64 = '{{ defines.SEARCH_BASE64 }}';</script>
+
+        {# Google analytics #}
+        {% include 'Default/ga.twig' %}
+
+        {# Load tooltips #}
+        <script>var xivdb_tooltips = { source: '{{ defines.SECURE }}', language: '{{ defines.LANGUAGE }}', seturlicon: {{ devices.mobile ? 'false' : 'true' }} }</script>
+        <script src="{{ defines.SECURE }}/tooltips.js?v={{ version }}"></script>
+
+        {# lightbox #}
+        <div class="lightbox">
+            <div class="controls">
+                <a href="" target="_blank"><i class="fa fa-external-link"></i> {{ languages.custom[1151] }}</a>
+                <button type="button" onclick="$('.lightbox').hide();"><i class="fa fa-times"></i> {{ languages.custom[1152] }}</button>
+            </div>
+            <div class="lightbox-image"></div>
+        </div>
+
+        {# search loading #}
+        <div class="search-loading">
+            <svg class="loading" width="65px" height="65px" viewBox="0 0 66 66" xmlns="https://www.w3.org/2000/svg">
+                <circle class="loading-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+            </svg>
+        </div>
+    </body>
+</html>
+{% endspaceless %}

@@ -1,0 +1,20 @@
+{% import 'Search/menu/macro.twig' as SearchMenu %}
+
+<div class="search">
+    <div class="search-input">
+        <input tabindex="1" class="core-search" type="text" placeholder="{{ languages.custom[727] }}" maxlength="{{ defines.SEARCH_STRING_LENGTH }}" {% if ishome %}autofocus{% endif %} value="{% if search is defined and search.search is not empty %}{{ search.search }}{% endif %}">
+    </div>
+    <div class="search-button">
+        <button>
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</div>
+
+{% if not devices.mobile %}
+<nav class="menu" role="navigation">
+    {{ SearchMenu.dropdown(languages.custom[648], 'Search/menu/database.twig', menu) }}
+    {{ SearchMenu.dropdown(languages.custom[657], 'Search/menu/search.twig', menu) }}
+    {{ SearchMenu.dropdown(languages.custom[388], 'Search/menu/patches.twig', menu) }}
+</nav>
+{% endif %}

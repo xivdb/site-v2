@@ -1,0 +1,70 @@
+<div class="content-submit-information">
+
+	{% if user %}
+		<h1>{{ languages.custom[913] }}: <span class="content-title"></span></h1>
+
+		<div class="csi-menu">
+			<span data-tab="map" class="active">{{ languages.custom[912] }}</span>
+			<span data-tab="text">{{ languages.custom[911] }}</span>
+
+			<button class="csi-close" type="button">
+				<i class="fa fa-times" aria-hidden="true"></i> {{ languages.custom[662] }}
+			</button>
+		</div>
+
+		<div class="csi-tabs">
+			{# Map Positions #}
+			<div id="csi-map" class="active">
+				<h2>{{ languages.custom[912] }}</h2>
+
+				<div class="panel">
+					{{ languages.custom[916] }}
+				</div>
+
+				<form id="form_positions">
+					<div class="posrow">
+						<input type="hidden" id="content_id" value="{{ content.id }}">
+						<input type="hidden" id="content_type" value="{{ content._cid }}">
+						<select id="pos_map" class="small">
+							{% for placenameId, place in mapPlacenames %}
+							<option value="{{ place.id }}">{{ place.name }}</option>
+							{% endfor %}
+						</select>
+						<input type="text" placeholder="X" id="pos_x" class="small">
+						<input type="text" placeholder="Y" id="pos_z" class="small">
+						<input type="text" placeholder="(Optional): notes" id="pos_notes" class="small">
+						<button type="button" class="purple small" id="duplicate">{{ languages.custom[915] }}</button>
+					</div>
+					<br>
+					<div align="center" class="submit-box">
+						<button class="blue" type="submit">{{ languages.custom[104] }}</button>
+					</div>
+				</form>
+			</div>
+
+			{# Text Information #}
+			<div id="csi-text">
+				<h2>{{ languages.custom[911] }}</h2>
+				<div class="panel">
+					{{ languages.custom[914] }}
+				</div>
+				<br>
+				<form id="form_textinfo">
+					<textarea id="textinfo" name="textinfo"></textarea>
+					<div align="center" class="submit-box">
+						<button class="blue" type="submit">{{ languages.custom[104] }}</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	{% else %}
+		<div class="alert alert-danger">
+			{{ languages.custom[917] }}
+
+			<button class="csi-close" type="button">
+				<i class="fa fa-times" aria-hidden="true"></i> {{ languages.custom[662] }}
+			</button>
+		</div>
+	{% endif %}
+
+</div>
