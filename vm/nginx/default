@@ -4,7 +4,7 @@
 server
 {
     listen 80;
-    server_name v2.xivdb.local;
+    server_name xivdb.local;
     root /vagrant/site/web;
     index _app.php;
     sendfile off;
@@ -29,7 +29,7 @@ server
 server
 {
     listen 80;
-    server_name v2.xivsync.local;
+    server_name xivsync.local;
     root /vagrant/repos/XIVSync/web;
     index app.php;
     sendfile off;
@@ -58,7 +58,7 @@ server
 server
 {
     listen 80;
-    server_name v2.secure.xivdb.local;
+    server_name secure.xivdb.local;
     root /vagrant/site/web;
     index _secure.php;
     sendfile off;
@@ -86,7 +86,7 @@ server
 server
 {
     listen 80;
-    server_name v2.dashboard.xivdb.local
+    server_name dashboard.xivdb.local
     root /vagrant/site/web;
     index _dashboard.php;
     sendfile off;
@@ -114,7 +114,7 @@ server
 server
 {
     listen 80;
-    server_name v2.xivdb.adminer;
+    server_name xivdb.adminer;
     root /vagrant/adminer;
     index index.php;
     sendfile off;
